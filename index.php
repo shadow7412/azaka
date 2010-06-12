@@ -1,3 +1,1 @@
-<?php
-include "/inc/uni.php";
-?>
+<?php include "/inc/uni.php";?>
