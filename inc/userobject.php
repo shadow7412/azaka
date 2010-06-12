@@ -35,6 +35,11 @@ class userObject {
 			$userinfo['password'] = "";
 			$userinfo['access'] = 0;
 		}
+		
+		global $username, $password;
+		setcookie("username",$username,time()+60*60*24*14);
+		setcookie("password",$password,time()+60*60*24*14);
+		
 	}
 	
 }

@@ -20,11 +20,6 @@ class universal {
 	
 	function __destruct(){
 		//on closing of script, update any changes to the userinfo array into the sessions, and update the cookies.
-		global $userinfo;
-		$_SESSION['userinfo'] = $userinfo;
-		setcookie("username",$userinfo->username,time()+60*60*24*14);
-		setcookie("password",$userinfo->password,time()+60*60*24*14);
-		
 		//display bottom of page
 		global $bottom;
 		echo $bottom;
