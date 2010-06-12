@@ -27,9 +27,8 @@ mysql_query("CREATE TABLE  `azaka`.`news` (
 `uid` INT NOT NULL COMMENT  'Id of user who posted news',
 `time` DATETIME NOT NULL ,
 `content` TEXT NOT NULL
-) ENGINE = MYISAM
-=======
 ) ENGINE = MYISAM");
+
 
 mysql_query("CREATE TABLE  `azaka`.`bills` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -42,7 +41,7 @@ mysql_query("CREATE TABLE  `azaka`.`bills` (
 `confirmed` INT NOT NULL ,
 `datepaid` DATE NOT NULL ,
 `dateconfirmed` DATE NOT NULL
-) ENGINE = MYISAM ;
+) ENGINE = MYISAM");
 
 Header('Location: ..');
 ?>
