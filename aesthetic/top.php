@@ -7,11 +7,15 @@ global $pagename, $userinfo;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="aesthetic/azaka.css" media="screen" /><title>SaltFish - $pagename</title>
+<link rel="stylesheet" type="text/css" href="aesthetic/azaka.css" media="screen" />
+<title><?php echo isset($pagename)?"$pagename - ":"";?>azaka</title>
 </head>
 
 <body><center><a href="index.php"><img src="aesthetic/title.gif" alt="azaka" /></a></center><br/>
 
-<div id="right" align="right">Your IP is ".$_SERVER['REMOTE_ADDR']."<br/><br/></div>
+<div id="right" align="right">Your IP is <?php echo $_SERVER['REMOTE_ADDR']; ?><br/><br/></div>
 
 <div id="main">
+<div id="toolbar">
+toolbar goes here
+</div>

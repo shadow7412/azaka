@@ -17,26 +17,18 @@ body {
 	border-bottom: 2px solid #564b47;
 	border-top: 2px solid #564b47;
 	background-color: #ffffff;
-	background-image: url(../images/background.jpg);
+	background-image: url(bg.jpg);
 	min-width: 500px;
 }
 #content {
 	padding:5px;
 }
 #toolbar {
+	padding: 5px;
 	background-color: #DDDDDD;
 }
 #credits {
 	font-size: 10px;
-}
-#popup{
-	border-left: 2px solid #564b47;
-	border-right: 2px solid #564b47;
-	border-bottom: 2px solid #564b47;
-	border-top: 2px solid #564b47;
-	padding: 5px;
-	background-color: #ffffff;
-	background-image: url(world.background.gif);
 }
 #left {
 	position: absolute;

@@ -2,19 +2,18 @@
 Will use cookies like in saltfish - if you log in then you stay that way.
 
 
-
->>Database (run install.php to set this up)
+>>Database - run azaka/config/initsetup.php to set this up (eventually)
 
 > users
--- id
--- username
--- password
+-- id, int
+-- username, varchar(10)
+-- password, varchar(10)
 -- access
--- first
--- last
+-- first, varchar(15)
+-- last, varchar(15)
 -- dob
 -- billable
--- email 
+-- email, varchar(20)
 
 > bills
 -- id
