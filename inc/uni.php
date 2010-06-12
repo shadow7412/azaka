@@ -1,9 +1,9 @@
 <?php
 //aaaaaall the includes
 global $userinfo;
-include_once "db.php";
-include_once "linklist.php";
-include_once "userobject.php";
+include_once "inc/db.php";
+include_once "inc/linklist.php";
+include_once "inc/userobject.php";
 
 class universal {
 	var $bottom;

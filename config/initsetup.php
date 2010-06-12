@@ -2,8 +2,8 @@
 include "dbconfig.php";
 
 mysql_connect($db['host'], $db['user'], $db['pass']) or error("The connection to MySQL couldn't be made. Check dbconfig.php.");
-mysql_query("IF NOT EXIST CREATE DATABASE azaka");
-mysql_select_db($db['db']) or die("The database \"".$db['db']."\" couldn't be found. Have you run the installer by any chance..?");
+mysql_query("IF NOT EXIST CREATE DATABASE ".$db['pass']);
+mysql_select_db($db['db']) or die("The database \"".$db['db']."\" couldn't be found. I am hungry.");
 
 mysql_query("CREATE TABLE  `azaka`.`users` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,in
