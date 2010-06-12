@@ -1,6 +1,6 @@
 <?php
 global $userinfo;
-include "/inc/uni.php";
+include "inc/uni.php";
 $x = new universal("Home",0);
 $db = new database();
 $l = new linklist();
