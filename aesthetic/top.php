@@ -19,3 +19,4 @@ global $pagename, $userinfo;
 <div id="toolbar">
 toolbar goes here
 </div>
+<div id="content">

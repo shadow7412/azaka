@@ -1,2 +1,0 @@
-</div>
-<div align="center" id="credits"><a href="http://validator.w3.org/check?uri=referer" title="Click here to check xhtml compliency of this page">Azaka</a>(c) is copyright - Steven Huf 2010</div></body></html>

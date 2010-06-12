@@ -1,10 +1,12 @@
 <?php
 include "inc/db.php";
 
+//render bottom here as you cannot read files in destructor
+$bottom = file_get_contents("aesthetic/bottom.html");
+
 class universal {
-	function __construct($pagename,$reqaccess){
-		
 	
+	function __construct($pagename,$reqaccess){
 		include "aesthetic/top.php";
 	}
 
@@ -15,10 +17,12 @@ class universal {
 		//setcookie("username",$userinfo['username'],time()+60*60*24*14);
 		//setcookie("password",$userinfo['password'],time()+60*60*24*14);
 		
-		//also render the bottom of the page
-		//include "aesthetic/bottom.php";
+		//display bottom of page
+		global $bottom;
+		echo $bottom;
+		
 	}
-	
+}
 function redirect($url, $message){ //This is just a function that pumps out javascript redirection text so I don't need to keep retyping it.
 	echo "<script type='text/javascript'>";
 	if(isset($message))	echo "alert(\"$message\");";
@@ -26,10 +30,8 @@ function redirect($url, $message){ //This is just a function that pumps out java
 	die("Redirecting...");
 }
 
-function error($smg){
-echo "<div id=error>$msg</div>";
-die;
-}
-
+function error($msg){
+	echo "<div id=error>$msg</div>";
+	die;
 }
 ?>
