@@ -12,3 +12,17 @@ UNIQUE (
 `username`
 )
 ) ENGINE = MYISAM 
+
+CREATE TABLE  `azaka`.`bills` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`uid` INT NOT NULL ,
+`service` VARCHAR( 10 ) NOT NULL ,
+`amount` DECIMAL( 5, 2 ) NOT NULL ,
+`dateentered` DATE NOT NULL ,
+`datedue` DATE NOT NULL ,
+`paid` BOOL NOT NULL ,
+`confirmed` INT NOT NULL ,
+`datepaid` DATE NOT NULL ,
+`dateconfirmed` DATE NOT NULL
+) ENGINE = MYISAM ;
+
