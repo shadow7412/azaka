@@ -1,3 +1,6 @@
+>>TODO
+-set the iphone kajigger to happen only once (ie leave a cookie if users says no)
+
 >>Login
 Will use cookies like in saltfish - if you log in then you stay that way.
 

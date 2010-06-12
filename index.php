@@ -5,6 +5,6 @@ $db = new database();
 
 $result = $db->qry("SELECT * FROM users");
 echo "<pre>";
-print_r(mysql_fetch_array($result));
+//print_r(mysql_fetch_array($result));
 echo "</pre>";
 ?>
