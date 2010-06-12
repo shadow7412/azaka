@@ -11,10 +11,11 @@ class linklist {
 	function additem($label,$link, $reqaccess){
 	global $userinfo;
 	global $counter;
-	if ($userinfo->access<$reqaccess){
+	if (true/*$userinfo->access<$reqaccess*/){
 		$links[$counter]["label"] = $label;
 		$links[$counter++]["link"] = $link;
 		}
+
 	}
 
 	function addbreak(){
@@ -24,8 +25,8 @@ class linklist {
 	
 	function disp(){
 		global $counter;
-		for($i=0;$i!=$counter;$i++){
-		if(isset($link[$i]['label']) && $link[$i]['label']!="")
+		for($i=0; $i != $counter; $i++){
+		if(isset($link[$i]['label']) && $link[$i]['label'] != "")
 			echo "<a href=\"$link\">$label</a><br/>";
 		else
 			echo "<br/>";
