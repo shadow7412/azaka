@@ -5,7 +5,7 @@
 Will use cookies like in saltfish - if you log in then you stay that way.
 
 
->>Database - run azaka/config/initsetup.php to set this up (eventually)
+>>Database - run azaka/config/initsetup.php to set up the database
 
 > users
 -- id, int
@@ -25,5 +25,9 @@ Will use cookies like in saltfish - if you log in then you stay that way.
 
 > news
 -- id
+-- visible
+-- idposter
+-- time
+-- content
 
 > settings

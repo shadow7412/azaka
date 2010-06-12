@@ -12,3 +12,11 @@ UNIQUE (
 `username`
 )
 ) ENGINE = MYISAM 
+
+CREATE TABLE  `azaka`.`news` (
+`id` INT NOT NULL ,
+`visible` INT NOT NULL ,
+`uid` INT NOT NULL COMMENT  'Id of user who posted news',
+`time` DATETIME NOT NULL ,
+`content` TEXT NOT NULL
+) ENGINE = MYISAM
