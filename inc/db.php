@@ -1,4 +1,9 @@
 <?php
+function error($msg){
+	echo "<div id=error>$msg  <a href=\"config/initsetup.php\" onclick=\"return confirm('This will delete all existing data in the database if it exists. Continue?');\">Maybe remake database?</a></div>";
+	die;
+}
+
 class Database{
 	function __construct(){
 		include "/config/dbconfig.php";
