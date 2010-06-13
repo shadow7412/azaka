@@ -1,12 +1,19 @@
 <?php
 include "dbconfig.php";
+$errors = "";
+
+function doqry($name,$query){
+	mysql_query($query);
+	return mysql_error()==""?"":"$name: ".mysql_error()."\n";
+}
 
 mysql_connect($db['host'], $db['user'], $db['pass']) or error("The connection to MySQL couldn't be made. Check dbconfig.php.");
-mysql_query("IF NOT EXIST CREATE DATABASE ".$db['pass']);
+$errors .= doqry("Drop Database","DROP DATABASE IF EXISTS ".$db['db']);
+$errors .= doqry("Create Database","CREATE DATABASE ".$db['db']);
 mysql_select_db($db['db']) or die("The database \"".$db['db']."\" couldn't be found. I am hungry.");
 
-mysql_query("CREATE TABLE  `azaka`.`users` (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,in
+$errors .= doqry("User Table","CREATE TABLE `users` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `username` VARCHAR( 12 ) NOT NULL ,
 `password` VARCHAR( 20 ) NOT NULL ,
 `access` TINYINT NOT NULL DEFAULT  '0',
@@ -18,19 +25,25 @@ mysql_query("CREATE TABLE  `azaka`.`users` (
 UNIQUE (
 `username`
 )
-
 ) ENGINE = MYISAM ");
 
-mysql_query("CREATE TABLE  `azaka`.`news` (
-`id` INT NOT NULL ,
-`visible` INT NOT NULL ,
-`uid` INT NOT NULL COMMENT  'Id of user who posted news',
-`time` DATETIME NOT NULL ,
-`content` TEXT NOT NULL
-) ENGINE = MYISAM");
+$errors .= doqry("Default User","INSERT INTO `azaka`.`users` (`id`, `username`, `password`, `access`, `firstname`, `lastname`, `dob`, `billable`, `email`) VALUES (NULL, 'admin', '', '5', 'System', 'Default', CURDATE(), '0', '')");
 
 
-mysql_query("CREATE TABLE  `azaka`.`bills` (
+$errors .= doqry("News Table","CREATE TABLE `news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `uid` int(11) NOT NULL COMMENT 'Id of user who posted news',
+  `time` datetime NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+
+$errors .= doqry("Default news item","INSERT INTO  `azaka`.`news` (`id` ,`visible` ,`uid` ,`time` ,`content`)
+VALUES (NULL ,  '1',  '1', CURDATE( ) ,  'Welcome to azaka.\n\nThis is the default news item. You seeing this (and no errors) implies that things have gone smoothly.\n\nShock horror hey :P')
+");
+
+$errors .= doqry("Bills Table","CREATE TABLE `bills` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `uid` INT NOT NULL ,
 `service` VARCHAR( 10 ) NOT NULL ,
@@ -43,5 +56,9 @@ mysql_query("CREATE TABLE  `azaka`.`bills` (
 `dateconfirmed` DATE NOT NULL
 ) ENGINE = MYISAM");
 
-Header('Location: ..');
+if($errors == ""){
+	header('Refresh: 1; url=..');
+	echo "That seemed to work. Taking you to the mainpage...";
+	} else
+	echo "<pre>Observe the errors;\n\n".$errors."\n\n</pre><a href=\"..\">return to main page</a>";
 ?>

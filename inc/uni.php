@@ -40,7 +40,7 @@ function confirmredirect($url, $question){ //This is just a function that pumps 
 }
 
 function error($msg){
-	echo "<div id=error>$msg</div>";
+	echo "<div id=error>$msg  <a href=\"config/initsetup.php\">Maybe remake database?</a></div>";
 	die;
 }
 ?>
