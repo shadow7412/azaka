@@ -2,8 +2,7 @@ var anidone=false;
 function jah(url,target) {
     // native XMLHttpRequest object
 	anidone = false;
-	$("#"+target).fadeOut("slow", function() {anidone=true;});
-	
+	$("#"+target).fadeOut("fast", function() {anidone=true;});
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
@@ -24,14 +23,14 @@ function jah(url,target) {
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
-			if(!(anidone)){ //wait for animation
+			if(!(anidone)){ //animation hasnt completed - have another go in a few milliseconds
 				setTimeout("jahDone('"+target+"')",100);
 				return false;
 			}
 			
         // only if "OK"
 		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
-		$("#"+target).fadeIn("slow");
+		$("#"+target).fadeIn("fast");
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
