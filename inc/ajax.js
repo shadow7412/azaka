@@ -3,6 +3,7 @@ function jah(url,target) {
     // native XMLHttpRequest object
 	anidone = false;
 	$("#"+target).fadeOut("fast", function() {anidone=true;});
+	$("#bottom").fadeOut("fast");
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
@@ -23,7 +24,7 @@ function jah(url,target) {
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
-			if(!(anidone)){ //animation hasnt completed - have another go in a few milliseconds
+			if(!(anidone)){ //animation hasnt completed - 
 				setTimeout("jahDone('"+target+"')",100);
 				return false;
 			}
@@ -31,6 +32,7 @@ function jahDone(target) {
         // only if "OK"
 		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
 		$("#"+target).fadeIn("fast");
+		$("#bottom").fadeIn("fast");
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
@@ -39,6 +41,9 @@ function jahDone(target) {
                 req.statusText;
         }
     }
+}
+function changeToolbar($value){
+	document.getElementById("toolbar").innerHTML = "lol changed";
 }
 
 //for later reference

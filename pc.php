@@ -1,3 +1,4 @@
+<?php include_once "inc/userobject.php"; $u = new UserObject(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,8 +16,7 @@
 
 <div id="loader"><img src="aesthetics/notloading.gif" /></div>
 
-<div id="toolbar">
-</div>
+<div id="toolbar" align="right"><?php echo $u->username ?></div>
 
 
 <div id="content"><center>Loading...</center></div>
