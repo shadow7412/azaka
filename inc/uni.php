@@ -1,18 +1,17 @@
 <?php
 //aaaaaall the includes
-global $userinfo;
 include_once "inc/db.php";
 include_once "inc/linklist.php";
 include_once "inc/userobject.php";
+include_once "aesthetic/top.php";
 
-class page {
+class Page {
 	private $bottom;
-	
+	public $userinfo;
 	function __construct($pagename,$reqaccess){
-		global $userinfo;
-		$userinfo = new userObject();
-		include "aesthetic/top.php";
-		$bottom = file_get_contents("aesthetic/bottom.html");
+		$this->userinfo = new UserObject();
+		renderTop($this->userinfo,$pagename);
+		$this->bottom = file_get_contents("aesthetic/bottom.html");
 
 		//if device is iphone - ask if user wants to go to iphone page
 		if (strpos($_SERVER['HTTP_USER_AGENT'],"iPhone"))
@@ -21,7 +20,7 @@ class page {
 	
 	function __destruct(){
 		//display bottom of page
-		global $bottom;
+		echo $this->bottom;
 	}
 }
 

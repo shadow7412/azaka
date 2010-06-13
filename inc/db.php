@@ -1,5 +1,5 @@
 <?php
-class database{
+class Database{
 	function __construct(){
 		include "/config/dbconfig.php";
 

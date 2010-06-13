@@ -1,5 +1,5 @@
 <?php
-class userObject {
+class UserObject {
 	public $id;
 	public $username;
 	public $password;
@@ -32,7 +32,7 @@ class userObject {
 		}
 	//if user did not successfully log in, log in a pseudo guest account
 		if(!isset($this->username)){
-			$this->username = "Guest";
+			$this->username = "guest";
 			$this->password = "";
 			$this->access = 0;
 		}

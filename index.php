@@ -1,13 +1,11 @@
 <?php
 include "inc/uni.php";
-$x = new page("Home",0);
-$db = new database();
-$l = new linklist();
-global $userinfo;
+$p = new Page("home",0);
+$db = new Database();
+$l = new Linklist();
 
 $l->additem("add news item","admin_addnews.php", 0);
 $l->disp();
-
 $result = $db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid");
 while($row = mysql_fetch_array($result)){
 	extract($row);
