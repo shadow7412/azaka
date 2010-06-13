@@ -5,7 +5,8 @@ include_once "inc/userobject.php";
 $db = new Database();
 $l = new Linklist();
 $userinfo = new UserObject();
-$l->additem("add news item","admin_news.php", 0);
+
+$l->additem("return to main news page","news.php", 0);
 $l->disp();
 
 $result = $db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid");

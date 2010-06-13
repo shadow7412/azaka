@@ -15,6 +15,9 @@ a:hover {color: #7777FF; text-decoration: underline; }
 #top {
 	text-align: center;
 }
+#loader {
+	text-align: center;
+}
 #toolbar {
 	padding: 5px;
 	background-color: #333333;
