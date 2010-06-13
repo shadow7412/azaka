@@ -33,12 +33,22 @@ function jahDone(target) {
         }
     }
 }
-/*
-$(document).ready(function(){
-	$("#content").fadeTo("slow", 0.3); // This sets the opacity of the thumbs to fade down to 30% when the page loads
-	$("#content").hover(function(){
-	$(this).fadeTo("slow", 1.0); // This should set the opacity to 100% on hover
-	},function(){
-	$(this).fadeTo("slow", 0.3); // This should set the opacity back to 30% on mouseout
-	});
-});*/
+
+//for later reference
+function sendPost(){
+	var url = "get_data.php";
+	var params = "lorem=ipsum&name=binny";
+	http.open("POST", url, true);
+	
+	//Send the proper header information along with the request
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.setRequestHeader("Content-length", params.length);
+	http.setRequestHeader("Connection", "close");
+
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		if(http.readyState == 4 && http.status == 200) {
+			alert(http.responseText);
+		}
+	}
+	http.send(params);
+}
