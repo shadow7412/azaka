@@ -17,6 +17,7 @@ $username
 </div>
 
 <div id="content">
+<center><img src="aesthetics/loading.gif" /></center>
 </div>
 
 <div id="bottom">
