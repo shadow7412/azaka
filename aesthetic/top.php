@@ -1,6 +1,7 @@
 <?php
 //VARIABLES THAT NEED TO BE SET:
 //$pagename, $userinfo
+
 global $pagename, $userinfo;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -8,7 +9,9 @@ global $pagename, $userinfo;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="aesthetic/azaka.css" media="screen" />
-<title><?php echo isset($pagename)?"$pagename - ":"";?>azaka</title>
+<title><?php
+echo isset($pagename)?"$pagename - ":""
+?>azaka</title>
 </head>
 
 <body><center><a href="index.php"><img src="aesthetic/title.gif" alt="azaka" /></a></center><br/>
@@ -17,6 +20,6 @@ global $pagename, $userinfo;
 
 <div id="main">
 <div id="toolbar">
-toolbar goes here
+<?php $userinfo->username; ?>
 </div>
 <div id="content">

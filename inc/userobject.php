@@ -1,45 +1,44 @@
 <?php
 class userObject {
-	var $id;
-	var $username;
-	var $password;
-	var $access;
-	var $firstname;
-	var $lastname;
-	var $dob;
-	var $billable;
-	var $email;
+	public $id;
+	public $username;
+	public $password;
+	public $access;
+	public $firstname;
+	public $lastname;
+	public $dob;
+	public $billable;
+	public $email;
 
 	function __construct(){
+	//first pull in any cookie info
 		if(isset($_COOKIE['username'])&&isset($_COOKIE['password'])){
-			$userinfo['username'] = $_COOKIE['username'];
-			$userinfo['password'] = $_COOKIE['password'];
+			$this->username = $_COOKIE['username'];
+			$this->password = $_COOKIE['password'];
 		}
-
-		if(isset($userinfo['username'])){
-			if($result = mysql_fetch_array(mysql_query("SELECT * FROM users WHERE username='$username' AND password = '$password'"))){
-				$id = $result['id'];
-				$access = $result['access'];
-				$firstname = $result['firstname'];
-				$lastname = $result['lastname'];
-				$dob = $result['dob'];
-				$billable = $result['billable'];
-				$email = $result['email'];
+	//if cookie info is existent and correct, log user in
+		if(isset($this->username)){
+			if($result = mysql_fetch_array($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."'"))){
+				$this->id = $result['id'];
+				$this->access = $result['access'];
+				$this->firstname = $result['firstname'];
+				$this->lastname = $result['lastname'];
+				$this->dob = $result['dob'];
+				$this->billable = $result['billable'];
+				$this->email = $result['email'];
 			} else {
-				unset($userinfo['username']);
+				unset($this->username);
 			}
 		}
-		
-		if(!isset($userinfo['username'])){
-			$userinfo['username'] = "Guest";
-			$userinfo['password'] = "";
-			$userinfo['access'] = 0;
+	//if user did not successfully log in, log in a pseudo guest account
+		if(!isset($this->username)){
+			$this->username = "Guest";
+			$this->password = "";
+			$this->access = 0;
 		}
-		
-		global $username, $password;
-		setcookie("username",$username,time()+60*60*24*14);
-		setcookie("password",$password,time()+60*60*24*14);
-		
+	//save changes
+		setcookie("username",$this->username,time()+60*60*24*14);
+		setcookie("password",$this->password,time()+60*60*24*14);
 	}
 	
 }

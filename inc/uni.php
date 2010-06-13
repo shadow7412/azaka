@@ -5,8 +5,9 @@ include_once "inc/db.php";
 include_once "inc/linklist.php";
 include_once "inc/userobject.php";
 
-class universal {
-	var $bottom;
+class page {
+	private $bottom;
+	
 	function __construct($pagename,$reqaccess){
 		global $userinfo;
 		$userinfo = new userObject();
@@ -19,10 +20,8 @@ class universal {
 	}
 	
 	function __destruct(){
-		//on closing of script, update any changes to the userinfo array into the sessions, and update the cookies.
 		//display bottom of page
 		global $bottom;
-		echo $bottom;
 	}
 }
 
@@ -40,7 +39,7 @@ function confirmredirect($url, $question){ //This is just a function that pumps 
 }
 
 function error($msg){
-	echo "<div id=error>$msg  <a href=\"config/initsetup.php\">Maybe remake database?</a></div>";
+	echo "<div id=error>$msg  <a href=\"config/initsetup.php\" onclick=\"return confirm('This will delete all existing data in the database if it exists. Continue?');\">Maybe remake database?</a></div>";
 	die;
 }
 ?>
