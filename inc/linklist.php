@@ -20,14 +20,15 @@ class linklist {
 	}
 	
 	function disp(){
-		for($i=0; $i != $this->counter; $i++){
-			
-			if(isset($this->link[$i]['label']) && $this->link[$i]['label'] != "")
-				echo "<a href=\"".$this->links[$i]["link"]."\">".$this->links[$i]["label"]."</a><br/>";
+	if($this->counter!=0){
+	echo "<div id=\"linklist\"><ul>";
+		for($i=0; $i != $this->counter; $i++)
+			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
+				echo "<li><a href=\"".$this->links[$i]["link"]."\">".$this->links[$i]["label"]."</a></li>";
 			else
 				echo "<br/>";
-			}
 		}
-
+	echo "</ul></div>";
+	}
 }
 ?>

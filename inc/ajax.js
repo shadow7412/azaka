@@ -1,6 +1,6 @@
 function jah(url,target) {
     // native XMLHttpRequest object
-    document.getElementById(target).innerHTML = '<img src="loading.gif" />';
+    document.getElementById(target).innerHTML = '<center><img src="aesthetics/loading.gif" /></center>';
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
         req.onreadystatechange = function() {jahDone(target);};
@@ -25,7 +25,7 @@ function jahDone(target) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
         } else {
-            document.getElementById(target).innerHTML="jah error:\n" +
+            document.getElementById(target).innerHTML="There has been an ajax error:\n" +
                 req.statusText;
         }
     }
