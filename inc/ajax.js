@@ -1,6 +1,9 @@
+var anidone=false;
 function jah(url,target) {
     // native XMLHttpRequest object
-	$("#"+target).fadeTo("slow", 0);
+	anidone = false;
+	$("#"+target).fadeOut("slow", function() {anidone=true;});
+	
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
@@ -16,14 +19,19 @@ function jah(url,target) {
             req.send();
         }
     }
-}    
+}
 
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
+			if(!(anidone)){ //wait for animation
+				setTimeout("jahDone('"+target+"')",100);
+				return false;
+			}
+			
         // only if "OK"
 		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
-		$("#"+target).fadeTo("slow", 1);
+		$("#"+target).fadeIn("slow");
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
