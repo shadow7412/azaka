@@ -17,7 +17,7 @@ class Page {
 		$this->javascript .= "document.getElementById('toolbar').innerHTML = '".$this->u->username."';";
 	}
 	function addJs($js){
-	$this->js.=$fs
+	$this->js.=$fs;
 	}
 	function __destruct(){
 		$this->javascript .= "</script>";
