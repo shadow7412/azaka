@@ -11,26 +11,51 @@ a:active {color: #7777FF; text-decoration: none; }
 a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 
-#top {text-align: center;}
-#loader {text-align: center;}
+#top {
+	height: 75px;
+	text-align: center;
+}
+#loader {
+	height: 15px;
+	text-align: center;
+}
 #toolbar {
-	padding: 5px;
+	height: 20px;
+	line-height:20px;
+	vertical-align: bottom;
 	background-color: #333333;
 }
 #content {
 	padding:5px;
-	margin: 0px 200px 0px 200px;
-	border-left: 2px solid #564b47;
-	border-right: 2px solid #564b47;
-	border-bottom: 2px solid #564b47;
-	border-top: 2px solid #564b47;
+	margin: 10px 230px 0px 230px;
 	color: #000000;
 	background-color: #ffffff;
-	background-image: url(bg.jpg);
+	background-image: url(images/bg.jpg);
 	min-width: 500px;
 	opacity:0;
 }
-#main {padding:5px;}
+#sidebar{
+	position: absolute;
+	top: 120px;
+	left: 0px;
+	width: 220px;
+	bottom: 0px;
+	background-color: #111111;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+}
+#modules {
+	position: absolute;
+	top: 120px;
+	right: 0px;
+	width: 220px;
+	bottom: 0px;
+	background-color: #111111;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+}
 #bottom {
 	font-size: 10px;
 	text-align: center;

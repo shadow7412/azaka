@@ -46,13 +46,13 @@ function jah(url,target) {
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
-	document.getElementById("loader").innerHTML = "<img src=\"aesthetics/images/notloading.gif\" />";
+	document.getElementById("loader").innerHTML = "";
 		if(!(anidone)){ //animation hasnt completed - try again in a split second or so
 			setTimeout("jahDone('"+target+"')",10);
 			return false;
 		}
         // only if "OK"
-		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/images/notloading.gif\" />";
+		document.getElementById("loader").innerHTML = "";
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
@@ -67,10 +67,14 @@ function jahDone(target) {
 			jah("error.php?code="+req.status+"&msg="+req.responseText,"content");
     }
 }
-function gethashing(){
-	if (window.location.hash == '')
-		jah('news.php','content');
+function startautomation(){
+	if (window.location.hash == '') jah('news.php','content'); //if no hash default to news page
 	setTimeout("checkhash()",500);
+	updatemods();
+}
+function checkmods(){
+	jah("modules/","modules");
+	setTimeout("updatemods();",1000);
 }
 function checkhash(){
 	if(currenthash != window.location.hash)

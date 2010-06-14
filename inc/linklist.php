@@ -1,26 +1,27 @@
 <?php
+include_once("inc/userobject.php");
 class linklist {
-	var $links = array();
+	var $links;
 	var $counter;
-	
+	var $u;
 	function __construct(){
+		$this->links = array();
 		$this->counter = 0;
+		$this->u = new UserObject();
 	}
 	
 	function additem($label,$link, $reqaccess){
-	if (true/*$userinfo->access<$reqaccess*/){
+	if ($this->u->access >= $reqaccess){
 		$this->links[$this->counter]["label"] = $label;
 		$this->links[$this->counter++]["link"] = $link;
 		}
-
 	}
-
 	function addbreak(){
 		$this->counter++;
 	}
 	function disp(){
 	if($this->counter!=0){
-	echo "<div id=\"linklist\"><ul>";
+		echo "<div id=\"linklist\"><ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
 				echo "<li><a href=\"javascript:jah('".$this->links[$i]["link"]."','content');\">".$this->links[$i]["label"]."</a></li>";

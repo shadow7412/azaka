@@ -36,10 +36,11 @@ class UserObject {
 			$this->password = "";
 			$this->access = 0;
 		}
-	//save any changes
+	}
+	 function __destruct(){
+		//save any changes
 		setcookie("username",$this->username,time()+60*60*24*14);
 		setcookie("password",$this->password,time()+60*60*24*14);
-	}
-	
+	 }
 }
 ?>
