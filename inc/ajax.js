@@ -4,10 +4,10 @@ var currenthash = '';
 
 function jah(url,target) {
     // native XMLHttpRequest object
-	if(url.indexOf('?')!=-1)
-		currenthash = String(url).substring(indexOf('?'));
+	if(url.indexOf('?')==-1)
+		currenthash = "#"+url;
 	else 
-		currenthash = url;
+		currenthash = "#"+String(url).substring(0,indexOf('?'));
 	window.location.hash = currenthash;
 	
 	anidone = false;
@@ -29,19 +29,6 @@ function jah(url,target) {
         }
     }
 }
-function gethashing(){
-	if (window.location.hash == '')
-		jah('news.php','content');
-	setTimeout("checkhash()",500);
-}
-
-function checkhash(){
-	if("#"+currenthash != window.location.hash){
-		jah(window.location.hash.substring(1),"content");
-	}
-	setTimeout("checkhash()",200);
-}
-
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
@@ -55,12 +42,23 @@ function jahDone(target) {
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
-		$("#"+target).fadeTo("slow",1);
-		$("#bottom").fadeTo("slow",1);
+			$("#"+target).fadeTo("slow",1);
+			$("#bottom").fadeTo("slow",1);
         } else {
 			jah("error.php?code="+req.status+"&msg="+req.responseText,"content");
         }
     }
+}
+function gethashing(){
+	if (window.location.hash == '')
+		jah('news.php','content');
+	setTimeout("checkhash()",500);
+}
+
+function checkhash(){
+	if(currenthash != window.location.hash)
+		jah(window.location.hash.substring(1),"content");
+	setTimeout("checkhash()",200);
 }
 
 //for later reference

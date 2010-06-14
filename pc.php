@@ -5,11 +5,11 @@
 <title>azaka</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="aesthetics/pc.css" media="screen" />
-<script language="javascript1.3" src="inc/jquery.js" />
-<script language="javascript1.3" src="inc/ajax.js" />
+<script language="javascript1.3" src="inc/jquery.js" ></script>
+<script language="javascript1.3" src="inc/ajax.js" ></script>
 </head>
 
-<body onload="javascript:gethashing();">
+<body onload="javascript:gethashing()">
 <div id="top">
 <a href="index.php"><img src="aesthetics/title.gif" alt="azaka" /></a>
 <noscript>This page relies on javascript. You should enable it.</noscript>
@@ -18,7 +18,6 @@
 <div id="loader"><img src="aesthetics/notloading.gif" /></div>
 
 <div id="toolbar" align="right"><?php echo $u->username ?></div>
-
 
 <div id="content" ></div>
 
