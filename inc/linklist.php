@@ -24,7 +24,7 @@ class linklist {
 		echo "<div id=\"linklist\"><ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				echo "<li><a href=\"javascript:jah('".$this->links[$i]["link"]."','content');\">".$this->links[$i]["label"]."</a></li>";
+				echo "<li><a href=\"javascript:updateContent('".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
 			else
 				echo "<br/>";
 		}
