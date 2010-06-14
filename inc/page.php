@@ -1,6 +1,5 @@
 <?php
-include_once "inc/page.php";
-//include_once "inc/linklist.php";
+// 0 - Guest, 1 - User, 2 - Admin, 3 - God
 include_once "inc/userobject.php";
 
 class Page {
@@ -9,6 +8,7 @@ class Page {
 	
 	function __construct($title,$accessreq){
 		$this->u = new UserObject();
+		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
 		$this->javascript = "<script id=\"pagejs\">";
 		$this->setupTop($title);
 	}
