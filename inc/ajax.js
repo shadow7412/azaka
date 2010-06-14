@@ -1,10 +1,11 @@
 var anidone=false;
+
 function jah(url,target) {
     // native XMLHttpRequest object
 	anidone = false;
-	$("#"+target).fadeOut("fast", function() {anidone=true;});
-	$("#bottom").fadeOut("fast");
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
+	$("#"+target).fadeTo("fast",0, function() {anidone=true;});
+	$("#bottom").fadeTo("fast",0);
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
         req.onreadystatechange = function() {jahDone(target);};
@@ -24,26 +25,22 @@ function jah(url,target) {
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
-			if(!(anidone)){ //animation hasnt completed - 
-				setTimeout("jahDone('"+target+"')",100);
-				return false;
-			}
-			
+	document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
+		if(!(anidone)){ //animation hasnt completed - try again in a split second or so
+			setTimeout("jahDone('"+target+"')",10);
+			return false;
+		}
         // only if "OK"
 		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
-		$("#"+target).fadeIn("fast");
-		$("#bottom").fadeIn("fast");
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
+		$("#"+target).fadeTo("slow",1);
+		$("#bottom").fadeTo("slow",1);
         } else {
-            document.getElementById(target).innerHTML="There has been an ajax error:\n" +
-                req.statusText;
+			jah("error.php?code="+req.status+"&msg="+req.responseText,"content");
         }
     }
-}
-function changeToolbar($value){
-	document.getElementById("toolbar").innerHTML = "lol changed";
 }
 
 //for later reference

@@ -6,7 +6,7 @@ body {
 	padding:0px;
 	margin:0px;
 }
-	
+
 a:link {color: #7777FF; text-decoration: none; }
 a:active {color: #7777FF; text-decoration: none; }
 a:visited {color: #7777FF; text-decoration: none; }
@@ -33,6 +33,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	background-color: #ffffff;
 	background-image: url(bg.jpg);
 	min-width: 500px;
+	opacity:0;
 }
 #main {
 	padding:5px;
@@ -40,6 +41,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 #bottom {
 	font-size: 10px;
 	text-align: center;
+	opacity:0;
 }
 #error {
 	background-color: #FF6666;

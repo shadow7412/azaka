@@ -8,6 +8,7 @@ $l = new Linklist();
 
 $userinfo = new UserObject();
 $l->additem("add news item","admin_news.php", 0);
+$l->additem("invalid link","test.php", 0);
 $l->disp();
 
 $result = $db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid");
