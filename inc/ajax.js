@@ -35,7 +35,7 @@ function startautomation(){
 	updatemods();
 }
 function updatemods(){
-	//jah("modules","modules");
+	//jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
 	setTimeout("updatemods();",1000);
 }
 function checkhash(){
@@ -50,7 +50,7 @@ function jah(url,target, params, callback) {
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
         if(callback == null) req.onreadystatechange = function() {jahDone(target);};
-		else req.onreadystatechange = function() {eval(callback);};
+			else req.onreadystatechange = function() {eval(callback);};
         req.open("POST", url, true);
 		if(params != null && params != ''){
 			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -64,7 +64,7 @@ function jah(url,target, params, callback) {
         req = new ActiveXObject("Microsoft.XMLHTTP");
         if (req) {
             if(callback == null) req.onreadystatechange = function() {jahDone(target);};
-			else req.onreadystatechange = function() {eval(callback);};
+				else req.onreadystatechange = function() {eval(callback);};
             req.open("POST", url, true);
 			if(params != null && params != ''){
 				req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
