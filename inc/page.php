@@ -11,15 +11,17 @@ class Page {
 		$this->u = new UserObject();
 		$this->javascript = "<script id=\"pagejs\">";
 		$this->setupTop($title);
-		$this->javascript .= "</script>";
-		
-		echo $this->javascript;
 	}
-	
 	function setupTop($title){
 		$this->javascript .= "document.title = '$title - azaka';";
 		$this->javascript .= "document.getElementById('toolbar').innerHTML = '".$this->u->username."';";
 	}
-	
+	function addJs($js){
+	$this->js.=$fs
+	}
+	function __destruct(){
+		$this->javascript .= "</script>";
+		echo $this->javascript;
+	}
 }
 ?>
