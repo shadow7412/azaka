@@ -1,3 +1,3 @@
 <?php
-echo "module updated";
+echo "module succesfully updated";
 ?>

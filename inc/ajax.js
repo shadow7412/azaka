@@ -1,5 +1,6 @@
 //global action
 var anidone = true; //tag to show whether animation has completed
+var ajaxinuse = false;
 var currenthash = '';//current #code in browser
 
 function updateContent(url){
@@ -23,10 +24,12 @@ function contentUpdated(){
 				jahDone("content");
 				$("#content").fadeTo("fast",1);
 				$("#bottom").fadeTo("fast",1);
-			} else //show error page
+			} else {//show error page
+				ajaxinuse = false;
 				updateContent("error.php?code="+req.status+"&msg="+req.responseText);
+			}
 		} else 
-			setTimeout("contentUpdated()",10);
+			setTimeout("contentUpdated();",10);
 	}
 }
 function startautomation(){
@@ -35,7 +38,7 @@ function startautomation(){
 	updatemods();
 }
 function updatemods(){
-	//jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
+	jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
 	setTimeout("updatemods();",1000);
 }
 function checkhash(){
@@ -44,28 +47,16 @@ function checkhash(){
 	setTimeout("checkhash()",150);
 }
 function jah(url,target, params, callback) {
-    document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
-	
-    // native XMLHttpRequest object
-    if (window.XMLHttpRequest) {
-        req = new XMLHttpRequest();
-        if(callback == null) req.onreadystatechange = function() {jahDone(target);};
-			else req.onreadystatechange = function() {eval(callback);};
-        req.open("POST", url, true);
-		if(params != null && params != ''){
-			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			req.setRequestHeader("Content-length", params.length);
-			req.setRequestHeader("Connection", "close");
-			req.send(params);
-		} else
-			req.send(null);
-    // IE/Windows ActiveX version
-    } else if (window.ActiveXObject) {
-        req = new ActiveXObject("Microsoft.XMLHTTP");
-        if (req) {
-            if(callback == null) req.onreadystatechange = function() {jahDone(target);};
+	if(ajaxinuse) setTimeout("jah("+url+","+target+");",10); //prevents 2 of these running at the same time.
+	else {
+		ajaxinuse = true;
+		document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
+		// native XMLHttpRequest object
+		if (window.XMLHttpRequest) {
+			req = new XMLHttpRequest();
+			if(callback == null || callback == '') req.onreadystatechange = function() {jahDone(target);};
 				else req.onreadystatechange = function() {eval(callback);};
-            req.open("POST", url, true);
+			req.open("POST", url, true);
 			if(params != null && params != ''){
 				req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				req.setRequestHeader("Content-length", params.length);
@@ -73,8 +64,23 @@ function jah(url,target, params, callback) {
 				req.send(params);
 			} else
 				req.send(null);
+		// IE/Windows ActiveX version
+		} else if (window.ActiveXObject) {
+			req = new ActiveXObject("Microsoft.XMLHTTP");
+			if (req) {
+				if(callback == null || callback == '') req.onreadystatechange = function() {jahDone(target);};
+					else req.onreadystatechange = function() {eval(callback);};
+				req.open("POST", url, true);
+				if(params != null && params != ''){
+					req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					req.setRequestHeader("Content-length", params.length);
+					req.setRequestHeader("Connection", "close");
+					req.send(params);
+				} else
+					req.send(null);
+			}
 		}
-    }
+	}
 }
 function jahDone(target) {
     // only if req is "loaded"
@@ -87,5 +93,6 @@ function jahDone(target) {
         } else {
             document.getElementById(target).innerHTML="ajax error:\n" + req.statusText;
         }
+		ajaxinuse = false;
     }
 }
