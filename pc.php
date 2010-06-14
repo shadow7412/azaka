@@ -9,7 +9,7 @@
 <script language="javascript1.3" src="inc/ajax.js" />
 </head>
 
-<body onload="javascript:jah('news.php','content');">
+<body onload="javascript:gethashing();">
 <div id="top">
 <a href="index.php"><img src="aesthetics/title.gif" alt="azaka" /></a>
 <noscript>This page relies on javascript. You should enable it.</noscript>

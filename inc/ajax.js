@@ -1,7 +1,15 @@
-var anidone=false;
+//global action
+var anidone = false;
+var currenthash = '';
 
 function jah(url,target) {
     // native XMLHttpRequest object
+	if(url.indexOf('?')!=-1)
+		currenthash = String(url).substring(indexOf('?'));
+	else 
+		currenthash = url;
+	window.location.hash = currenthash;
+	
 	anidone = false;
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
 	$("#"+target).fadeTo("fast",0, function() {anidone=true;});
@@ -20,6 +28,18 @@ function jah(url,target) {
             req.send();
         }
     }
+}
+function gethashing(){
+	if (window.location.hash == '')
+		jah('news.php','content');
+	setTimeout("checkhash()",500);
+}
+
+function checkhash(){
+	if("#"+currenthash != window.location.hash){
+		jah(window.location.hash.substring(1),"content");
+	}
+	setTimeout("checkhash()",200);
 }
 
 function jahDone(target) {
