@@ -9,10 +9,10 @@ function jah(url,target) {
 		params = url.substring(url.indexOf('?')+1);
 		url = url.substring(0,url.indexOf('?'));
 	}
-	currenthash = "#"+url;
+	currenthash = "#"+url.substring(0,url.length-4);
 	window.location.hash = currenthash;
 	anidone = false;
-    document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
+    document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
 	$("#"+target).fadeTo("fast",0, function() {anidone=true;});
 	$("#bottom").fadeTo("fast",0);
     if (window.XMLHttpRequest) {
@@ -46,18 +46,18 @@ function jah(url,target) {
 function jahDone(target) {
     // only if req is "loaded"
     if (req.readyState == 4) {
-	document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
+	document.getElementById("loader").innerHTML = "<img src=\"aesthetics/images/notloading.gif\" />";
 		if(!(anidone)){ //animation hasnt completed - try again in a split second or so
 			setTimeout("jahDone('"+target+"')",10);
 			return false;
 		}
         // only if "OK"
-		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/notloading.gif\" />";
+		document.getElementById("loader").innerHTML = "<img src=\"aesthetics/images/notloading.gif\" />";
         if (req.status == 200) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
-			$("#"+target).fadeTo("slow",1);
-			$("#bottom").fadeTo("slow",1);
+			$("#"+target).fadeTo("fast",1);
+			$("#bottom").fadeTo("fast",1);
 			if(document.getElementById("pagejs") != null)
 				eval(document.getElementById("pagejs").innerHTML);
 			else {
@@ -74,6 +74,6 @@ function gethashing(){
 }
 function checkhash(){
 	if(currenthash != window.location.hash)
-		jah(window.location.hash.substring(1),"content");
-	setTimeout("checkhash()",200);
+		jah(window.location.hash.substring(1)+".php","content");
+	setTimeout("checkhash()",150);
 }

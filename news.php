@@ -9,7 +9,7 @@ $db = new Database();
 $l = new Linklist();
 $userinfo = new UserObject();
 
-$l->additem("add news item","admin_news.php", 0);
+$l->additem("add news item","admin_news.php", 2);
 $l->additem("invalid link","test.php", 0);
 $l->disp();
 
