@@ -24,6 +24,10 @@ function contentUpdated(){
 				jahDone("content");
 				$("#content").fadeTo("fast",1);
 				$("#bottom").fadeTo("fast",1);
+				if(document.getElementById("pagejs") != null) //run page js
+					eval(document.getElementById("pagejs").innerHTML);
+				else
+					alert("Warning: page.php may not have been included.\n\nThis error seems to always come up in IE.");
 			} else {//show error page
 				ajaxinuse = false;
 				updateContent("error.php?code="+req.status+"&msg="+req.responseText);
