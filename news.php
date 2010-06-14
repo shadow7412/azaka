@@ -3,10 +3,12 @@ include "inc/page.php";
 include_once "inc/db.php";
 include_once "inc/linklist.php";
 include_once "inc/userobject.php";
+
+$p = new Page("news",0);
 $db = new Database();
 $l = new Linklist();
-
 $userinfo = new UserObject();
+
 $l->additem("add news item","admin_news.php", 0);
 $l->additem("invalid link","test.php", 0);
 $l->disp();

@@ -1,7 +1,9 @@
 <?php
-include "inc/db.php";
-include "inc/linklist.php";
+include_once "inc/page.php";
+include_once "inc/db.php";
+include_once "inc/linklist.php";
 include_once "inc/userobject.php";
+$p = new Page('news - admin', 2);
 $db = new Database();
 $l = new Linklist();
 $userinfo = new UserObject();

@@ -4,12 +4,13 @@ var currenthash = '';
 
 function jah(url,target) {
     // native XMLHttpRequest object
-	if(url.indexOf('?')==-1)
-		currenthash = "#"+url;
-	else 
-		currenthash = "#"+String(url).substring(0,indexOf('?'));
+	var params;
+	if(url.indexOf('?')!=-1){
+		params = url.substring(url.indexOf('?')+1);
+		url = url.substring(0,url.indexOf('?'));
+	}
+	currenthash = "#"+url;
 	window.location.hash = currenthash;
-	
 	anidone = false;
     document.getElementById("loader").innerHTML = '<img src="aesthetics/loading.gif" />';
 	$("#"+target).fadeTo("fast",0, function() {anidone=true;});
@@ -17,8 +18,15 @@ function jah(url,target) {
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
         req.onreadystatechange = function() {jahDone(target);};
-        req.open("GET", url, true);
-        req.send(null);
+        req.open("POST", url, true);
+		if(params != null && params != ''){
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			req.setRequestHeader("Content-length", params.length);
+			req.setRequestHeader("Connection", "close");
+			req.send(params);
+		} else
+			req.send(null);
+			
     // IE/Windows ActiveX version
     } else if (window.ActiveXObject) {
         req = new ActiveXObject("Microsoft.XMLHTTP");
@@ -44,9 +52,14 @@ function jahDone(target) {
             document.getElementById(target).innerHTML = results;
 			$("#"+target).fadeTo("slow",1);
 			$("#bottom").fadeTo("slow",1);
-        } else {
+			if(document.getElementById("pagejs") != null)
+				eval(document.getElementById("pagejs").innerHTML);
+			else {
+				alert("Error - inpage javascript not found. Has 'page' been run?");
+			}
+				
+        } else
 			jah("error.php?code="+req.status+"&msg="+req.responseText,"content");
-        }
     }
 }
 function gethashing(){
@@ -62,11 +75,10 @@ function checkhash(){
 }
 
 //for later reference
-function sendPost(){
-	var url = "get_data.php";
-	var params = "lorem=ipsum&name=binny";
+function sendPost(url, params){
+	var http = new XMLHttpRequest();
+	alert(url+"?"+params);
 	http.open("POST", url, true);
-	
 	//Send the proper header information along with the request
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	http.setRequestHeader("Content-length", params.length);

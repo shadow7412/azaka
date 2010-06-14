@@ -28,6 +28,7 @@ class linklist {
 				echo "<br/>";
 		}
 	echo "</ul></div>";
+	$this->counter=0;
 	}
 }
 ?>
