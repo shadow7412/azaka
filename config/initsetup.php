@@ -69,6 +69,12 @@ if(file_exists("stop")){
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
+	$errors .= doqry("Add Links","INSERT INTO pages (name, url, access)
+	VALUES
+	('bills','bills.php',0),
+	('news','news.php',0)
+	");
+
 	if($errors == ""){
 		header('Refresh: 1; url=..');
 		echo "That seemed to work. Taking you to the mainpage...";

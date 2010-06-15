@@ -2,16 +2,19 @@
 // 0 - Guest, 1 - User, 2 - Admin, 3 - God
 include_once "inc/userobject.php";
 include_once "inc/linklist.php";
+include_once "inc/db.php";
 
 class Page {
 	private $javascript;
 	public $u;
-	public $ll;
+	private $ll;
+	public $db;
 	
 	function __construct($title,$accessreq){
 		$this->u = new UserObject();
 		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
 		$this->ll = new LinkList();
+		$this->db = new Database();
 		$this->javascript = "<script id=\"pagejs\">";
 		$this->setupTop($title);
 		$this->setupSidebar();
@@ -21,9 +24,9 @@ class Page {
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
-		$this->ll->additem("bills","bills.php",0);
-		$this->ll->additem("invalid","blah.php",0);
-		$this->ll->additem("news","news.php",0);
+		$result = $this->db->qry("SELECT name, url, access FROM pages WHERE enabled = 1");
+		while($row = mysql_fetch_array($result))
+			$this->ll->additem($row['name'],$row['url'],$row['access']);
 		$toolbarContent = $this->ll->dispBar()."<div id=\"rtoolbar\">".$this->u->username."</div>";
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
