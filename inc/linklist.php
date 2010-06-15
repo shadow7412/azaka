@@ -21,25 +21,27 @@ class linklist {
 	}
 	function disp(){
 	if($this->counter!=0){
-		echo "<div id=\"linklist\"><ul>";
+		$output = "<div id=\"linklist\"><ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				echo "<li><a href=\"javascript:updateContent('".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
+				$output .= "<li><a href=\"javascript:updateContent('".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
 			else
-				echo "<br/>";
+				$output .= "<br/>";
 		}
-	echo "</ul></div>";
+	$output .= "</ul></div>";
 	$this->counter=0;
+	return $output;
 	}
 	function dispBar(){
 	if($this->counter!=0){
-		echo "<ul>";
+		$output = "<ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				echo "<li><a href=\"javascript:updateContent('".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
+				$output .= "<li><a href=\"javascript:updateContent(\'".$this->links[$i]["link"]."\');\">".$this->links[$i]["label"]."</a></li>";
 		}
-	echo "</ul></div>";
+	$output .= "</ul>";
 	$this->counter=0;
+	return $output;
 	}
 }
 ?>
