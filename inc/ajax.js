@@ -39,7 +39,7 @@ function contentUpdated(){
 function startautomation(){
 	if (window.location.hash == '') updateContent('news.php'); //if no hash default to news page
 	setTimeout("checkhash()",500);
-	updatemods();
+	setTimeout("updatemods()",400);
 }
 function updatemods(){
 	jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
@@ -51,7 +51,7 @@ function checkhash(){
 	setTimeout("checkhash()",150);
 }
 function jah(url,target, params, callback) {
-	if(ajaxinuse) setTimeout("jah("+url+","+target+");",10); //prevents 2 of these running at the same time.
+	if(ajaxinuse) alert(url+" multiple requests running");
 	else {
 		ajaxinuse = true;
 		document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
