@@ -35,11 +35,11 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	width:6em;
 	text-decoration:none;
 	color:white;
-	background-color:purple;
+	background-color:#333333;
 	padding:0.2em 0.6em;
 	border-right:1px solid white;
 }
-#toolbar a:hover {background-color:#ff3300;}
+#toolbar a:hover {background-color:#7777FF;}
 #toolbar li {display:inline;}
 #rtoolbar { float:right; }
 #content {
