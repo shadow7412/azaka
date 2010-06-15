@@ -31,5 +31,15 @@ class linklist {
 	echo "</ul></div>";
 	$this->counter=0;
 	}
+	function dispBar(){
+	if($this->counter!=0){
+		echo "<ul>";
+		for($i=0; $i != $this->counter; $i++)
+			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
+				echo "<li><a href=\"javascript:updateContent('".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
+		}
+	echo "</ul></div>";
+	$this->counter=0;
+	}
 }
 ?>

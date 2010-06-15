@@ -43,7 +43,7 @@ function startautomation(){
 }
 function updatemods(){
 	jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
-	setTimeout("updatemods();",1000);
+	setTimeout("updatemods();",15000);
 }
 function checkhash(){
 	if(currenthash != window.location.hash)

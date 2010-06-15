@@ -23,6 +23,31 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	line-height:20px;
 	vertical-align: bottom;
 	background-color: #333333;
+	
+	
+ul
+{
+float:left;
+width:100%;
+padding:0;
+margin:0;
+list-style-type:none;
+}
+a
+{
+float:left;
+width:6em;
+text-decoration:none;
+color:white;
+background-color:purple;
+padding:0.2em 0.6em;
+border-right:1px solid white;
+}
+a:hover {background-color:#ff3300;}
+li {display:inline;}
+	
+	
+	
 }
 #content {
 	padding:5px;
@@ -58,6 +83,18 @@ a:hover {color: #7777FF; text-decoration: underline; }
 #bottom {
 	font-size: 10px;
 	text-align: center;
+	min-width:500px;
 	opacity:0;
 }
 #error {	background-color: #FF6666;}
+#login {
+	float:right;
+	top: 120px;
+	right: 0px;
+	width: 220px;
+	bottom: 0px;
+	background-color: #555555;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+}

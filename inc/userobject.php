@@ -13,8 +13,8 @@ class UserObject {
 	function __construct(){
 	//first pull in any cookie info
 		if(isset($_COOKIE['username'])&&isset($_COOKIE['password'])){
-			$this->username = $_COOKIE['username'];
-			$this->password = $_COOKIE['password'];
+			$this->username = $_COOKIE['azaka_username'];
+			$this->password = $_COOKIE['azaka_password'];
 		}
 	//if cookie info is existent and correct, log user in
 		if(isset($this->username)){
@@ -36,11 +36,15 @@ class UserObject {
 			$this->password = "";
 			$this->access = 0;
 		}
-	}
-	 function __destruct(){
+		
 		//save any changes
-		setcookie("username",$this->username,time()+60*60*24*14);
-		setcookie("password",$this->password,time()+60*60*24*14);
-	 }
+		setcookie("azaka_username",$this->username,time()+60*60*24*14);
+		setcookie("azaka_password",$this->password,time()+60*60*24*14);
+	}
+	/*function __destruct(){
+		//save any changes
+		setcookie("azaka_username",$this->username,time()+60*60*24*14);
+		setcookie("azaka_password",$this->password,time()+60*60*24*14);
+	}*/
 }
 ?>
