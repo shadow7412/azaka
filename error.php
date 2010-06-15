@@ -5,6 +5,7 @@ if(isset($_POST['code'])&isset($_POST['msg'])){
 	switch($_POST['code']){
 	case 403:
 	case 404:
+	case 501:
 		echo "<center><h1>-".$_POST['code']."-</h1><img src=\"aesthetics/images/error.png\"/></center>";
 		break;
 	default:

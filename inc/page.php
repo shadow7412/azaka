@@ -14,15 +14,21 @@ class Page {
 		$this->ll = new LinkList();
 		$this->javascript = "<script id=\"pagejs\">";
 		$this->setupTop($title);
-	}
-	function setupTop($title){
-		$this->ll->additem("news","news.php",0);
-		$toolbarContent = $this->ll->dispBar().$this->u->username;
-		$this->addJs("document.title = '$title - azaka';");
-		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
+		$this->setupSidebar();
 	}
 	function addJs($js){
-	$this->javascript.=$js;
+	$this->javascript .= $js;
+	}
+	function setupTop($title){
+		$this->addJs("document.title = '$title - azaka';");
+		$this->ll->additem("bills","bills.php",0);
+		$this->ll->additem("invalid","blah.php",0);
+		$this->ll->additem("news","news.php",0);
+		$toolbarContent = $this->ll->dispBar()."<div id=\"rtoolbar\">".$this->u->username."</div>";
+		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
+	}
+	function setupSidebar(){
+		$this->addJs("document.getElementById('sidebar').innerHTML = 'sidebar updated'");
 	}
 	function __destruct(){
 		$this->javascript .= "</script>";

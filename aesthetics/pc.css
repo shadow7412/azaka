@@ -20,35 +20,28 @@ a:hover {color: #7777FF; text-decoration: underline; }
 }
 #toolbar {
 	height: 20px;
-	line-height:20px;
+	line-height: 20px;
 	vertical-align: bottom;
 	background-color: #333333;
-	
-	
-ul
-{
-float:left;
-width:100%;
-padding:0;
-margin:0;
-list-style-type:none;
 }
-a
-{
-float:left;
-width:6em;
-text-decoration:none;
-color:white;
-background-color:purple;
-padding:0.2em 0.6em;
-border-right:1px solid white;
+#toolbar ul {
+	width:100%;
+	padding:0px;
+	margin:0px;
+	list-style-type:none;
 }
-a:hover {background-color:#ff3300;}
-li {display:inline;}
-	
-	
-	
+#toolbar a {
+	float:left;
+	width:6em;
+	text-decoration:none;
+	color:white;
+	background-color:purple;
+	padding:0.2em 0.6em;
+	border-right:1px solid white;
 }
+#toolbar a:hover {background-color:#ff3300;}
+#toolbar li {display:inline;}
+#rtoolbar { float:right; }
 #content {
 	padding:5px;
 	margin: 10px 230px 0px 230px;
@@ -86,7 +79,7 @@ li {display:inline;}
 	min-width:500px;
 	opacity:0;
 }
-#error {	background-color: #FF6666;}
+#error {background-color: #FF6666;}
 #login {
 	float:right;
 	top: 120px;
