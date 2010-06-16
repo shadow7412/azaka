@@ -1,24 +1,26 @@
 //global action
-var anidone = true; //tag to show whether animation has completed
+var anidone = true;  //tag to show whether animation has completed
 var ajaxinuse = false;
-var currenthash = '';//current #code in browser
-var queue = array();
+var currenthash = ''; //current #code in browser
+var queue = new Array();
 
 function queueJah(action){
-	
-	if(action=='')
-		ajaxinuse = false; //push - shift
-	else
+	if(action == ''){
+		action = queue.shift();
 		try {
 			eval("jah("+action+");");
 		} catch (err) {
 			alert(err+"\n\n"+action);
 		}
+	} else {
+		queue.push(action);
+		if(!ajaxinuse) queueJah(''); //if no threads running, run straight away
+	}
 }
 function updateContent(url){
 	anidone = false;
 	var params = "";
-	if(url.indexOf('?')!=-1){
+	if(url.indexOf('?') != -1){
 		params = url.substring(url.indexOf('?')+1);
 		url = url.substring(0,url.indexOf('?'));
 	}
@@ -30,6 +32,7 @@ function updateContent(url){
 	queueJah("'"+url+"', 'content', '"+params+"', 'contentUpdated();'");
 }
 function contentUpdated(){
+alert();
 	if(req.readyState == 4){
 		if(anidone){ //animation hasnt completed - try again in a split second or so
 			if(req.status == 200){
@@ -39,9 +42,8 @@ function contentUpdated(){
 				if(document.getElementById("pagejs") != null) //run page js
 					{ try {eval(document.getElementById("pagejs").innerHTML); } catch (jserror){alert("inpage js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);}; }
 				else
-					alert("Warning: page.php may not have been included.\n\nThis error seems to always come up in IE.");
+					alert("Warning: page.php may not have been included. You will be sent straight to the error pages later in development.");
 			} else {//show error page
-				queueJah(action);
 				updateContent("error.php?code="+req.status+"&msg="+req.responseText);
 			}
 		} else 
@@ -54,7 +56,7 @@ function startautomation(){
 	setTimeout("updatemods()",400);
 }
 function updatemods(){
-	jah("modules","modules"); //sometimes changes content (only on hard refresh maybe)
+	queueJah("'modules','modules'"); //sometimes changes content (only on hard refresh maybe)
 	setTimeout("updatemods();",15000);
 }
 function checkhash(){
@@ -84,7 +86,7 @@ function jah(url,target, params, callback) {
 		} else if (window.ActiveXObject) {
 			req = new ActiveXObject("Microsoft.XMLHTTP");
 			if (req) {
-				if(callback == null || callback == '') req.onreadystatechange = function() {jahDone(target);};
+				if(callback == null || callback == '') req.onreadystatechange = function() { jahDone(target); };
 					else req.onreadystatechange = function() {eval(callback);};
 				req.open("POST", url, true);
 				if(params != null && params != ''){
@@ -99,6 +101,7 @@ function jah(url,target, params, callback) {
 	}
 }
 function jahDone(target) {
+	alert(req.readyState+" "+target);
     // only if req is "loaded"
     if (req.readyState == 4) {
 		document.getElementById("loader").innerHTML = "";
@@ -107,8 +110,9 @@ function jahDone(target) {
             results = req.responseText;
             document.getElementById(target).innerHTML = results;
         } else {
-            document.getElementById(target).innerHTML="ajax error:\n" + req.statusText;
+            document.getElementById(target).innerHTML = "ajax error:\n" + req.statusText;
         }
+		ajaxinuse = false;
 		queueJah('');
     }
 }
