@@ -2,20 +2,9 @@
 var anidone = true;  //tag to show whether animation has completed
 var ajaxinuse = false;
 var currenthash = ''; //current #code in browser
-var queue = new Array();
 
 function queueJah(action){
-	if(action == ''){
-		action = queue.shift();
-		try {
-			eval("jah("+action+");");
-		} catch (err) {
-			alert(err+"\n\n"+action);
-		}
-	} else {
-		queue.push(action);
-		if(!ajaxinuse) queueJah(''); //if no threads running, run straight away
-	}
+	eval("jah("+action+");");
 }
 function updateContent(url){
 	anidone = false;
@@ -32,20 +21,22 @@ function updateContent(url){
 	queueJah("'"+url+"', 'content', '"+params+"', 'contentUpdated();'");
 }
 function contentUpdated(){
-alert();
 	if(req.readyState == 4){
 		if(anidone){ //animation hasnt completed - try again in a split second or so
 			if(req.status == 200){
 				jahDone("content");
 				$("#content").fadeTo("fast",1);
 				$("#bottom").fadeTo("fast",1);
-				if(document.getElementById("pagejs") != null) //run page js
-					{ try {eval(document.getElementById("pagejs").innerHTML); } catch (jserror){alert("inpage js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);}; }
-				else
+				if(document.getElementById("pagejs") != null) { //run page js
+					try {
+						eval(document.getElementById("pagejs").innerHTML);
+					} catch (jserror){
+						alert("inpage js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);
+					}
+				} else
 					alert("Warning: page.php may not have been included. You will be sent straight to the error pages later in development.");
-			} else {//show error page
+			} else //show error page
 				updateContent("error.php?code="+req.status+"&msg="+req.responseText);
-			}
 		} else 
 			setTimeout("contentUpdated();",10);
 	}
@@ -101,7 +92,6 @@ function jah(url,target, params, callback) {
 	}
 }
 function jahDone(target) {
-	alert(req.readyState+" "+target);
     // only if req is "loaded"
     if (req.readyState == 4) {
 		document.getElementById("loader").innerHTML = "";
@@ -113,6 +103,5 @@ function jahDone(target) {
             document.getElementById(target).innerHTML = "ajax error:\n" + req.statusText;
         }
 		ajaxinuse = false;
-		queueJah('');
     }
 }
