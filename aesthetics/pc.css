@@ -19,7 +19,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	text-align: center;
 }
 #toolbar {
-	height: 20px;
+	min-height: 20px;
 	line-height: 20px;
 	vertical-align: bottom;
 	background-color: #333333;

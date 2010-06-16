@@ -2,7 +2,19 @@
 var anidone = true; //tag to show whether animation has completed
 var ajaxinuse = false;
 var currenthash = '';//current #code in browser
+var queue = array();
 
+function queueJah(action){
+	
+	if(action=='')
+		ajaxinuse = false; //push - shift
+	else
+		try {
+			eval("jah("+action+");");
+		} catch (err) {
+			alert(err+"\n\n"+action);
+		}
+}
 function updateContent(url){
 	anidone = false;
 	var params = "";
@@ -15,7 +27,7 @@ function updateContent(url){
     document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
 	$("#content").fadeTo("fast",0, function() {anidone=true;});
 	$("#bottom").fadeTo("fast",0);
-	jah(url,"content", params, "contentUpdated();");
+	queueJah("'"+url+"', 'content', '"+params+"', 'contentUpdated();'");
 }
 function contentUpdated(){
 	if(req.readyState == 4){
@@ -29,7 +41,7 @@ function contentUpdated(){
 				else
 					alert("Warning: page.php may not have been included.\n\nThis error seems to always come up in IE.");
 			} else {//show error page
-				ajaxinuse = false;
+				queueJah(action);
 				updateContent("error.php?code="+req.status+"&msg="+req.responseText);
 			}
 		} else 
@@ -97,6 +109,6 @@ function jahDone(target) {
         } else {
             document.getElementById(target).innerHTML="ajax error:\n" + req.statusText;
         }
-		ajaxinuse = false;
+		queueJah('');
     }
 }
