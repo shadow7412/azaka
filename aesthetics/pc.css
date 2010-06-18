@@ -11,7 +11,7 @@ a:active {color: #7777FF; text-decoration: none; }
 a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 #top {
-	height: 75px;
+	height: 90px;
 	text-align: center;
 }
 #loader {
@@ -52,7 +52,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	background-color: #ffffff;
 	background-image: url(images/bg.jpg);
 	min-width: 500px;
-	opacity:1;
+	opacity:0;
 }
 #sidebar{
 	position: absolute;
@@ -80,7 +80,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	font-size: 10px;
 	text-align: center;
 	min-width:500px;
-	opacity:1;
+	opacity:0;
 }
 #error {background-color: #FF6666;}
 #login {

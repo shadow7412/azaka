@@ -1,8 +1,8 @@
 <?php
 // 0 - Guest, 1 - User, 2 - Admin, 3 - God
-include_once "inc/userobject.php";
-include_once "inc/linklist.php";
-include_once "inc/db.php";
+include_once "../include/userobject.php";
+include_once "../include/linklist.php";
+include_once "../include/db.php";
 
 class Page {
 	private $javascript;

@@ -1,14 +1,14 @@
 <?php
-include "../inc/page.php";
-include_once "../inc/linklist.php";
-include_once "../inc/userobject.php";
+include "../include/page.php";
+include_once "../include/linklist.php";
+include_once "../include/userobject.php";
 
 $p = new Page("news",0);
 $l = new Linklist();
 $userinfo = new UserObject();
 
-$l->additem("add news item","admin_news.php", 2);
-$l->additem("invalid link","test.php", 0);
+$l->additem("add news item","admin_news", 2);
+$l->additem("invalid link","test", 0);
 echo $l->disp();
 
 $result = $p->db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid");

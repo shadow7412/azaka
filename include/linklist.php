@@ -1,5 +1,5 @@
 <?php
-include_once("inc/userobject.php");
+include_once("../include/userobject.php");
 class linklist {
 	var $links;
 	var $counter;
@@ -24,7 +24,7 @@ class linklist {
 		$output = "<div id=\"linklist\"><ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				$output .= "<li><a href=\"javascript:updateContent('pages/".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
+				$output .= "<li><a href=\"javascript:grabContent('pages/".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
 			else
 				$output .= "<br/>";
 		}
@@ -37,7 +37,7 @@ class linklist {
 		$output = "<ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				$output .= "<li><a href=\"javascript:updateContent(\'".$this->links[$i]["link"]."\');\">".$this->links[$i]["label"]."</a></li>";
+				$output .= "<li><a href=\"javascript:grabContent(\'".$this->links[$i]["link"]."\');\">".$this->links[$i]["label"]."</a></li>";
 		}
 	$output .= "</ul>";
 	$this->counter=0;
