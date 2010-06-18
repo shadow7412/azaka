@@ -72,8 +72,11 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
 	$errors .= doqry("Add Links","INSERT INTO pages (name, url, access) VALUES
+	('error','error.php',0),
 	('bills','bills.php',0),
-	('news','news.php',0)
+	('news','news.php',0),
+	('admin_bills','admin_bills.php',0),
+	('admin_news','admin_news.php',0)
 	");
 	
 	$errors .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (

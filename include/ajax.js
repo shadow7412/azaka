@@ -62,7 +62,7 @@ function jahDone(target) {
 			}
         } else {
 			if(target=='content')
-				jah("pages/error.php?code="+req[target].status+"&msg="+req[target].statusText,"content");
+				jah("pages?page=error&code="+req[target].status+"&msg="+req[target].statusText,"content");
 			else {
 				document.getElementById('loader').innerHTML='<div id="error"> loading ' + target + ": " + req[target].statusText + '</div>';
 				setTimeout("document.getElementById('loader').innerHTML=''",1000);
