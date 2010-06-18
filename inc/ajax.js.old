@@ -12,9 +12,9 @@ function updateContent(url){
 	currenthash = "#"+url.substring(0,url.length-4);
 	window.location.hash = currenthash;
     document.getElementById("loader").innerHTML = '<img src="aesthetics/images/loading.gif" />';
-	//$("#content").fadeTo("fast",0, function() {anidone=true;});
-	//$("#bottom").fadeTo("fast",0);
-	grab(url,'content', 'params');
+	$("#content").fadeTo("fast",0, function() {anidone=true;});
+	$("#bottom").fadeTo("fast",0);
+	jah(url,'content', 'params');
 }
 function contentUpdated(){
 	if(req.readyState == 4){

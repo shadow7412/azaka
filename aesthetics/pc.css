@@ -52,7 +52,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	background-color: #ffffff;
 	background-image: url(images/bg.jpg);
 	min-width: 500px;
-	opacity:0;
+	opacity:1;
 }
 #sidebar{
 	position: absolute;
@@ -80,7 +80,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	font-size: 10px;
 	text-align: center;
 	min-width:500px;
-	opacity:0;
+	opacity:1;
 }
 #error {background-color: #FF6666;}
 #login {
