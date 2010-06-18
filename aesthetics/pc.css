@@ -19,8 +19,8 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	text-align: center;
 }
 #toolbar {
-	min-height: 20px;
-	line-height: 20px;
+	height: 25px;
+	line-height: 25px;
 	vertical-align: bottom;
 	background-color: #333333;
 }
@@ -36,7 +36,7 @@ a:hover {color: #7777FF; text-decoration: underline; }
 	text-decoration:none;
 	color:white;
 	background-color:#333333;
-	padding:0.2em 0.6em;
+	padding:0em 0.6em;
 	border-right:1px solid white;
 }
 #toolbar a:hover {background-color:#7777FF;}

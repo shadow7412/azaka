@@ -31,7 +31,8 @@ class Page {
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
-		$this->addJs("document.getElementById('sidebar').innerHTML = 'sidebar updated'");
+		$sidebar = "sidebar";
+		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar'");
 	}
 	function __destruct(){
 		$this->javascript .= "</script>";

@@ -15,8 +15,8 @@ function startPage(){
 	updateMods();
 }
 function updateMods(){
-	//jah("'modules','modules'"); //sometimes changes content (only on hard refresh maybe)
-	setTimeout("updateMods();",15000);
+	jah("modules","modules");
+	setTimeout("updateMods();",4000);
 }
 function checkHash(){
 	if(currenthash != window.location.hash){
@@ -50,6 +50,16 @@ function jahDone(target) {
 		document.getElementById('loader').innerHTML = '';
         if (req[target].status == 200) {
             document.getElementById(target).innerHTML = req[target].responseText;
+			if(target=='content'){
+				if(document.getElementById("pagejs") != null) { //run page js
+						try {
+							eval(document.getElementById("pagejs").innerHTML);
+						} catch (jserror){
+							alert("inpage js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);
+						}
+					} else
+						alert("Warning: page.php may not have been included. You will be sent straight to the error pages later in development.");
+			}
         } else {
 			if(target=='content')
 				jah("pages/error.php?code="+req[target].status+"&msg="+req[target].statusText,"content");

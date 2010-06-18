@@ -76,7 +76,7 @@ if(file_exists("stop")){
 	('news','news.php',0)
 	");
 	
-	$error .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (
+	$errors .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `enabled` tinyint(1) NOT NULL DEFAULT '1',
 	  `name` text NOT NULL,
@@ -85,7 +85,7 @@ if(file_exists("stop")){
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
-	$error .= doqry("Add Modules", "INSERT INTO modules (name, url) VALUES
+	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url) VALUES
 	('ventrilio','vent.php')");
 
 	if($errors == ""){
