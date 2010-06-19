@@ -1,6 +1,8 @@
+
 function grabContent(id){
 	window.location.hash = id;
-	$("#content").fadeTo("fast",0, function() {anidone=true;});
+	animating = true;
+	$("#content").fadeTo("fast",0, function() {animating = false;});
 	$("#bottom").fadeTo("fast",0);
 	jah("pages?page="+id,'content');
 }
@@ -10,6 +12,7 @@ function updateModule(id){
 function startPage(){
 	req = Array();
 	currenthash='';
+	var animating = false;
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
 	checkHash();
 	updateMods();
@@ -44,10 +47,14 @@ function jah(url,target) {
     }
 }
 function jahDone(target) {
-    // only if req is "loaded"
+    // only if req is "loaded"	
     if (req[target].readyState == 4) {
         // only if "OK"
 		document.getElementById('loader').innerHTML = '';
+		if(target == 'content' && animating){ //delay rendering if content is still animating - only affects content
+			setTimeout("jahDone('"+target+"');",10);
+			return false;
+		}
         if (req[target].status == 200) {
             document.getElementById(target).innerHTML = req[target].responseText;
 			if(target=='content'){
@@ -71,6 +78,8 @@ function jahDone(target) {
 		if(target=='content'){
 				$("#content").fadeTo("fast",1);
 				$("#bottom").fadeTo("fast",1);
+		} else if(target=="module"){
+			alert('runjs');
 		}
     }
 }
