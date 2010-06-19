@@ -7,7 +7,7 @@ $p = new Page("news",0);
 $l = new Linklist();
 $userinfo = new UserObject();
 
-$l->additem("add news item","admin_news", 0);
+$l->additem("add news item","admin_news", 2);
 $l->additem("invalid link","test", 0);
 echo $l->disp();
 

@@ -65,18 +65,19 @@ if(file_exists("stop")){
 	$errors .= doqry("Pages Table","CREATE TABLE IF NOT EXISTS `pages` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+	  `visible` tinyint(1) NOT NULL DEFAULT '1',
 	  `name` text NOT NULL,
 	  `url` text NOT NULL,
 	  `access` tinyint(4) NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
-	$errors .= doqry("Add Links","INSERT INTO pages (name, url, access) VALUES
-	('error','error.php',0),
-	('bills','bills.php',0),
-	('news','news.php',0),
-	('admin_bills','admin_bills.php',0),
-	('admin_news','admin_news.php',0)
+	$errors .= doqry("Add Pages","INSERT INTO pages (name, url, access, visible) VALUES
+	('error','error.php',0, 0),
+	('bills','bills.php',1, 1),
+	('news','news.php',0, 1),
+	('admin_bills','admin_bills.php',2, 0),
+	('admin_news','admin_news.php',2, 0)
 	");
 	
 	$errors .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (

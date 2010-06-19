@@ -22,9 +22,8 @@ function updateMods(){
 	setTimeout("updateMods();",4000);
 }
 function checkHash(){
-	if(currenthash != window.location.hash){
+	if(currenthash != window.location.hash)
 		grabContent(window.location.hash.substring(1));
-	}
 	setTimeout("checkHash()",150);
 }
 function jah(url,target) {

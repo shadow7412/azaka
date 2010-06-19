@@ -12,6 +12,5 @@ if(isset($_GET['code'])&isset($_GET['msg'])){
 		echo "<div id=\"error\"<h1>Oops we have a ".$_GET['code']."</h1>\n".$_GET['msg']."</div>Hit the back button on your browser. You may need to double click. If all is lost - click the logo to reset the page.";	
 	}
 	
-	} else
-	echo "<div id=\"error\">Something weird has happened. Click the logo to reset the page.</div>";
+	} else echo "<div id=\"error\">The error page has been accessed directly.<br/> Click a link up the top, or to reset the page click the logo.</div>";
 ?>

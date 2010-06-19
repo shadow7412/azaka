@@ -1,1 +1,6 @@
-<?php die(header("Not Implemented", true, 501)); ?>
+<?php 
+include "../include/page.php";
+$p = new Page(bills,1);
+
+echo "Bills Management";
+?>

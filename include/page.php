@@ -24,7 +24,7 @@ class Page {
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
-		$result = $this->db->qry("SELECT name, url, access FROM pages WHERE enabled = 1");
+		$result = $this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
 		while($row = mysql_fetch_array($result))
 			$this->ll->additem($row['name'],$row['name'],$row['access']);
 		$toolbarContent = $this->ll->dispBar()."<div id=\"rtoolbar\">".$this->u->username."</div>";
