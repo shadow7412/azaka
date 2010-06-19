@@ -34,6 +34,9 @@ function updateMods(){
 function forceUpdateMods(){
 	jah("modules","modules");
 }
+function forceHash(){
+	grabContent(window.location.hash.substring(1));
+}
 function checkHash(){
 	if(_currentHash != window.location.hash)
 		grabContent(window.location.hash.substring(1));

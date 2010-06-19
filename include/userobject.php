@@ -17,11 +17,13 @@ class UserObject {
 
 	function updateUser(){
 	//first pull in any cookie info
-		if(isset($_COOKIE['username'])&&isset($_COOKIE['password'])){
+		if(isset($_COOKIE['azaka_username']) && isset($_COOKIE['azaka_password'])){
 			$this->username = $_COOKIE['azaka_username'];
 			$this->password = $_COOKIE['azaka_password'];
 		}
-	//if cookie info is existent and correct, log user in
+	//if cookie info is existent and correct, log user in. if not, destroy stuff.
+		include_once "../include/db.php";
+		$db = new Database();
 		if(isset($this->username)){
 			if($result = mysql_fetch_array($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."'"))){
 				$this->id = $result['id'];
@@ -44,8 +46,8 @@ class UserObject {
 	}
 	
 	function updateCookies($username, $password){
-		setcookie("azaka_username",$username,time()+60*60*24*14);
-		setcookie("azaka_password",$password,time()+60*60*24*14);
+		setcookie("azaka_username",$username,time()+60*60*24*14,"/");
+		setcookie("azaka_password",$password,time()+60*60*24*14,"/");
 	}
 }
 ?>
