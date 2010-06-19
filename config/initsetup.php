@@ -95,7 +95,7 @@ if(file_exists("stop")){
 	('ventrilio','vent.php', 0)
 	");
 
-	if($errors == ""){
+	if($errors == ''){
 		header('Refresh: 1; url=..');
 		echo "That seemed to work. Taking you to the mainpage...";
 		$file = fopen("stop","w");

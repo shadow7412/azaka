@@ -2,16 +2,32 @@
 class Module {
 	private $content;
 	private $js;
+	private $name;
 	
-	function __construct($title,$accessreq){
+	function __construct($name,$accessreq){
 		$this->u = new UserObject();
 		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
+		$js = "";
+		$content = "";
+		$this->name = $name;
 	}
-	function addContent(){
-	
+	function addContent($newContent){
+		$this->content .= $newContent;
 	}
-	function addJs(){
-	
+	function addJs($newJs){
+		$this->js .= $newJs;
+	}
+	function renderContent(){
+		echo "<div id=\"mod-".$this->name."\">".$this->name.$this->content."</div>";
+	}
+	function renderJs(){
+		echo "<script id=\"modjs-".$this->name."\">".$this->js."</script>";
+	}
+	function getContent(){
+		return "<div id=\"mod-".$this->name."\">".$this->name.$this->content."</div>";
+	}
+	function getJs(){
+		return "<script id=\"modjs-".$this->name."\">".$this->js."</script>";
 	}
 }
 

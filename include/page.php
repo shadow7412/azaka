@@ -32,12 +32,10 @@ class Page {
 	}
 	function setupSidebar(){
 		$sidebar = "";
-		$result = $this->db->qry("SELECT id, name, url FROM modules WHERE enabled = 1 & onsidebar = 1");
+		$result = $this->db->qry("SELECT url FROM modules WHERE enabled = 1 & onsidebar = 1");
 		while($row = mysql_fetch_array($result)){
-			extract($row);
-			$sidebar .= "$name<div id=\"module mod-$id\">";
-			include "../modules/".$url;
-			echo "</div>";
+			include "../modules/".$row['url'];
+			$sidebar = $m->getContent();
 		}
 		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar'");
 	}

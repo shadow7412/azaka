@@ -1,8 +1,8 @@
 function grabContent(id){
 	window.location.hash = id;
-	currenthash = window.location.hash
-	animating = true;
-	$("#content").fadeTo("fast",0, function() {animating = false;});
+	_currentHash = window.location.hash
+	_animating = true;
+	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
 	jah("pages?page="+id,'content');
 }
@@ -10,19 +10,26 @@ function updateModule(id){
 	jah("modules?update="+id,'mod-'+id);
 }
 function startPage(){
-	req = Array();
-	currenthash='';
-	var animating = false;
+	_req = Array();
+	_currentHash='';
+	var _animating = false;
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
 	checkHash();
 	updateMods();
 }
 function updateMods(){
-	jah("modules","modules");
+	if(document.getElementById('modjs')==null)
+		jah("modules","modules");
+	else
+		try{
+			eval(document.getElementById('modjs').innerHTML);
+		} catch (jserror) {
+			alert("module js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);
+		}
 	setTimeout("updateMods();",4000);
 }
 function checkHash(){
-	if(currenthash != window.location.hash)
+	if(_currentHash != window.location.hash)
 		grabContent(window.location.hash.substring(1));
 	setTimeout("checkHash()",150);
 }
@@ -30,31 +37,31 @@ function jah(url,target) {
     // native XMLHttpRequest object
     document.getElementById('loader').innerHTML = '<img src="aesthetics/images/loading.gif" alt="loading..."/>';
     if (window.XMLHttpRequest) {
-        req[target] = new XMLHttpRequest();
-        req[target].onreadystatechange = function() {jahDone(target);};
-        req[target].open("GET", url, true);
-        req[target].send(null);
+        _req[target] = new XMLHttpRequest();
+        _req[target].onreadystatechange = function() {jahDone(target);};
+        _req[target].open("GET", url, true);
+        _req[target].send(null);
     // IE/Windows ActiveX version
     } else if (window.ActiveXObject) {
-        req = new ActiveXObject("Microsoft.XMLHTTP");
-        if (req[target]) {
-            req[target].onreadystatechange = function() {jahDone(target);};
-            req[target].open("GET", url, true);
-            req[target].send();
+        _req = new ActiveXObject("Microsoft.XMLHTTP");
+        if (_req[target]) {
+            _req[target].onreadystatechange = function() {jahDone(target);};
+            _req[target].open("GET", url, true);
+            _req[target].send();
         }
     }
 }
 function jahDone(target) {
-    // only if req is "loaded"	
-    if (req[target].readyState == 4) {
+    // only if _req is "loaded"	
+    if (_req[target].readyState == 4) {
         // only if "OK"
 		document.getElementById('loader').innerHTML = '';
-		if(target == 'content' && animating){ //delay rendering if content is still animating - only affects content
+		if(target == 'content' && _animating){ //delay rendering if content is still _animating - only affects content
 			setTimeout("jahDone('"+target+"');",10);
 			return false;
 		}
-        if (req[target].status == 200) {
-            document.getElementById(target).innerHTML = req[target].responseText;
+        if (_req[target].status == 200) {
+            document.getElementById(target).innerHTML = _req[target].responseText;
 			if(target=='content'){
 				if(document.getElementById("pagejs") != null) { //run page js
 						try {
@@ -67,9 +74,9 @@ function jahDone(target) {
 			}
         } else {
 			if(target=='content')
-				jah("pages?page=error&code="+req[target].status+"&msg="+req[target].statusText,"content");
+				jah("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
 			else {
-				document.getElementById('loader').innerHTML='<div id="error"> loading ' + target + ": " + req[target].statusText + '</div>';
+				document.getElementById('loader').innerHTML='<div id="error"> loading ' + target + ": " + _req[target].statusText + '</div>';
 				setTimeout("document.getElementById('loader').innerHTML=''",1000);
 			}
         }
