@@ -9,7 +9,6 @@ class linklist {
 		$this->counter = 0;
 		$this->u = new UserObject();
 	}
-	
 	function additem($label,$link, $reqaccess){
 	if ($this->u->access >= $reqaccess){
 		$this->links[$this->counter]["label"] = $label;
@@ -39,7 +38,7 @@ class linklist {
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
 				$output .= "<li><a href=\"javascript:grabContent(\'".$this->links[$i]["link"]."\');\">".$this->links[$i]["label"]."</a></li>";
-		}
+	}
 	$output .= "</ul>";
 	$this->counter=0;
 	return $output;

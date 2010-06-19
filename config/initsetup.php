@@ -19,7 +19,7 @@ if(file_exists("stop")){
 	$errors .= doqry("User Table","CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`username` VARCHAR( 12 ) NOT NULL ,
-	`password` VARCHAR( 20 ) NOT NULL ,
+	`password` VARCHAR( 40 ) NOT NULL ,
 	`access` TINYINT NOT NULL DEFAULT  '0',
 	`firstname` VARCHAR( 15 ) NOT NULL ,
 	`lastname` VARCHAR( 15 ) NOT NULL ,
@@ -33,7 +33,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("Default User","INSERT INTO `users`
 	(`username`, `password`, `access`, `firstname`, `lastname`, `dob`, `billable`, `email`)
-	VALUES ('admin', '', '5', 'System', 'Default', CURDATE(), '0', '')");
+	VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', '5', 'System', 'Default', CURDATE(), '0', '')");
 
 
 	$errors .= doqry("News Table","CREATE TABLE `news` (
@@ -74,6 +74,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("Add Pages","INSERT INTO pages (name, url, access, visible) VALUES
 	('error','error.php',0, 0),
+	('register','register.php',1, 1),
 	('bills','bills.php',1, 1),
 	('news','news.php',0, 1),
 	('admin_bills','admin_bills.php',2, 0),

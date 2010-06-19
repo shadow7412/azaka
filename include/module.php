@@ -18,10 +18,10 @@ class Module {
 		$this->js .= $newJs;
 	}
 	function renderContent(){
-		echo "<table border = 1 width = 100%><tr><td>".$this->name."</td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+		echo "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
 	}
 	function getContent(){
-		return "<table border = 1 width = 100%><tr><td>".$this->name."</td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+		return "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
 	}
 	function renderJs(){
 		echo "<script id=\"modjs-".$this->name."\">".$this->js."</script>";

@@ -20,7 +20,7 @@ class Page {
 		$this->setupSidebar();
 	}
 	function addJs($js){
-	$this->javascript .= $js;
+		$this->javascript .= "\n\n".$js;
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
@@ -37,7 +37,7 @@ class Page {
 			include "../modules/".$row['url'];
 			$sidebar = $m->getContent();
 		}
-		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar'");
+		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar';");
 	}
 	function __destruct(){
 		$this->javascript .= "</script>";

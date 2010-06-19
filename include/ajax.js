@@ -6,8 +6,11 @@ function grabContent(id){
 	$("#bottom").fadeTo("fast",0);
 	jah("pages?page="+id,'content');
 }
-function updateModule(id){
-	jah("modules?update="+id,'mod-'+id);
+function sendPost(url){
+	_animating = true;
+	$("#content").fadeTo("fast",0, function() {_animating = false;});
+	$("#bottom").fadeTo("fast",0);
+	jah(url,'content');
 }
 function startPage(){
 	_req = Array();
@@ -24,9 +27,12 @@ function updateMods(){
 		try{
 			eval(document.getElementById('modjs').innerHTML);
 		} catch (jserror) {
-			alert("module js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);
+			alert("module js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML + "\n\n" + document.getElementById('modjs').innerHTML);
 		}
-	setTimeout("updateMods();",4000);
+	setTimeout("updateMods();",500);
+}
+function forceUpdateMods(){
+	jah("modules","modules");
 }
 function checkHash(){
 	if(_currentHash != window.location.hash)
@@ -81,10 +87,8 @@ function jahDone(target) {
 			}
         }
 		if(target=='content'){
-				$("#content").fadeTo("fast",1);
-				$("#bottom").fadeTo("fast",1);
-		} else if(target=="module"){
-			alert('runjs');
+			$("#content").fadeTo("fast",1);
+			$("#bottom").fadeTo("fast",1);
 		}
     }
 }

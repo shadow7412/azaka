@@ -11,6 +11,11 @@ class UserObject {
 	public $email;
 
 	function __construct(){
+		$this->updateUser();
+		$this->updateCookies($this->username,$this->password);
+	}
+
+	function updateUser(){
 	//first pull in any cookie info
 		if(isset($_COOKIE['username'])&&isset($_COOKIE['password'])){
 			$this->username = $_COOKIE['azaka_username'];
@@ -36,15 +41,11 @@ class UserObject {
 			$this->password = "";
 			$this->access = 0;
 		}
-		
-		//save any changes
-		setcookie("azaka_username",$this->username,time()+60*60*24*14);
-		setcookie("azaka_password",$this->password,time()+60*60*24*14);
 	}
-	/*function __destruct(){
-		//save any changes
-		setcookie("azaka_username",$this->username,time()+60*60*24*14);
-		setcookie("azaka_password",$this->password,time()+60*60*24*14);
-	}*/
+	
+	function updateCookies($username, $password){
+		setcookie("azaka_username",$username,time()+60*60*24*14);
+		setcookie("azaka_password",$password,time()+60*60*24*14);
+	}
 }
 ?>
