@@ -12,7 +12,7 @@ function updateModule(id){
 function startPage(){
 	_req = Array();
 	_currentHash='';
-	var _animating = false;
+	_animating = false;
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
 	checkHash();
 	updateMods();
