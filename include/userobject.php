@@ -44,10 +44,12 @@ class UserObject {
 			$this->access = 0;
 		}
 	}
-	
 	function updateCookies($username, $password){
 		setcookie("azaka_username",$username,time()+60*60*24*14,"/");
 		setcookie("azaka_password",$password,time()+60*60*24*14,"/");
+	}
+	function invalidateSession(){
+		$this->updateCookies('','');
 	}
 }
 ?>

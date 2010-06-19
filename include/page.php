@@ -27,7 +27,7 @@ class Page {
 		$result = $this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
 		while($row = mysql_fetch_array($result))
 			$this->ll->additem($row['name'],$row['name'],$row['access']);
-		$toolbarContent = $this->ll->dispBar()."<div id=\"rtoolbar\">".$this->u->username."</div>";
+		$toolbarContent = $this->ll->dispBar();
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
