@@ -1,6 +1,6 @@
-
 function grabContent(id){
 	window.location.hash = id;
+	currenthash = window.location.hash
 	animating = true;
 	$("#content").fadeTo("fast",0, function() {animating = false;});
 	$("#bottom").fadeTo("fast",0);
@@ -23,7 +23,6 @@ function updateMods(){
 }
 function checkHash(){
 	if(currenthash != window.location.hash){
-		currenthash = window.location.hash
 		grabContent(window.location.hash.substring(1));
 	}
 	setTimeout("checkHash()",150);
