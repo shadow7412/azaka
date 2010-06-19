@@ -1,4 +1,4 @@
 <?php
 include_once "../include/module.php";
-$m = new Module("Ventrilio", 0);
+$m = new Module("user info", 0);
 ?>

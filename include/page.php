@@ -31,7 +31,14 @@ class Page {
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
-		$sidebar = "sidebar";
+		$sidebar = "";
+		$result = $this->db->qry("SELECT id, name, url FROM modules WHERE enabled = 1 & onsidebar = 1");
+		while($row = mysql_fetch_array($result)){
+			extract($row);
+			$sidebar .= "$name<div id=\"module mod-$id\">";
+			include "../modules/".$url;
+			echo "</div>";
+		}
 		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar'");
 	}
 	function __destruct(){

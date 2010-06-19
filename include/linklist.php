@@ -20,8 +20,9 @@ class linklist {
 		$this->counter++;
 	}
 	function disp(){
+	$output = '';
 	if($this->counter!=0){
-		$output = "<div id=\"linklist\"><ul>";
+		$output .= "<div id=\"linklist\"><ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
 				$output .= "<li><a href=\"javascript:grabContent('pages/".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
