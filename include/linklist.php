@@ -10,34 +10,38 @@ class linklist {
 		$this->u = new UserObject();
 	}
 	function additem($label,$link, $reqaccess){
-	if ($this->u->access >= $reqaccess){
-		$this->links[$this->counter]["label"] = $label;
-		$this->links[$this->counter++]["link"] = $link;
+		if ($this->u->access >= $reqaccess){
+			$this->links[$this->counter]["label"] = $label;
+			$this->links[$this->counter++]["link"] = "javascript:grabContent(\'$link\');";
+		}
+	}
+	function addlink($label,$link, $reqaccess){
+		if ($this->u->access >= $reqaccess){
+			$this->links[$this->counter]["label"] = $label;
+			$this->links[$this->counter++]["link"] = $link;
 		}
 	}
 	function addbreak(){
 		$this->counter++;
 	}
-	function disp(){
-	$output = '';
-	if($this->counter!=0){
-		$output .= "<div id=\"linklist\"><ul>";
-		for($i=0; $i != $this->counter; $i++)
-			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				$output .= "<li><a href=\"javascript:grabContent('pages/".$this->links[$i]["link"]."');\">".$this->links[$i]["label"]."</a></li>";
-			else
-				$output .= "<br/>";
+	function dispList(){
+		if($this->counter!=0){
+			$output = "<div id=\"linklist\"><ul>".$this->dispBar()."</div>";
+			return $output;
 		}
-	$output .= "</ul></div>";
-	$this->counter=0;
-	return $output;
+	}
+	function dispBox($rows){ //TODO
+		if($this->counter!=0){
+			$output = "<div id=\"linklist\"><ul>".$this->dispBar()."</div>";
+			return $output;
+		}
 	}
 	function dispBar(){
 	if($this->counter!=0){
 		$output = "<ul>";
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
-				$output .= "<li><a href=\"javascript:grabContent(\'".$this->links[$i]["link"]."\');\">".$this->links[$i]["label"]."</a></li>";
+				$output .= "<li><a href=\"".$this->links[$i]["link"]."\">".$this->links[$i]["label"]."</a></li>";
 	}
 	$output .= "</ul>";
 	$this->counter=0;

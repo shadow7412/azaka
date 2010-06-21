@@ -19,6 +19,9 @@ h5 {margin:0px;}
 	height: 15px;
 	text-align: center;
 }
+#linklist ul {
+	padding-left:10px;
+}
 #toolbar {
 	height: 25px;
 	line-height: 25px;

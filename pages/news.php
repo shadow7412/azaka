@@ -8,7 +8,7 @@ $l = new Linklist();
 $userinfo = new UserObject();
 
 $l->additem("add news item","admin_news", 2);
-echo $l->disp();
+echo $l->dispList();
 
 $result = $p->db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid");
 while($row = mysql_fetch_array($result)){

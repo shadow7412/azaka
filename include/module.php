@@ -1,13 +1,18 @@
 <?php
+include_once "../include/db.php";
+
 class Module {
 	private $content;
 	private $js;
 	private $name;
+	public $u;
+	private $db;
 	
 	function __construct($name,$accessreq){
 		$this->u = new UserObject();
 		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
-		$js = "";
+		$this->db = new Database();
+		$js = ";";
 		$content = "";
 		$this->name = $name;
 	}
