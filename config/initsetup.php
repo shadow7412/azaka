@@ -88,6 +88,8 @@ if(file_exists("stop")){
 	  `access` int(11) NOT NULL DEFAULT '0',
 	  `name` text NOT NULL,
 	  `url` text NOT NULL,
+	  `localrefresh` int(11) NOT NULL DEFAULT '3000',
+	  `webrefesh` int(11) NOT NULL DEFAULT '15000',
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	

@@ -7,10 +7,10 @@ $u = new UserObject();
 $js = "<script id=\"modjs\">";
 $result = $db->qry("SELECT name, url FROM modules WHERE enabled = 1 & onsidebar = 0");
 while($row = mysql_fetch_array($result)){
-	$js .= "try{eval(document.getElementById('modjs-".$row['name']."').innerHTML)} catch (err) {alert('".$row['name']." has failed: '+err);}";
+	$js .= "runJs('modjs-".$row['name']."');";
 	include $row['url'];
-	$m->renderContent();
-	$m->renderJs();
+	echo $m->getContent();
+	echo $m->getJs();
 }
 echo $js."</script>";
 ?>

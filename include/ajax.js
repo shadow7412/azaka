@@ -1,6 +1,6 @@
 function grabContent(id){
 	window.location.hash = id;
-	_currentHash = window.location.hash
+	_currentHash = window.location.hash;
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
@@ -11,6 +11,17 @@ function sendPost(url){
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
 	jah(url,'content');
+}
+function runJs(target){
+	if(document.getElementById(target) != null)
+		try {
+			eval(document.getElementById(target).innerHTML);
+		} catch (jserror) {
+		document.getElementById('loader').innerHTML='<div id="error" onclick="javascript:alert(document.getElementById(\''+target+'\').innerHTML)"> jserror ' + target + ": " + jserror + '</div>';
+				setTimeout("document.getElementById('loader').innerHTML=''",1000);
+		}
+	else
+		alert(target+" does not exist.");
 }
 function startPage(){
 	_req = Array();
@@ -24,11 +35,7 @@ function updateMods(){
 	if(document.getElementById('modjs')==null)
 		jah("modules","modules");
 	else
-		try{
-			eval(document.getElementById('modjs').innerHTML);
-		} catch (jserror) {
-			alert("module js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML + "\n\n" + document.getElementById('modjs').innerHTML);
-		}
+		runJs('modjs');
 	setTimeout("updateMods();",500);
 }
 function forceUpdateMods(){
@@ -71,16 +78,8 @@ function jahDone(target) {
 		}
         if (_req[target].status == 200) {
             document.getElementById(target).innerHTML = _req[target].responseText;
-			if(target=='content'){
-				if(document.getElementById("pagejs") != null) { //run page js
-						try {
-							eval(document.getElementById("pagejs").innerHTML);
-						} catch (jserror){
-							alert("inpage js error: "+ jserror + "\n\n"+document.getElementById("pagejs").innerHTML);
-						}
-					} else
-						alert("Warning: page.php may not have been included. You will be sent straight to the error pages later in development.");
-			}
+			if(target=='content')
+				runJs('pagejs');
         } else {
 			if(target=='content')
 				jah("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
