@@ -4,14 +4,15 @@ include_once "../include/db.php";
 class Module {
 	private $content;
 	private $js;
+	private $accessreq;
 	private $name;
 	public $u;
 	private $db;
 	
 	function __construct($name,$accessreq){
 		$this->u = new UserObject();
-		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
 		$this->db = new Database();
+		$this->accessreq = $accessreq;
 		$js = ";";
 		$content = "";
 		$this->name = $name;
@@ -23,17 +24,25 @@ class Module {
 		$this->js .= $newJs;
 	}
 	function renderContent(){
-		echo "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+		echo $this->getContent();
 	}
 	function getContent(){
-		return "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+		if($this->checkAccess())
+			return "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+		else
+			return "<div id=\"mod-".$this->name."\"></div>";
 	}
 	function renderJs(){
-		echo "<script id=\"modjs-".$this->name."\">".$this->js."</script>";
+		echo $this->getJs();
 	}
 	function getJs(){
-		return "<script id=\"modjs-".$this->name."\">".$this->js."</script>";
+		if($this->checkAccess())
+			return "<script id=\"modjs-".$this->name."\">".$this->js."</script>";
+		else
+			return "<script id=\"modjs-".$this->name."\"></script>";
+	}
+	function checkAccess(){
+		return ($this->u->access >= $this->accessreq);
 	}
 }
-
 ?>
