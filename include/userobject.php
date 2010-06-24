@@ -25,7 +25,7 @@ class UserObject {
 		include_once "../include/db.php";
 		$db = new Database();
 		if(isset($this->username)){
-			if($result = mysql_fetch_array($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."'"))){
+			if($result = mysql_fetch_array($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '{$this->password}'"))){
 				$this->id = $result['id'];
 				$this->access = $result['access'];
 				$this->firstname = $result['firstname'];
@@ -44,12 +44,12 @@ class UserObject {
 			$this->access = 0;
 		}
 	}
-	function updateCookies($username, $password){
-		setcookie("azaka_username",$username,time()+60*60*24*14,"/");
-		setcookie("azaka_password",$password,time()+60*60*24*14,"/");
-	}
 	function invalidateSession(){
 		$this->updateCookies('','');
+	}
+	function updateCookies($user, $pass){
+		setcookie("azaka_username",$user,time()+60*60*24*14,"/");
+		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");
 	}
 }
 ?>
