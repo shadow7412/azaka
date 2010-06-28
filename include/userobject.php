@@ -9,9 +9,20 @@ class UserObject {
 	public $dob;
 	public $billable;
 	public $email;
+	public $islocal;
 
 	function __construct(){
+	//echo $_SERVER['SCRIPT_NAME'];
 		$this->updateUser();
+		switch ($_SERVER['REMOTE_ADDR'][0].$_SERVER['REMOTE_ADDR'][1].$_SERVER['REMOTE_ADDR'][2]){ //until i work out substring..
+			case ("127"):
+			case ("192"):
+			case ("172"):
+				$this->islocal = true;
+				break;
+			default:
+				$this->islocal = false;
+		}
 		$this->updateCookies($this->username,$this->password);
 	}
 
