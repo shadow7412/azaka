@@ -2,7 +2,7 @@
 include_once "../include/page.php";
 $p = new Page("registration",0);
 
-if (isset($_GET['username']) && isset($_GET['password'])
+if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET['username']) && isset($_GET['password'])
 	&& $result = mysql_fetch_array($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
 			$p->u->updateCookies($_GET['username'], $_GET['password']);
@@ -17,7 +17,16 @@ if (isset($_GET['username']) && isset($_GET['password'])
 } else if (isset($_GET['action']) && $_GET['action']=="register"){
 	echo "Here is the paperwork..<br/><br/>";
 } else if (isset($_GET['action']) && $_GET['action']=="registering"){
-	echo "Alright - lets get you registered. One day.";	
+	//make sure there are no duplicate names
+	
+	//add user to database
+	
+	//log user in?
+	
+	echo "Alright - lets get you registered. One day.<pre>";
+	print_r($_GET);
+	echo "</pre>";
+	echo "Well it is done. There is the login form <--. Please do not tell me you have ALREADY forgotten your password...";
 } else {
 	echo "Dunno who the heck you are... Fill this out if you want to register.<br/><br/>";
 }
@@ -36,36 +45,43 @@ document.register.email.value == '' ){
 	alert('\'guest\' is not a valid username.');
 	document.register.username.value = '';
 } else if(document.register.password.value != document.register.confirm.value){
-	alert('It seems you have entered your password WRONG. Fix it.');
+	alert('Please learn how to type. Start simply - by typing the same password twice.');
 	document.register.password.value = '';
 	document.register.confirm.value = '';
 } else if(false){
 	alert('In case I think of something else.');
 } else {
 	alert('duurr... ok...');
-	sendPost();
+	sendPost('pages/register.php?action=registering&
+	username='+document.register.username.value+'&
+	firstname='+document.register.firstname.value+'&
+	dobd='+document.register.dobd.value+'&
+	dobm='+document.register.dobm.value+'&
+	doby='+document.register.doby.value+'&
+	email='+document.register.email.value+'&
+	password='+hex_md5(document.register.password.value));
 }
 return false;">
   <table width="500" border="0">
     <tr>
       <td width="167">username</td>
-      <td><input type="text" name="username" id="username" /></td>
+      <td><input type="text" name="username"/></td>
     </tr>
     <tr>
       <td>password</td>
-      <td><input type="password" name="password" id="password" /></td>
+      <td><input type="password" name="password"/></td>
     </tr>
     <tr>
       <td>confirm</td>
-      <td><input type="password" name="confirm" id="confirm" /></td>
+      <td><input type="password" name="confirm"/></td>
     </tr>
     <tr>
       <td>first name</td>
-      <td><input type="text" name="firstname" id="firstname" /></td>
+      <td><input type="text" name="firstname"/></td>
     </tr>
     <tr>
       <td>last name</td>
-      <td><input type="text" name="lastname" id="lastname" /></td>
+      <td><input type="text" name="lastname"/></td>
     </tr>
     <tr>
       <td>date of birth</td>
@@ -120,14 +136,8 @@ return false;">
     </tr>
     <tr>
       <td>email</td>
-      <td><input type="text" name="email" id="email" /></td>
+      <td><input type="text" name="email"/></td>
     </tr>
   </table>
-  <tr><input type="submit" name="action" id="action" value="register" /></tr>
+  <tr><input type="submit" name="action"value="register" /></tr>
 </form>
-
-
-<?php
-
-
-?>
