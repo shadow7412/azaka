@@ -12,7 +12,7 @@ class linklist {
 	function additem($label,$link, $reqaccess){
 		if ($this->u->access >= $reqaccess){
 			$this->links[$this->counter]["label"] = $label;
-			$this->links[$this->counter++]["link"] = "javascript:grabContent(\'$link\');";
+			$this->links[$this->counter++]["link"] = "javascript:grabContent('$link');";
 		}
 	}
 	function addlink($label,$link, $reqaccess){
