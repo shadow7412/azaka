@@ -1,11 +1,9 @@
 <?php
-include "../include/page.php";
+include_once "../include/page.php";
 include_once "../include/linklist.php";
-include_once "../include/userobject.php";
 
 $p = new Page("news",0);
 $l = new Linklist();
-$userinfo = new UserObject();
 
 $l->additem("add news item","admin_news", 2);
 echo $l->dispList();

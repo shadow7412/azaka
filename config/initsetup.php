@@ -40,13 +40,13 @@ if(file_exists("stop")){
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `visible` tinyint(1) NOT NULL DEFAULT '1',
 	  `uid` int(11) NOT NULL COMMENT 'Id of user who posted news',
-	  `time` datetime NOT NULL,
+	  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	  `content` text NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
-	$errors .= doqry("Default news item","INSERT INTO `news` (`id` ,`visible` ,`uid` ,`time` ,`content`)
-	VALUES (NULL ,  '1',  '1', CURTIME( ) ,  'Welcome to azaka.\n\nThis is the default news item. You seeing this (and no errors) implies that things have gone smoothly.\n\nShock horror hey :P')
+	$errors .= doqry("Default news item","INSERT INTO `news` (`id`, `visible`, `uid`, `content`)
+	VALUES (NULL ,  '1',  '1',  'Welcome to azaka.\n\nThis is the default news item. You seeing this (and no errors) implies that things have gone smoothly.\n\nShock horror hey :P')
 	");
 
 	$errors .= doqry("Bills Table","CREATE TABLE `bills` (

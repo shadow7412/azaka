@@ -11,6 +11,7 @@ function sendPost(url){
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
 	jah(url,'content');
+	return false;
 }
 function runJs(target){
 	if(document.getElementById(target) != null)
