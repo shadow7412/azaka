@@ -77,6 +77,7 @@ if(file_exists("stop")){
 	('register','register.php',0, 0),
 	('bills','bills.php',1, 1),
 	('news','news.php',0, 1),
+	('admin','administration.php',3, 1),
 	('admin_bills','admin_bills.php',2, 0),
 	('admin_news','admin_news.php', 2, 0)
 	");

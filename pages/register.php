@@ -26,9 +26,9 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 		extract($_GET);
 		$p->db->qry("INSERT INTO users (username, password, firstname, lastname, dob, email)
 			VALUES ('$username','$password','$firstname','$lastname','$doby-$dobm-$dobd','$email')");
-		echo "Well it is done. There is the login form <--. Please do not tell me you have ALREADY forgotten your password...";		
-		//log user in?
-		die();
+		//log user in
+		$p->u->updateCookies($_GET['username'], $_GET['password']);
+		die($p->addJs("forceUpdateMods();forceHash();"));
 	}
 } else {
 	echo "Dunno who the heck you are... Fill this out if you want to register.<br/><br/>";

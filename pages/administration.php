@@ -1,0 +1,37 @@
+<?php
+include_once "../include/page.php";
+$p = new Page("administration",3);
+
+if(!isset($_GET['action'])){
+} elseif ($_GET['action']=='delete'){
+	$p->db->qry("DELETE FROM users WHERE id='".$_GET['user']."'");
+} elseif ($_GET['action']=='reset'){
+	echo "Changed pwd to ".$_GET['newpass'];
+	//$p->db->qry("UPDATE FROM users WHERE id='".$_GET['user']."'");
+}
+
+echo "<h2>User Administration</h2>";
+$results = $p->db->qry("SELECT id, username, access, billable FROM users");
+echo "<form name='useradmin' id='useradmin'><table>";
+while($row = mysql_fetch_array($results)){
+	extract($row);
+	echo "<tr><td>$username</td><td>
+  <select name=\"access$id\" id=\"access\">
+    <option value=\"0\">Guest/Banned</option>
+    <option value=\"1\">User</option>
+    <option value=\"2\">Admin</option>
+    <option value=\"3\">God</option>
+  </select>
+  </td><td>
+  <select name=\"billable$id\" id=\"billable\">
+    <option value=\"0\">Standard</option>
+    <option value=\"1\">Billable</option>
+  </select></td>
+  <td><a href=\"javascript:if(newpass=prompt('What to?')) sendPost('pages/administration.php?action=reset&user=$id&newpass='+hex_md5(newpass))\">reset code</a></td>
+  <td>or <a href=\"javascript:if(confirm('Are you sure?')) sendPost('pages/administration.php?action=delete&user=$id')\">delete</a></td></tr>";
+  $p->addJs("document.useradmin.access$id.value = $access");
+  $p->addJs("document.useradmin.billable$id.value = $billable");
+	}
+echo "</table></form>"
+	
+?>
