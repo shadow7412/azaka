@@ -3,7 +3,7 @@ include_once "../include/page.php";
 $p = new Page("registration",0);
 
 if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET['username']) && isset($_GET['password'])
-	&& $result = mysql_fetch_array($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
+	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
 			$p->u->updateCookies($_GET['username'], $_GET['password']);
 			die($p->addJs("forceUpdateMods();forceHash();"));
@@ -18,9 +18,11 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 	echo "Here is the paperwork..<br/><br/>";
 } else if (isset($_GET['action']) && $_GET['action']=="registering"){
 	//make sure there are no duplicate names
-	$results = $p->db->qry("SELECT username FROM users WHERE username = '".$_GET['username']."'");
-	if(mysql_fetch_array($results)){
-		echo "That username (".$_GET['username'].") is taken. Your punishment is filling out the whole form again.";
+	$p->db->qry("SELECT username, disabled FROM users WHERE username = '".$_GET['username']."'");
+	if($row = $p->db->fetchLast()){
+		echo "That username (".$row['username'].") is taken";
+		if($row['disabled']) echo ", but is disabled.<br/>If you are this user, you may want to talk to your benevolent admin.";
+		echo "<br/><br/>Your punishment is filling out the whole form again.";
 	} else {
 		//add user to database
 		extract($_GET);

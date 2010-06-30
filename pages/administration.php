@@ -4,21 +4,21 @@ $p = new Page("administration",3);
 
 if(!isset($_GET['action'])){
 } elseif ($_GET['action']=='delete'){
-	$p->db->qry("DELETE FROM users WHERE id='".$_GET['user']."'");
+	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
 } elseif ($_GET['action']=='reset'){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
 	echo "Password has been reset";
 }
 
 echo "<h2>User Administration</h2>";
-$results = $p->db->qry("SELECT id, username, access, billable FROM users");
+$p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0");
 echo "<form name='useradmin' id='useradmin'><table>";
-while($row = mysql_fetch_array($results)){
+while($row = $p->db->fetchLast()){
 	extract($row);
 	echo "<tr><td>$username</td><td>
   <select name=\"access$id\" id=\"access\">
-    <option value=\"0\">Guest/Banned</option>
-    <option value=\"1\">User</option>
+    <option value=\"0\">Unauthorised</option>
+    <option value=\"1\">Authorised</option>
     <option value=\"2\">Admin</option>
     <option value=\"3\">God</option>
   </select>

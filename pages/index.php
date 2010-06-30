@@ -2,9 +2,9 @@
 if (isset($_GET['page'])){
 	include "../include/db.php";
 	$db = new Database;
-	$results = $db->qry("SELECT name, url FROM pages WHERE enabled = 1");
+	$db->qry("SELECT name, url FROM pages WHERE enabled = 1");
 	$foundEntry = false;
-	while($row = mysql_fetch_array($results))
+	while($row = $db->fetchLast())
 		if($_GET['page'] == $row['name']){
 			$foundEntry = true;
 			if(file_exists($row['url']))

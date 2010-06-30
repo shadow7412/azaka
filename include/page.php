@@ -24,16 +24,16 @@ class Page {
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
-		$result = $this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
-		while($row = mysql_fetch_array($result))
+		$this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
+		while($row = $this->db->fetchLast())
 			$this->ll->additem($row['name'],$row['name'],$row['access']);
 		$toolbarContent = addSlashes($this->ll->dispBar());
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
 		$sidebar = "";
-		$result = $this->db->qry("SELECT url FROM modules WHERE enabled = 1 & onsidebar = 1");
-		while($row = mysql_fetch_array($result)){
+		$this->db->qry("SELECT url FROM modules WHERE enabled = 1 & onsidebar = 1");
+		while($row = $this->db->fetchLast()){
 			include "../modules/".$row['url'];
 			$sidebar = $m->getContent();
 		}

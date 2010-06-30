@@ -36,7 +36,7 @@ class UserObject {
 		include_once "../include/db.php";
 		$db = new Database();
 		if(isset($this->username)){
-			if($result = mysql_fetch_array($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."'"))){
+			if($result = $db->fetch($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."' AND disabled=0"))){
 				$this->id = $result['id'];
 				$this->access = $result['access'];
 				$this->firstname = $result['firstname'];

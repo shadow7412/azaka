@@ -86,7 +86,7 @@ function jahDone(target) {
 				jah("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
 			else {
 				document.getElementById('loader').innerHTML='<div id="error"> loading ' + target + ": " + _req[target].statusText + '</div>';
-				setTimeout("document.getElementById('loader').innerHTML=''",1000);
+				setTimeout("document.getElementById('loader').innerHTML=''",3000);
 			}
         }
 		if(target=='content'){

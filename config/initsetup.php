@@ -9,6 +9,7 @@ function doqry($name,$query){
 
 if(file_exists("stop")){
 	echo "To (re)install the database please delete the stop file in config.<br/>Then refresh this page.";
+	echo 'Make sure your dbconfig.php file is accurate before proceeding.';
 } else {
 
 	mysql_connect($db['host'], $db['user'], $db['pass']) or error("The connection to MySQL couldn't be made. Check dbconfig.php.");
@@ -18,6 +19,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("User Table","CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`disabled` BOOL NOT NULL DEFAULT  '0',
 	`username` VARCHAR( 12 ) NOT NULL ,
 	`password` VARCHAR( 40 ) NOT NULL ,
 	`access` TINYINT NOT NULL DEFAULT  '1',
