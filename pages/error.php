@@ -1,5 +1,5 @@
 <?php
-include "../include/page.php";
+include_once "../include/page.php";
 $p = new Page((isset($_GET['code']))?"error: ".$_GET['code']:"error",0);
 if(isset($_GET['code'])&isset($_GET['msg'])){
 	switch($_GET['code']){

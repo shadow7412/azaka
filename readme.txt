@@ -7,7 +7,7 @@ It can* cope with:
 	news,
 	and whatever else I think of.
 
-Also it is built to be secure. Hopefully.
+Also it is built to be secure. In theory.
 
 *can in that it will if it does not already.
 

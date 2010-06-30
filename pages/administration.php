@@ -3,9 +3,9 @@ include_once "../include/page.php";
 $p = new Page("administration",3);
 
 if(!isset($_GET['action'])){
-} elseif ($_GET['action']=='delete'){
+} elseif ($_GET['action']=='delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
-} elseif ($_GET['action']=='reset'){
+  elseif ($_GET['action']=='reset'){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
 	echo "Password has been reset";
 }
