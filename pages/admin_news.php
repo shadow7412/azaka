@@ -10,10 +10,17 @@ echo $l->dispList();
 if(!isset($_GET['action'])){
 	//if no action, do nothing. This is just so we do not need to check every time.
 } elseif ($_GET['action']=='add')
-	$p->db->qry("INSERT INTO news (uid, content) VALUES ('".$p->u->id."', '".addSlashes($_GET['content'])."')");
-elseif ($_GET['action']=='modify')
-	echo "501";//$p->db->qry("INSERT INTO news (uid, content) VALUES ('".$p->u->id."', '".addSlashes($_GET['content'])."')");
-elseif ($_GET['action']=='delete')
+	if((!isset($_GET['item'])) || $_GET['item']=="")
+		$p->db->qry("INSERT INTO news (uid, content) VALUES ('".$p->u->id."', '".addSlashes($_GET['newscontent'])."')");
+	else
+		$p->db->qry("UPDATE news SET uid = ".$p->u->id.",time = CURRENT_TIMESTAMP, content = '".addSlashes($_GET['newscontent'])."' WHERE id='".$_GET['item']."'");
+  elseif ($_GET['action']=='modify'){
+    extract($_GET);
+	$row = mysql_fetch_array($p->db->qry("SELECT content FROM news WHERE id='$item'"));
+	$newscontent = $row['content'];
+	$p->addJs("document.addnews.newscontent.value='".addSlashes($newscontent)."';");
+	$p->addJs("document.addnews.item.value='$item';");
+} elseif ($_GET['action']=='delete')
 	$p->db->qry("DELETE FROM news WHERE id = {$_GET['item']}");
 //modify
 
@@ -21,7 +28,7 @@ elseif ($_GET['action']=='delete')
 
 
 //new
-echo "<form name=\"addnews\" id=\"addnews\" onsubmit=\"sendPost('pages/admin_news.php?action=add&content='+this.newscontent.value);return false;\"> ".$p->u->username." at [now] wrote:<blockquote><textarea id=\"newscontent\" name=\"newscontent\" cols=\"45\" rows=\"5\"></textarea></blockquote><input type=submit /></form><br/>";
+echo "<form name=\"addnews\" id=\"addnews\" onsubmit=\"sendPost('pages/admin_news.php?action=add&newscontent='+this.newscontent.value+'&item='+this.item.value);return false;\"> ".$p->u->username." at [now] wrote:<blockquote><textarea id=\"newscontent\" name=\"newscontent\" cols=\"45\" rows=\"5\"></textarea></blockquote><input type=submit /><input type=\"hidden\" name=\"item\" id=\"item\" value=\"\" /></form><br/>";
 
 //show all articles
 $result = $p->db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid ORDER BY time DESC");
