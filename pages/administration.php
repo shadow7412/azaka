@@ -6,8 +6,8 @@ if(!isset($_GET['action'])){
 } elseif ($_GET['action']=='delete'){
 	$p->db->qry("DELETE FROM users WHERE id='".$_GET['user']."'");
 } elseif ($_GET['action']=='reset'){
-	echo "Changed pwd to ".$_GET['newpass'];
-	//$p->db->qry("UPDATE FROM users WHERE id='".$_GET['user']."'");
+	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
+	echo "Password has been reset";
 }
 
 echo "<h2>User Administration</h2>";
