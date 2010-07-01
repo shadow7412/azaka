@@ -45,18 +45,17 @@ document.register.firstname.value == '' ||
 document.register.lastname.value =='' || 
 document.register.doby.value == '' || 
 document.register.email.value == '' ){
-	alert('Please fill out ALL fields.');
+	errorMsg('Please fill out ALL fields.');
 } else if(document.register.username.value == 'guest'){
-	alert('\'guest\' is not a valid username.');
+	errorMsg('\'guest\' is not a valid username.');
 	document.register.username.value = '';
 } else if(document.register.password.value != document.register.confirm.value){
-	alert('Please learn how to type. Start simply - by typing the same password twice.');
+	errorMsg('Please learn how to type. Start simply - by typing the same password twice.');
 	document.register.password.value = '';
 	document.register.confirm.value = '';
 } else if(false){
-	alert('In case I think of something else.');
+	errorMsg('In case I think of something else.');
 } else {
-	alert('duurr... ok...');
 	sendPost('pages/register.php?action=registering&
 	username='+document.register.username.value+'&
 	firstname='+document.register.firstname.value+'&
