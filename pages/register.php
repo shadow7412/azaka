@@ -9,7 +9,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 			die($p->addJs("forceUpdateMods();forceHash();"));
 		} else {
 			//incorrect password
-			echo "You seem to have inaccuratly typed your password.<br/>Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...<br/><br/>Or you can register if you do not have a user account.<br/>";
+			echo "You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately.<br/>Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...<br/><br/>If you have not used this system before, please register.";
 		}	
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
