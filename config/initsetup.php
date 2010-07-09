@@ -12,7 +12,7 @@ if(file_exists("stop")){
 	echo 'Make sure your dbconfig.php file is accurate before proceeding.';
 } else {
 
-	mysql_connect($db['host'], $db['user'], $db['pass']) or error("The connection to MySQL couldn't be made. Check dbconfig.php.");
+	mysql_connect($db['host'], $db['user'], $db['pass']) or die("The connection to MySQL couldn't be made. Check dbconfig.php.");
 	$errors .= doqry("Drop Database","DROP DATABASE IF EXISTS ".$db['db']);
 	$errors .= doqry("Create Database","CREATE DATABASE ".$db['db']);
 	mysql_select_db($db['db']) or die("<pre>Observe the errors;\n\n".$errors."The database \"".$db['db']."\" couldn't be found. I am hungry.</pre>");
