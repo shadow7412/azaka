@@ -22,7 +22,7 @@ function runJs(target){
 				setTimeout("document.getElementById('loader').innerHTML=''",1000);
 		}
 	else
-		alert(target+" does not exist.");
+		errorMsg(target+" does not exist.");
 }
 function startPage(){
 	_req = Array();
@@ -67,6 +67,21 @@ function jah(url,target) {
             _req[target].send();
         }
     }
+}
+function grabXML(url, target){
+    if (window.XMLHttpRequest) {
+        _req[target] = new XMLHttpRequest();
+        _req[target].open("GET", url, false);
+        _req[target].send(null);
+    // IE/Windows ActiveX version
+    } else if (window.ActiveXObject) {
+        _req = new ActiveXObject("Microsoft.XMLHTTP");
+        if (_req[target]) {
+            _req[target].open("GET", url, false);
+            _req[target].send();
+        }
+    }
+	return _req[target].responseText;
 }
 function jahDone(target) {
     // only if _req is "loaded"	
