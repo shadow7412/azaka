@@ -119,8 +119,8 @@ $stat->m_cmdpass	= "";					// Status password if necessary.
 $rc = $stat->Request();
 if ( $rc )
 {
-	$m->addContent("CVentriloStatus->Request() failed. <strong>$stat->m_error</strong><br><br>\n");
-}
+	$m->addContent("<span onclick=\"javascript:errorMsg('CVentriloStatus->Request() failed. <strong>$stat->m_error</strong>')\">Error occurred. Click for details.</span>");
+} else {
 
 if ($stat->m_clientcount != 0){
 	$name = "SourTalk";
@@ -130,6 +130,6 @@ if ($stat->m_clientcount != 0){
 } else {
 	$m->addContent("<a href=ventrilo://lemon.thruhere.net/servername=SourTalk>The Ventrilo server is lonely.</a>");
 }
-
+}
 
 ?>
