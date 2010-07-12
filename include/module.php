@@ -14,6 +14,7 @@ class Module {
 		$this->u = new UserObject();
 		$this->db = new Database();
 		$this->accessreq = $accessreq;
+		$this->refresh = 15000;
 		$js = ";";
 		$content = "";
 		$this->name = $name;
@@ -26,7 +27,7 @@ class Module {
 	}
 	function getJs(){
 		if($this->checkAccess())
-			return "<script id=\"modjs-".$this->name."\">".$this->js.";setTimeout(\"runJs('modjs-".$this->name."')\",15000)</script>";
+			return "<script id=\"modjs-".$this->name."\">".$this->js.";setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.")</script>";
 		else
 			return "<script id=\"modjs-".$this->name."\"></script>";
 	}
@@ -35,6 +36,9 @@ class Module {
 	}
 	function addJs($newJs){
 		$this->js .= $newJs;
+	}
+	function setRefresh($refresh){
+		$this->refresh = $refresh;
 	}
 	function checkAccess(){
 		return ($this->u->access >= $this->accessreq);
