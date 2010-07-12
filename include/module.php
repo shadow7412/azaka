@@ -14,7 +14,7 @@ class Module {
 		$this->u = new UserObject();
 		$this->db = new Database();
 		$this->accessreq = $accessreq;
-		$this->refresh = 15000;
+		$this->refresh = 200;
 		$js = ";";
 		$content = "";
 		$this->name = $name;
@@ -37,8 +37,8 @@ class Module {
 	function addJs($newJs){
 		$this->js .= $newJs;
 	}
-	function setRefresh($refresh){
-		$this->refresh = $refresh;
+	function setRefresh($newrefresh){
+		$this->refresh = $newrefresh;
 	}
 	function checkAccess(){
 		return ($this->u->access >= $this->accessreq);

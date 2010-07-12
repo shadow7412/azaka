@@ -1,10 +1,10 @@
 <?php
 include_once "../include/module.php";
+include "ventrilostatus.php";
 $m = new Module("ventrilio", 0);
 
-include "ventrilostatus.php";
 
-function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx )
+function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 {
   global $colors; 
   $chan = $stat->ChannelFind( $cid );
@@ -14,7 +14,7 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx )
   else
   	$bg = $colors['background'];
 */
-$bg = $colors['cell_background'];
+$bg = "#111111";
 
 /*
   if ( $chan->m_prot )
@@ -22,8 +22,8 @@ $bg = $colors['cell_background'];
   else
     $fg = "#FFFFFF";
 */
-  $fg = $colors['primary'];
-  
+  $fg = "#FFFFFF";
+  /*
   if ( $chan->m_prot )
   {
   		if ( $bgidx %2 )
@@ -31,7 +31,7 @@ $bg = $colors['cell_background'];
 		else
 			$bg = "#330000";
   }
-  
+  */
   $m->addContent("  <tr>\n");
   $m->addContent("    <td bgcolor=\"$bg\"><font color=\"$fg\"><strong>");
   $m->addContent($name);
@@ -125,7 +125,7 @@ if ( $rc )
 if ($stat->m_clientcount != 0){
 	$name = "SourTalk";
 	$m->addContent("<center><table width=\"100%\" border=\"0\">\n");
-	VentriloDisplayEX1( $stat, $name, 0, 0 );
+	VentriloDisplayEX1( $stat, $name, 0, 0 ,$m);
 	$m->addContent("</table></center>\n");
 } else {
 	$m->addContent("<a href=ventrilo://lemon.thruhere.net/servername=SourTalk>The Ventrilo server is lonely.</a>");

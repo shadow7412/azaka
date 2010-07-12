@@ -97,10 +97,10 @@ if(file_exists("stop")){
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
-	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar) VALUES
-	('userinfo','userinfo.php', 1),
-	('server','server.php', 0),
-	('ventrilio','vent.php', 0)
+	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
+	('userinfo','userinfo.php', 1, 0 ,0),
+	('server','server.php', 0, 500, 15000),
+	('ventrilio','vent.php', 0, 2000, 20000)
 	");
 
 	if($errors == ''){

@@ -9,7 +9,7 @@ $db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled 
 while($row = $db->fetchLast()){
 	$js .= "runJs('modjs-".$row['name']."');";
 	include_once $row['url'];
-	$m->setRefresh = $u->islocal?$row['localrefresh']:$row['webrefresh'];
+	$m->setRefresh($u->islocal?$row['localrefresh']:$row['webrefresh']);
 	echo $m->getContent();
 	echo $m->getJs();
 }
