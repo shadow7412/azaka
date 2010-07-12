@@ -111,6 +111,6 @@ function jahDone(target) {
     }
 }
 function errorMsg(message){
-	document.getElementById('loader').innerHTML='<div id="error">'+message+'</div>';
-	setTimeout("document.getElementById('loader').innerHTML=''",4000);
+	document.getElementById('loader').innerHTML='<span class=\"ui-state-error ui-corner-all\">  '+message+'  </span>';
+	setTimeout("document.getElementById('loader').innerHTML=''",3000);
 }

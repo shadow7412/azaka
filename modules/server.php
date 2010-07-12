@@ -2,7 +2,7 @@
 include_once "../include/module.php";
 
 $m = new Module("server", 2);
-$m->addContent("Upload: <a id=\"mod-server-upload\">...</a><br/>Download:<a id=\"mod-server-download\">...</a><br/><br/>");
+$m->addContent("<table><tr><td width=10><span class=\"ui-icon ui-icon-carat-1-n\"></span></td><td width=60><span id=\"mod-server-upload\">...</span></td><td width=10><span class=\"ui-icon ui-icon-carat-1-s\"></span></td><td width=60><a id=\"mod-server-download\">...</a></td></tr></table>");
 $m->addContent("<strong>time remaining</strong><div id=\"mod-server-timebar\"></div><div id=\"mod-server-time\"></div><br/>");
 $m->addContent("<strong>onpeak remaining</strong><div id=\"mod-server-onpeakbar\"></div><div id=\"mod-server-onpeak\"></div><br/>");
 $m->addContent("<strong>offpeak remaining</strong><div id=\"mod-server-offpeakbar\"></div><div id=\"mod-server-offpeak\"></div><br/>");

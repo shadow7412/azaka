@@ -9,7 +9,7 @@ class Bandwidth {
 	public $download;
 	
 	function __construct(){
-		exec("ifstat -i eth0 .1 1",$output);
+		exec("ifstat -i eth0 .4 1",$output);
 		if(isset($output[2])){
 			$this->download = strtok($output[2]," ");
 			$this->upload = strtok(" ");

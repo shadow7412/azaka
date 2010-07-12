@@ -2,7 +2,7 @@
 include_once "../include/bandwidth.php";
 $stats = new Bandwidth;
 header ("content-type: text/xml");
-
+echo "<?xml version=\"1.0\" ?>";
 $xml = simplexml_load_file('../../xml/netspace.xml'); //Open (local) NetSpace XML
 $startdate = strtotime($xml["START_DATE"]); //startdate in seconds
 $enddate = strtotime($xml["END_DATE"]); //enddate in seconds
