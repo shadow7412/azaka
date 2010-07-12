@@ -37,7 +37,6 @@ function updateMods(){
 		jah("modules","modules");
 	else
 		runJs('modjs');
-	setTimeout("updateMods();",500);
 }
 function forceUpdateMods(){
 	jah("modules","modules");
@@ -96,6 +95,8 @@ function jahDone(target) {
             document.getElementById(target).innerHTML = _req[target].responseText;
 			if(target=='content')
 				runJs('pagejs');
+			else if(target=='modules')
+				runJs('modjs');
         } else {
 			if(target=='content')
 				jah("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
