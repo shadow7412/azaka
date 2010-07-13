@@ -11,7 +11,6 @@ function sendPost(url){
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
 	jah(url,'content');
-	return false;
 }
 function runJs(target){
 	if(document.getElementById(target) != null)
@@ -111,6 +110,6 @@ function jahDone(target) {
     }
 }
 function errorMsg(message){
-	document.getElementById('loader').innerHTML='<span class=\"ui-state-error ui-corner-all\">  '+message+'  </span>';
+	document.getElementById('loader').innerHTML='<span class=\"ui-icon-alert ui-state-error ui-corner-all\">  '+message+'  </span>';
 	setTimeout("document.getElementById('loader').innerHTML=''",3000);
 }

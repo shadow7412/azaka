@@ -10,11 +10,7 @@ $p->db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u
 echo "<div id=\"accordion\">";
 while($row = $p->db->fetchLast()){
 	extract($row);
-	echo "<h3><a href=\"#section3\">$poster @ $time</a></h3>
-	<div><pre>$content</pre></div>";
-	
-	
-	//echo "$poster at $time wrote:<blockquote><pre>$content</pre></blockquote>";
+	echo "<h3><a href=\"#\">$poster @ $time</a></h3><div><pre>$content</pre></div>";
 }
 echo "</div>";
 ?>

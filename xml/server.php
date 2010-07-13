@@ -19,9 +19,11 @@ $time = round($timeleft/$totaltime*100,2);
 $daysleft = round((date('U',$enddate) - date('U'))/60/60/24,2);
 $onpercentage = 100 - $onused/$ontotal*100;
 $offpercentage = 100 - $offused/$offtotal*100;
+$ongbday = round($onused / $daysleft,2);
+$offgbday = round($offused / $daysleft,2);;
 } else {
 	$xml->PLAN['DESCRIPTION'] = "File not set up.";
-	$time = $daysleft = $onpercentage = $ontotal = $onused = $offpercentage = $offtotal = $offused = $uploaded = 0;
+	$time = $daysleft = $onpercentage = $ontotal = $onused = $offpercentage = $offtotal = $offused = $uploaded = $ongbday = $offgbday = 0;
 }
 echo "<bandwidth>
 	<plan>{$xml->PLAN['DESCRIPTION']}</plan>
@@ -30,9 +32,11 @@ echo "<bandwidth>
 	<onpercentage>$onpercentage</onpercentage>
 	<onpeaktotal>$ontotal</onpeaktotal>
 	<onpeakused>$onused</onpeakused>
+	<ongbday>$ongbday</ongbday>
 	<offpercentage>$offpercentage</offpercentage>
 	<offpeaktotal>$offtotal</offpeaktotal>
 	<offpeakused>$offused</offpeakused>
+	<offgbday>$offgbday</offgbday>
 	<uploaded>$uploaded</uploaded>
 	<liveupload>{$stats->upload}</liveupload>
 	<livedownload>{$stats->download}</livedownload>
