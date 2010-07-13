@@ -9,20 +9,20 @@ class LinkList {
 		$this->counter = 0;
 		$this->u = $u;
 	}
-	function additem($label,$link, $reqaccess){
+	function addItem($label,$link, $reqaccess){
 		if ($this->u->access >= $reqaccess){
 			$this->links[$this->counter]["label"] = $label;
 			$this->links[$this->counter++]["link"] = "javascript:grabContent('$link');";
 		}
 	}
-	function addlink($label,$link, $reqaccess){
+	function addLink($label,$link, $reqaccess){
 		if ($this->u->access >= $reqaccess){
 			$this->links[$this->counter]["label"] = $label;
 			$this->links[$this->counter++]["link"] = $link;
 		}
 	}
-	function addbreak(){
-		$this->counter++;
+	function addBreak(){
+		$this->links[$this->counter++]["label"] = "";
 	}
 	function dispList(){
 		if($this->counter!=0){
@@ -42,6 +42,8 @@ class LinkList {
 		for($i=0; $i != $this->counter; $i++)
 			if(isset($this->links[$i]['label']) && $this->links[$i]['label'] != "")
 				$output .= "<li><a href=\"".$this->links[$i]["link"]."\">".$this->links[$i]["label"]."</a></li>";
+			else
+				$output .= "<br/>";
 	}
 	$output .= "</ul>";
 	$this->counter=0;
