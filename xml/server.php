@@ -1,9 +1,11 @@
 <?php
+$netspacefile = '../../xml/netspace.xml';
 include_once "../include/bandwidth.php";
 $stats = new Bandwidth;
-header ("content-type: text/xml");
+header("content-type: text/xml");
 echo "<?xml version=\"1.0\" ?>";
-$xml = simplexml_load_file('../../xml/netspace.xml'); //Open (local) NetSpace XML
+if(file_exists($netspacefile)){
+$xml = simplexml_load_file($netspacefile); //Open (local) NetSpace XML
 $startdate = strtotime($xml["START_DATE"]); //startdate in seconds
 $enddate = strtotime($xml["END_DATE"]); //enddate in seconds
 $ontotal = round($xml->PLAN->LIMIT[0]["MEGABYTES"]/1000,1); //peak total
@@ -17,6 +19,10 @@ $time = round($timeleft/$totaltime*100,2);
 $daysleft = round((date('U',$enddate) - date('U'))/60/60/24,2);
 $onpercentage = 100 - $onused/$ontotal*100;
 $offpercentage = 100 - $offused/$offtotal*100;
+} else {
+	$xml->PLAN['DESCRIPTION'] = "File not set up.";
+	$time = $daysleft = $onpercentage = $ontotal = $onused = $offpercentage = $offtotal = $offused = $uploaded = 0;
+}
 echo "<bandwidth>
 	<plan>{$xml->PLAN['DESCRIPTION']}</plan>
 	<time>$time</time>
