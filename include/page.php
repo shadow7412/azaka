@@ -7,13 +7,13 @@ include_once "../include/db.php";
 class Page {
 	private $javascript;
 	public $u;
-	private $ll;
+	public $l;
 	public $db;
 	
 	function __construct($title,$accessreq){
 		$this->u = new UserObject();
 		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
-		$this->ll = new LinkList();
+		$this->l = new LinkList($this->u);
 		$this->db = new Database();
 		$this->javascript = "<script id=\"pagejs\">";
 		$this->setupTop($title);
@@ -26,8 +26,8 @@ class Page {
 		$this->addJs("document.title = '$title - azaka';");
 		$this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
 		while($row = $this->db->fetchLast())
-			$this->ll->additem($row['name'],$row['name'],$row['access']);
-		$toolbarContent = addSlashes($this->ll->dispBar());
+			$this->l->additem($row['name'],$row['name'],$row['access']);
+		$toolbarContent = addSlashes($this->l->dispBar());
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){

@@ -1,13 +1,13 @@
 <?php
 include_once("../include/userobject.php");
-class linklist {
+class LinkList {
 	var $links;
 	var $counter;
 	var $u;
-	function __construct(){
+	function __construct(&$u){
 		$this->links = array();
 		$this->counter = 0;
-		$this->u = new UserObject();
+		$this->u = $u;
 	}
 	function additem($label,$link, $reqaccess){
 		if ($this->u->access >= $reqaccess){
