@@ -12,7 +12,7 @@ class Page {
 	
 	function __construct($title,$accessreq){
 		$this->u = new UserObject();
-		if($this->u->access < $accessreq) die(header($accessreq, true, 403)); //halt rendering, and say access denied
+		if(!$this->u->canAccess($accessreq)) die(header($accessreq, true, 403)); //halt rendering, and say access denied
 		$this->l = new LinkList($this->u);
 		$this->db = new Database();
 		$this->javascript = "<script id=\"pagejs\">";

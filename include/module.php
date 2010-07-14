@@ -3,11 +3,11 @@ include_once "../include/db.php";
 include_once "../include/userobject.php";
 
 class Module {
-	public  $u;
+	public $u;
 	public $name;
-	private $accessreq;
+	public $accessreq;
+	public $db;
 	private $content;
-	private $db;
 	private $js;
 	private $refresh;
 	
@@ -21,13 +21,13 @@ class Module {
 		$this->name = $name;
 	}
 	function getContent(){
-		if($this->checkAccess())
+		if($this->u->canAccess($this->accessreq))
 			return "<div id=\"mod-".$this->name."\">".$this->content."</div>";
 		else
 			return "<div id=\"mod-".$this->name."\"></div>";
 	}
 	function getJs(){
-		if($this->checkAccess())
+		if($this->u->canAccess($this->accessreq))
 			return "<script id=\"modjs-".$this->name."\">".$this->js.";setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.")</script>";
 		else
 			return "<script id=\"modjs-".$this->name."\"></script>";
@@ -40,9 +40,6 @@ class Module {
 	}
 	function setRefresh($newrefresh){
 		$this->refresh = $newrefresh;
-	}
-	function checkAccess(){
-		return ($this->u->access >= $this->accessreq);
 	}
 }
 ?>

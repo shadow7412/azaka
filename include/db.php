@@ -1,7 +1,7 @@
 <?php
 
 class Database{
-	public $lastQry;
+	private $lastQry;
 	
 	function __construct(){
 		include "../config/dbconfig.php";

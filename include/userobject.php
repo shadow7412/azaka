@@ -63,5 +63,8 @@ class UserObject {
 		setcookie("azaka_username",$user,time()+60*60*24*14,"/");
 		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");
 	}
+	function canAccess($reqaccess){
+		return ($this->access >= $reqaccess);
+	}
 }
 ?>
