@@ -1,14 +1,15 @@
 <?php
 include_once "../include/db.php";
+include_once "../include/userobject.php";
 
 class Module {
+	public  $u;
+	public $name;
 	private $accessreq;
 	private $content;
 	private $db;
 	private $js;
-	private $name;
 	private $refresh;
-	public  $u;
 	
 	function __construct($name, $accessreq){
 		$this->u = new UserObject();
@@ -21,7 +22,7 @@ class Module {
 	}
 	function getContent(){
 		if($this->checkAccess())
-			return "<table width = 100%><tr><td><h5>".$this->name."</h5></td></tr><tr><td><div id=\"mod-".$this->name."\">".$this->content."</div></td></tr></table>";
+			return "<div id=\"mod-".$this->name."\">".$this->content."</div>";
 		else
 			return "<div id=\"mod-".$this->name."\"></div>";
 	}

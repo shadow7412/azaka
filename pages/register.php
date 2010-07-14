@@ -65,8 +65,7 @@ document.register.email.value == '' ){
 	doby='+document.register.doby.value+'&
 	email='+document.register.email.value+'&
 	password='+hex_md5(document.register.password.value));
-}
-return false;">
+};">
   <table width="500" border="0">
     <tr>
       <td width="167">username</td>
@@ -144,5 +143,5 @@ return false;">
       <td><input type="text" name="email"/></td>
     </tr>
   </table>
-  <tr><input type="submit" name="action"value="register" /></tr>
+  <tr><input type="submit" name="action" value="register" class="ui-button ui-widget ui-state-default ui-corner-all"/></tr>
 </form>

@@ -33,10 +33,13 @@ class Page {
 	function setupSidebar(){
 		$sidebar = "";
 		$this->db->qry("SELECT url FROM modules WHERE enabled = 1 & onsidebar = 1");
+		$sidebar .= "<ul style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\" id=\"modlist\">";
 		while($row = $this->db->fetchLast()){
 			include "../modules/".$row['url'];
-			$sidebar = $m->getContent();
+			$sidebar .= "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\">{$m->name}</div>";
+			$sidebar .= "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div></li>";
 		}
+		$sidebar.="</ul>";
 		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar';");
 	}
 	function __destruct(){

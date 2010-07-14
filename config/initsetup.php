@@ -114,7 +114,7 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
 	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
-	('bills_info', 'Ask your admin for where the bills should be sent.')
+	('bills_info', 'Ask your admin where the bills should be sent.')
 	");
 	
 	if($errors == ''){

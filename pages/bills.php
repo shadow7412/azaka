@@ -1,6 +1,5 @@
 <?php 
 include_once "../include/page.php";
-include_once "../include/linklist.php";
 $p = new Page('bills',1);
 
 if(isset($_GET['action'])){
