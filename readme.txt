@@ -12,3 +12,11 @@ Also it is built to be secure. In theory.
 There github. I have a readme. I hope you are happy. -angry fist-
 
 It uses jQuery and ajax. Yay.
+
+
+While I am here, I should dump these somewhere:
+*The name 'azaka' and the icon are based off Kokuto Azaka from the Kara no Kyoukai books and movies. (c) Type Moon.
+*The loading bar (which I plan to replace) is from ajaxload.info
+*The vent module uses the php class found at ventrilo.com/download.php
+*jah (the main ajax function) is from http://homepage.mac.com/kevinmarks/staticjah.html
+
