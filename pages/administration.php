@@ -9,8 +9,19 @@ if(!isset($_GET['action'])){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
 	echo "Password has been reset";
 }
+echo "<div id=\"accordion\">";
 
-echo "<h2>User Administration</h2>";
+//SETTINGS
+echo "<h3><a>Settings</a></h3><div><form>";
+$p->db->qry("SELECT * FROM settings");
+while($row = $p->db->fetchLast())
+	echo "<br><label>{$row['option']}</label><input value=\"{$row['setting']}\"></input></br>";
+
+echo "<br/><input type=\"submit\" class=\"ui-state-default ui-corner-all\"/></form></div>";
+
+//USER ADMINISTRATION
+echo "<h3><a>User Administration</a></h3><div>";
+$p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 $p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0");
 echo "<form name='useradmin' id='useradmin'><table>";
 while($row = $p->db->fetchLast()){
@@ -32,6 +43,8 @@ while($row = $p->db->fetchLast()){
   $p->addJs("document.useradmin.access$id.value = $access");
   $p->addJs("document.useradmin.billable$id.value = $billable");
 	}
-echo "</table></form>"
+echo "</table></form></div>";
+
+echo "</div>"
 	
 ?>
