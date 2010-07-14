@@ -1,10 +1,12 @@
 <?php
 $netspacefile = '../../xml/netspace.xml';
 include_once "../include/bandwidth.php";
+include_once "../include/userobject.php";
 $stats = new Bandwidth;
+$u = new UserObject;
 header("content-type: text/xml");
 echo "<?xml version=\"1.0\" ?>";
-if(file_exists($netspacefile)){
+if(file_exists($netspacefile) & $u->access > 0){
 $xml = simplexml_load_file($netspacefile); //Open (local) NetSpace XML
 $startdate = strtotime($xml["START_DATE"]); //startdate in seconds
 $enddate = strtotime($xml["END_DATE"]); //enddate in seconds
