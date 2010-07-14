@@ -41,14 +41,15 @@ if(file_exists("stop")){
 	$errors .= doqry("News Table","CREATE TABLE `news` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `visible` tinyint(1) NOT NULL DEFAULT '1',
+	  `title` text NOT NULL,
 	  `uid` int(11) NOT NULL COMMENT 'Id of user who posted news',
 	  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	  `content` text NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
-	$errors .= doqry("Default news item","INSERT INTO `news` (`id`, `visible`, `uid`, `content`)
-	VALUES (NULL ,  '1',  '1',  'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P')
+	$errors .= doqry("Default news item","INSERT INTO `news` (`visible`, `uid`, `title`,`content`)
+	VALUES ('1',  '1',  'Successfully Installed', 'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P')
 	");
 
 	$errors .= doqry("Bills Table","CREATE TABLE `bills` (
@@ -103,6 +104,19 @@ if(file_exists("stop")){
 	('ventrilio','vent.php', 0, 2000, 20000)
 	");
 
+	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (
+	  `option` varchar(20) NOT NULL,
+	  `setting` text,
+	  PRIMARY KEY (`option`),
+	UNIQUE (
+	`option`
+	)
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+	
+	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
+	('bills_info', 'Ask your admin for where the bills should be sent.')
+	");
+	
 	if($errors == ''){
 		header('Refresh: 1; url=..');
 		echo "That seemed to work. Taking you to the mainpage...";

@@ -21,12 +21,16 @@ class Database{
 	function no($results){ //TO FIX (PROBABLY)
 		return mysql_num_rows($results);
 	}
-	function noLast(){ //TO FIX (PROBABLY)
+	function noLast(){
 		return $this->no($this->lastQry);
 	}
+	function getSetting($option){
+		$result = mysql_query("SELECT setting FROM settings WHERE `option` = '$option'") or $this->error("Error getting setting for $option.");
+		$setting = mysql_fetch_array($result);
+		return $setting['setting'];
+	}
 	function error($msg){
-	echo "<div id=error>$msg  <a href=\"config/initsetup.php\" onclick=\"return confirm('This will delete all existing data in the database if it exists. Continue?');\">Maybe remake database?</a></div>";
-	die();
+	die("<div id=error>$msg<a href=\"config/initsetup.php\" onclick=\"return confirm('This will delete all existing data in the database if it exists. Continue?');\">Maybe remake database?</a></div>");
 	}
 }
 ?>

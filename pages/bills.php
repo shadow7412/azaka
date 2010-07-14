@@ -16,5 +16,6 @@ if (!isset($_GET['view']) || !$_GET['view']=='full') {
 	$result = $p->db->qry("SELECT * FROM `bills` WHERE confirmed = 0 AND uid = '".$p->u->id."' ORDER BY `uid` ASC");
 	}
 $p->l->addItem('add and edit bills','admin_bills.php',2);
-echo $p->l->dispList();
+echo $p->l->dispList()."<br/>";
+echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span>{$p->db->getSetting('bills_info')}</p></div></div>";
 ?>
