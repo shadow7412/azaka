@@ -7,7 +7,7 @@ It can cope with:
 	news,
 	and whatever else I think of.
 
-Also it is built to be secure. In theory.
+Also it is built to be secure. In theory. (It uses some encryption.)
 
 There github. I have a readme. I hope you are happy. -angry fist-
 

@@ -27,7 +27,8 @@ if ($p->db->noLast() != 0){
 		<td>$dateentered</td>
 		<td>$datedue</td>
 		<td>";
-		if (!$paid){echo "<input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:sendPost('pages/bills.php?action=pay&control=$id')\" value=\"mark as paid\"></td><td>";
+		if (!$paid){
+			echo "<input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:sendPost('pages/bills.php?action=pay&control=$id')\" value=\"mark as paid\"></td><td>";
 			if ($p->db->getSetting('paypal_enabled')) {
 				echo "<form action=\"https://www.paypal.com/cgi-bin/webscr\" target=\"_blank\" method=\"post\">
 				<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
@@ -39,22 +40,24 @@ if ($p->db->noLast() != 0){
 				<input type=\"hidden\" name=\"button_subtype\" value=\"services\">
 				<input type=\"hidden\" name=\"shipping\" value=\"0.00\">
 				<input type=\"hidden\" name=\"bn\" value=\"PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted\">
-				<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"pay with paypal\" border=\"0\" name=\"submit\" label=\"pay via paypal, mastercard, visa etc.\">
+				<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"pay with paypal\" border=\"0\" name=\"submit\" title=\"pay via paypal, mastercard, visa etc.\">
 				</form>";
-				} else {
-				echo "pay first";
-				}
-			$unpaid += $amount;}
-		else {echo "$datepaid</td><td><a href=\"javascript:sendPost('pages/bills.php?action=cancel&control=$id')\">cancel</a>"; $unconfirmed+= $amount;}
+				} else 
+					echo "pay first";
+			$unpaid += $amount;
+			} else {
+				echo "$datepaid</td><td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:sendPost('pages/bills.php?action=cancel&control=$id')\" value=\"mark as unpaid\">";
+				$unconfirmed+= $amount;
+			}
 		echo "</td></tr>";
 	}
 	echo "</table>\n<br/><br/>";
 	if ($unpaid!=0) echo "<strong>$$unpaid outstanding</strong><br/>"; else echo "$0 outstanding<br/>";
 	if ($unconfirmed!=0) echo "<strong>$$unconfirmed unconfirmed<br/></strong>"; else echo "$0 unconfirmed<br/>";
-	echo "<br/>";
 } else echo "You currently do not have any bills outstanding. Outstanding!";
 echo "</div><h3><a>bill history</a></h3><div>";
-$p->db->qry("SELECT * FROM `bills` WHERE uid = '".$p->u->id."' ORDER BY `uid` ASC");
+
+$p->db->qry("SELECT * FROM `bills` WHERE uid = '".$p->u->id."' AND confirmed=1 ORDER BY `datedue` DESC");
 if ($p->db->noLast() != 0){
 	$totalpaid = 0;
 	echo "<table border=1><tr><td>service</td><td>amount</td><td>date added</td><td>date due</td><td>date paid</td><td>date confirmed</td></tr>\n";
@@ -71,7 +74,6 @@ if ($p->db->noLast() != 0){
 	}
 	echo "</table>\n<br/><br/>";
 	echo "<strong>$$totalpaid paid in total</strong><br/>";
-	echo "<br/>";
 } else echo "You do not yet have a history. Enjoy it while it lasts... heh heh heh...";
 echo "</div></div>";
 ?>

@@ -49,7 +49,7 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
 	$errors .= doqry("Default news item","INSERT INTO `news` (`visible`, `uid`, `title`,`content`)
-	VALUES ('1',  '1',  'Successfully Installed', 'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P')
+	VALUES ('1',  '1',  'Successfully Installed', 'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P<br/><br/>Mmmmm Beta...')
 	");
 
 	$errors .= doqry("Bills Table","CREATE TABLE `bills` (
@@ -100,8 +100,8 @@ if(file_exists("stop")){
 	
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
 	('userinfo','userinfo.php', 1, 0 ,0),
-	('server','server.php', 0, 500, 15000),
-	('ventrilio','vent.php', 0, 2000, 20000)
+	('server','server.php', 0, 500, 5000),
+	('ventrilio','vent.php', 0, 2000, 10000)
 	");
 
 	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (
