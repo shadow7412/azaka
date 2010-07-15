@@ -57,12 +57,12 @@ if(file_exists("stop")){
 	`uid` INT NOT NULL ,
 	`service` VARCHAR( 10 ) NOT NULL ,
 	`amount` DECIMAL( 5, 2 ) NOT NULL ,
-	`dateentered` DATE NOT NULL ,
+	`dateentered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`datedue` DATE NOT NULL ,
-	`paid` BOOL NOT NULL ,
-	`confirmed` INT NOT NULL ,
-	`datepaid` DATE NOT NULL ,
-	`dateconfirmed` DATE NOT NULL
+	`paid` BOOL DEFAULT '0' ,
+	`confirmed` BOOL DEFAULT '0' ,
+	`datepaid` DATE,
+	`dateconfirmed` DATE
 	) ENGINE = MYISAM");
 
 	$errors .= doqry("Pages Table","CREATE TABLE IF NOT EXISTS `pages` (
@@ -107,6 +107,9 @@ if(file_exists("stop")){
 	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (
 	  `option` varchar(20) NOT NULL,
 	  `setting` text,
+	  `title` text,
+	  `help` text,
+	  `type` varchar(4),
 	  PRIMARY KEY (`option`),
 	UNIQUE (
 	`option`
@@ -114,7 +117,9 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
 	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
-	('bills_info', 'Ask your admin where the bills should be sent.')
+	('bills_info', 'Ask your admin where the bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
+	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
+	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','text')
 	");
 	
 	if($errors == ''){

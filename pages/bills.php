@@ -27,7 +27,24 @@ if ($p->db->noLast() != 0){
 		<td>$dateentered</td>
 		<td>$datedue</td>
 		<td>";
-		if (!$paid){echo "<a href=\"javascript:sendPost('pages/bills.php?action=pay&control=$id')\">pay</a></td><td>pay first"; $unpaid += $amount;}
+		if (!$paid){echo "<input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:sendPost('pages/bills.php?action=pay&control=$id')\" value=\"mark as paid\"></td><td>";
+			if ($p->db->getSetting('paypal_enabled')) {
+				echo "<form action=\"https://www.paypal.com/cgi-bin/webscr\" target=\"_blank\" method=\"post\">
+				<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
+				<input type=\"hidden\" name=\"business\" value=\"{$p->db->getSetting('paypal_email')}\">
+				<input type=\"hidden\" name=\"lc\" value=\"AU\">
+				<input type=\"hidden\" name=\"item_name\" value=\"{$p->u->username}$service\">
+				<input type=\"hidden\" name=\"amount\" value=\"$amount\">
+				<input type=\"hidden\" name=\"currency_code\" value=\"AUD\">
+				<input type=\"hidden\" name=\"button_subtype\" value=\"services\">
+				<input type=\"hidden\" name=\"shipping\" value=\"0.00\">
+				<input type=\"hidden\" name=\"bn\" value=\"PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted\">
+				<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"pay with paypal\" border=\"0\" name=\"submit\" label=\"pay via paypal, mastercard, visa etc.\">
+				</form>";
+				} else {
+				echo "pay first";
+				}
+			$unpaid += $amount;}
 		else {echo "$datepaid</td><td><a href=\"javascript:sendPost('pages/bills.php?action=cancel&control=$id')\">cancel</a>"; $unconfirmed+= $amount;}
 		echo "</td></tr>";
 	}
@@ -55,6 +72,6 @@ if ($p->db->noLast() != 0){
 	echo "</table>\n<br/><br/>";
 	echo "<strong>$$totalpaid paid in total</strong><br/>";
 	echo "<br/>";
-} else echo "You currently do not have any bills outstanding. Outstanding!";
+} else echo "You do not yet have a history. Enjoy it while it lasts... heh heh heh...";
 echo "</div></div>";
 ?>
