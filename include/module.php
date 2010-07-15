@@ -1,12 +1,10 @@
 <?php
-include_once "../include/db.php";
 include_once "../include/userobject.php";
 
 class Module {
 	public $u;
 	public $name;
 	public $accessreq;
-	public $db;
 	private $content;
 	private $js;
 	private $refresh;

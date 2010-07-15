@@ -4,6 +4,7 @@ include_once "../include/bandwidth.php";
 include_once "../include/userobject.php";
 $stats = new Bandwidth;
 $u = new UserObject;
+
 header("content-type: text/xml");
 echo "<?xml version=\"1.0\" ?>";
 if(file_exists($netspacefile) & $u->canAccess(1)){

@@ -6,6 +6,7 @@ $m->addContent("<table><tr><td width=10><span class=\"ui-icon ui-icon-carat-1-n\
 $m->addContent("<strong id=\"mod-server-plan\">time remaining</strong><div id=\"mod-server-timebar\"></div><div id=\"mod-server-time\"></div><br/>");
 $m->addContent("<strong>onpeak remaining</strong><div id=\"mod-server-onpeakbar\"></div><div id=\"mod-server-onpeak\"></div><br/>");
 $m->addContent("<strong>offpeak remaining</strong><div id=\"mod-server-offpeakbar\"></div><div id=\"mod-server-offpeak\"></div><br/>");
+
 $m->addJs("var modserverxml = (new DOMParser()).parseFromString(grabXML(\"xml/server.php\",\"mod-server\"),\"text/xml\");");
 $m->addJs("document.getElementById('mod-server-plan').innerHTML = modserverxml.getElementsByTagName('plan')[0].childNodes[0].nodeValue;");
 $m->addJs("document.getElementById('mod-server-upload').innerHTML = modserverxml.getElementsByTagName('liveupload')[0].childNodes[0].nodeValue;");

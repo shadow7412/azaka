@@ -12,7 +12,6 @@ class UserObject {
 	public $islocal;
 
 	function __construct(){
-	//echo $_SERVER['SCRIPT_NAME'];
 		$this->updateUser();
 		switch ($_SERVER['REMOTE_ADDR'][0].$_SERVER['REMOTE_ADDR'][1].$_SERVER['REMOTE_ADDR'][2]){ //until i work out substring..
 			case ("127"):
