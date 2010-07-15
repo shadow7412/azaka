@@ -45,16 +45,11 @@ h5 {margin:0px;}
 }
 #toolbar a:hover {background-color:#7777FF;}
 #toolbar li {display:inline;}
-#rtoolbar {
-	float:right;
-	padding-right:10px;
-}
 #content {
 	padding:5px;
 	margin: 10px 230px 0px 230px;
 	color: #000000;
 	background-color: #ffffff;
-	background-image: url(images/bg.jpg);
 	min-width: 500px;
 	opacity:0;
 }
@@ -88,16 +83,4 @@ h5 {margin:0px;}
 	text-align: center;
 	min-width:500px;
 	opacity:0;
-}
-#error {background-color: #FF6666;}
-#login {
-	float:right;
-	top: 120px;
-	right: 0px;
-	width: 220px;
-	bottom: 0px;
-	background-color: #555555;
-	color: #FFFFFF;
-	margin: 0px;
-	padding: 0px;
 }

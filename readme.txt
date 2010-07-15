@@ -16,7 +16,7 @@ It uses jQuery and ajax. Yay.
 
 While I am here, I should dump these somewhere:
 *The name 'azaka' and the icon are based off Kokuto Azaka from the Kara no Kyoukai books and movies. (c) Type Moon.
-*The loading bar (which I plan to replace) is from ajaxload.info
-*The vent module uses the php class found at ventrilo.com/download.php
+*The loading bar (which I plan to replace) is from http://ajaxload.info
+*The vent module uses the php class found at http://ventrilo.com/download.php
 *jah (the main ajax function) is from http://homepage.mac.com/kevinmarks/staticjah.html
-*paypal uses... Pay...Pal...
+*paypal uses... Pay...Pal... http://paypal.com
