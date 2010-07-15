@@ -20,3 +20,4 @@ While I am here, I should dump these somewhere:
 *The vent module uses the php class found at http://ventrilo.com/download.php
 *jah (the main ajax function) is from http://homepage.mac.com/kevinmarks/staticjah.html
 *paypal uses... Pay...Pal... http://paypal.com
+*The javascript md5 function came from http://pajhome.org.uk/crypt/md5

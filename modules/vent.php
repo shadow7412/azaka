@@ -1,8 +1,8 @@
 <?php
 include_once "../include/module.php";
 include "ventrilostatus.php";
-$m = new Module("ventrilio", 0);
-
+$m = new Module("ventrilo", 0);
+$m->addJs("document.getElementById('mod-ventrilo').innerHTML = grabXML('modules/vent.php?update=doit');");
 
 function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 {
@@ -14,7 +14,7 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
   else
   	$bg = $colors['background'];
 */
-$bg = "#111111";
+//$bg = "#111111";
 
 /*
   if ( $chan->m_prot )
@@ -33,7 +33,7 @@ $bg = "#111111";
   }
   */
   $m->addContent("  <tr>\n");
-  $m->addContent("    <td bgcolor=\"$bg\"><font color=\"$fg\"><strong>");
+  $m->addContent("    <td><font color=\"$fg\"><strong>");
   $m->addContent($name);
   $m->addContent("</strong></font>\n");
   
@@ -53,10 +53,10 @@ $bg = "#111111";
 		$m->addContent("        <td bgcolor=\"".$colors['cell_background']."\">");
 
 		$flags = "";
-		/*
+		
 		if ( $client->m_admin )
 			$flags .= "A";
-			*/
+			
 		if ( $client->m_phan )
 			$flags .= "P";
 			
@@ -94,8 +94,6 @@ $bg = "#111111";
   $m->addContent("  </tr>\n");
 }
 
-/*$m->addContent("<a href=ventrilo://soulmaster.thruhere.net/servername=Orion>Click here to join the server</a>";*/
-
 /*
 	This example PHP script came with a file called ventriloreadme.txt and should
 	be read if you are having problems making these scripts function properly.
@@ -110,26 +108,24 @@ $bg = "#111111";
 */
 
 $stat = new CVentriloStatus;
-$stat->m_cmdprog	= "/var/www/ventrilo_status";	// Adjust accordingly.
+$stat->m_cmdprog	= $m->db->getSetting("vent_path");	// Adjust accordingly.
 $stat->m_cmdcode	= "2";					// Detail mode.
 $stat->m_cmdhost	= "127.0.0.1";			// Assume ventrilo server on same machine.
 $stat->m_cmdport	= "3784";				// Port to be statused.
 $stat->m_cmdpass	= "";					// Status password if necessary.
 
-$rc = $stat->Request();
-if ( $rc )
-{
+if (  $stat->Request() ){
 	$m->addContent("<span onclick=\"javascript:errorMsg('CVentriloStatus->Request() failed. <strong>$stat->m_error</strong>')\">Error occurred. Click for details.</span>");
 } else {
 
-if ($stat->m_clientcount != 0){
-	$name = "SourTalk";
-	$m->addContent("<center><table width=\"100%\" border=\"0\">\n");
-	VentriloDisplayEX1( $stat, $name, 0, 0 ,$m);
-	$m->addContent("</table></center>\n");
-} else {
-	$m->addContent("<a href=ventrilo://lemon.thruhere.net/servername=SourTalk>The Ventrilo server is lonely.</a>");
+	if ($stat->m_clientcount != 0){
+		$m->addContent("<center><table width=\"100%\" border=\"0\">\n");
+		VentriloDisplayEX1( $stat, $stat->m_name, 0, 0 ,$m);
+		$m->addContent("</table></center>\n");
+	} else 
+		$m->addContent("The Ventrilo server is lonely.");
+
 }
-}
+if(isset($_GET['update']))	echo $m->getRawContent();
 
 ?>

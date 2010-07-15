@@ -32,7 +32,6 @@ echo "<bandwidth>
 	<plan>{$xml->PLAN['DESCRIPTION']}</plan>
 	<time>$time</time>
 	<daysleft>$daysleft</daysleft>
-	<daysleftpercentage>$daysleft</daysleftpercentage>
 	<onpercentage>$onpercentage</onpercentage>
 	<onpeaktotal>$ontotal</onpeaktotal>
 	<onpeakused>$onused</onpeakused>

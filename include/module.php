@@ -24,6 +24,12 @@ class Module {
 		else
 			return "<div id=\"mod-".$this->name."\"></div>";
 	}
+	function getRawContent(){
+		if($this->u->canAccess($this->accessreq))
+			return $this->content;
+		else
+			return "Access Issue. Please log in.";
+	}
 	function getJs(){
 		if($this->u->canAccess($this->accessreq))
 			return "<script id=\"modjs-".$this->name."\">".$this->js.";setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.")</script>";

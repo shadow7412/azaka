@@ -12,7 +12,7 @@ $m->addJs("document.getElementById('mod-server-plan').innerHTML = modserverxml.g
 $m->addJs("document.getElementById('mod-server-upload').innerHTML = modserverxml.getElementsByTagName('liveupload')[0].childNodes[0].nodeValue;");
 $m->addJs("document.getElementById('mod-server-download').innerHTML = modserverxml.getElementsByTagName('livedownload')[0].childNodes[0].nodeValue;");
 $m->addJs("$(\"#mod-server-timebar\").progressbar({value: parseInt(modserverxml.getElementsByTagName('time')[0].childNodes[0].nodeValue)});");
-$m->addJs("document.getElementById('mod-server-time').innerHTML = \"days left:\" + modserverxml.getElementsByTagName('time')[0].childNodes[0].nodeValue;");
+$m->addJs("document.getElementById('mod-server-time').innerHTML = \"days left:\" + modserverxml.getElementsByTagName('daysleft')[0].childNodes[0].nodeValue;");
 $m->addJs("$(\"#mod-server-onpeakbar\").progressbar({value: parseInt(modserverxml.getElementsByTagName('onpercentage')[0].childNodes[0].nodeValue)});");
 $m->addJs("document.getElementById('mod-server-onpeak').innerHTML = \"data used:\" + modserverxml.getElementsByTagName('onpeakused')[0].childNodes[0].nodeValue + \"/\"+ modserverxml.getElementsByTagName('onpeaktotal')[0].childNodes[0].nodeValue+\"<br/>gb/d remaining: \"+modserverxml.getElementsByTagName('ongbday')[0].childNodes[0].nodeValue;");
 $m->addJs("$(\"#mod-server-offpeakbar\").progressbar({value: parseInt(modserverxml.getElementsByTagName('offpercentage')[0].childNodes[0].nodeValue)});");
