@@ -2,7 +2,13 @@
 include_once "../include/page.php";
 $p = new Page("administration",3);
 
+// DO ACTIONS
 if(!isset($_GET['action'])){
+	//so that the rest of the if loop is only processed if action is set
+} elseif ($_GET['action']=='settings'){
+	foreach ($_GET as $option => $setting)
+		if ($option != "action")
+			$p->db->qry("UPDATE settings SET setting = '$setting' WHERE `option`='$option'");
 } elseif ($_GET['action']=='delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
   elseif ($_GET['action']=='reset'){
@@ -12,12 +18,31 @@ if(!isset($_GET['action'])){
 echo "<div id=\"accordion\">";
 
 //SETTINGS
-echo "<h3><a>Settings</a></h3><div><form>";
+echo "<h3><a>Settings</a></h3><div>";
+echo "<form type=\"get\" name=\"settings\" action=\"javascript:sendPost('pages/administration.php?action=settings\">
+	<table><tr><td><strong>Option</strong></td><td><strong>Setting</strong></td></tr>";
 $p->db->qry("SELECT * FROM settings");
-while($row = $p->db->fetchLast())
-	echo "<br><label>{$row['option']}</label><input value=\"{$row['setting']}\"></input></br>";
-
-echo "<br/><input type=\"submit\" class=\"ui-state-default ui-corner-all\"/></form></div>";
+while($row = $p->db->fetchLast()){
+	$p->addJs("document.settings.action += \"&{$row['option']}='+document.settings.{$row['option']}.value + '\";");
+	echo "<tr><td title=\"{$row['help']}\">{$row['title']}</td><td>";
+	switch($row['type']){
+		case ("bool"):
+		echo "<select name=\"{$row['option']}\"><option value=\"1\"";
+						echo $row['setting']?" selected=\"selected\"":"";
+						echo " >Yes</option><option value=\"0\"";
+						echo $row['setting']?"":" selected=\"selected\"";
+						echo ">No</option></select>";
+			break;
+		case ("text"): echo "<input name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
+			break;
+		case ("tbox"): echo "<textarea name=\"{$row['option']}\">{$row['setting']}</textarea>";
+			break;
+		default: echo "Input type unknown.";
+	}
+	echo "</td></tr>";
+}
+$p->addJs("document.settings.action+=\"')\"");
+echo "<tr><td><input type=\"submit\" value=\"Update settings\" class=\"ui-state-default ui-corner-all\"/></td></tr></table></form></div>";
 
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";

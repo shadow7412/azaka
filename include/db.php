@@ -4,6 +4,7 @@ class Database{
 	private $lastQry;
 	
 	function __construct(){
+	//echo $_SERVER['SCRIPT_NAME']."<br/>";
 		include "../config/dbconfig.php";
 		mysql_connect($db['host'], $db['user'], $db['pass']) or $this->error("The connection to MySQL couldn't be made. Make sure MySQL is on, and the username is correct.");
 		mysql_select_db($db['db']) or $this->error("The database \"".$db['db']."\" couldn't be found. Have you run the installer by any chance..?");
