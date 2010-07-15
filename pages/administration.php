@@ -38,9 +38,9 @@ while($row = $p->db->fetchLast()){
 						echo $row['setting']?"":" selected=\"selected\"";
 						echo ">No</option></select>";
 			break;
-		case ("text"): echo "<input name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
+		case ("text"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
 			break;
-		case ("tbox"): echo "<textarea name=\"{$row['option']}\">{$row['setting']}</textarea>";
+		case ("tbox"): echo "<textarea cols=\"40\" rows=\"3\" name=\"{$row['option']}\">{$row['setting']}</textarea>";
 			break;
 		default: echo "Input type unknown.";
 	}
