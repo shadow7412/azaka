@@ -101,7 +101,7 @@ if(file_exists("stop")){
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
 	('userinfo','userinfo.php', 1, 0 ,0),
 	('server','server.php', 0, 500, 5000),
-	('ventrilio','vent.php', 0, 2000, 10000)
+	('ventrilo','vent.php', 0, 2000, 10000)
 	");
 
 	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (

@@ -31,9 +31,11 @@ class Module {
 			return "Access Issue. Please log in.";
 	}
 	function getJs(){
-		if($this->u->canAccess($this->accessreq))
-			return "<script id=\"modjs-".$this->name."\">".$this->js.";setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.")</script>";
-		else
+		if($this->u->canAccess($this->accessreq)){
+			$returnstring = "<script id=\"modjs-".$this->name."\">".$this->js.";";
+			if($this->refresh != 0) $returnstring .= "setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.")";
+			return $returnstring."</script>";
+		} else
 			return "<script id=\"modjs-".$this->name."\"></script>";
 	}
 	function addContent($newContent){

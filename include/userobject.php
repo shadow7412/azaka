@@ -9,7 +9,7 @@ class UserObject {
 	public $dob;
 	public $billable;
 	public $email;
-	public $islocal;
+	public $isLocal;
 
 	function __construct(){
 		$this->updateUser();
@@ -17,10 +17,11 @@ class UserObject {
 			case ("127"):
 			case ("192"):
 			case ("172"):
-				$this->islocal = true;
+			case ("10."):
+				$this->isLocal = true;
 				break;
 			default:
-				$this->islocal = false;
+				$this->isLocal = false;
 		}
 		$this->updateCookies($this->username,$this->password);
 	}
