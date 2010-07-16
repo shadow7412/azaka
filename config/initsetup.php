@@ -89,6 +89,7 @@ if(file_exists("stop")){
 	$errors .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+	  `order` int(11) NOT NULL DEFAULT '0',
 	  `onsidebar` tinyint(1) NOT NULL DEFAULT '0',
 	  `access` int(11) NOT NULL DEFAULT '0',
 	  `name` text NOT NULL,
@@ -117,7 +118,7 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
 	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
-	('bills_info', 'Ask your admin where the bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
+	('bills_info', 'Ask your admin where bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
 	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
 	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','text'),
 	('vent_path', '/var/www/ventrilo_status','VentStat','The executable used to get the status of the vent sever','text')
