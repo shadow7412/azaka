@@ -1,8 +1,6 @@
 <?php
 $netspacefile = '../../xml/netspace.xml';
-include_once "../include/bandwidth.php";
 include_once "../include/userobject.php";
-$stats = new Bandwidth;
 $u = new UserObject;
 
 header("content-type: text/xml");
@@ -28,7 +26,7 @@ if(file_exists($netspacefile) & $u->canAccess(1)){
 	$xml->PLAN['DESCRIPTION'] = "File not set up.";
 	$time = $daysleft = $onpercentage = $ontotal = $onused = $offpercentage = $offtotal = $offused = $uploaded = $ongbday = $offgbday = 0;
 }
-echo "<bandwidth>
+echo "<internet>
 	<plan>{$xml->PLAN['DESCRIPTION']}</plan>
 	<time>$time</time>
 	<daysleft>$daysleft</daysleft>
@@ -41,9 +39,7 @@ echo "<bandwidth>
 	<offpeakused>$offused</offpeakused>
 	<offgbday>$offgbday</offgbday>
 	<uploaded>$uploaded</uploaded>
-	<liveupload>{$stats->upload}</liveupload>
-	<livedownload>{$stats->download}</livedownload>
-</bandwidth>";
+</internet>";
 
 
 
