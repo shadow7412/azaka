@@ -12,7 +12,7 @@ $p->l->addLink('bendigo bank','https://www.bendigobank.com.au/banking/BBLIBankin
 $p->l->addLink('commonwealth bank','https://www3.netbank.commbank.com.au/netbank/bankmain',0);
 $p->l->addLink('nab','https://ib.nab.com.au/nabib/index.jsp',0);
 echo $p->l->dispList()."<br/>";
-echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span>{$p->db->getSetting('bills_info')}</p></div></div>";
+echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>{$p->db->getSetting('bills_info')}</td></tr></table></p></div></div>";
 
 $p->db->qry("SELECT * FROM `bills` WHERE uid = '".$p->u->id."' AND `confirmed` = 0 ORDER BY `uid` ASC");
 echo "<div id=\"accordion\"><h3><a>current bills</a></h3><div>";

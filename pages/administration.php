@@ -53,6 +53,16 @@ echo "<tr><td><input type=\"submit\" value=\"Update settings\" class=\"ui-button
 echo "<h3><a>Page Settings</a></h3><div>";
 echo "Working on it...</div>";
 
+//MODULE SETTINGS
+echo "<h3><a>Module Settings</a></h3><div>";
+$p->addJs("$(\"#modsettings\").sortable();");
+$p->db->qry("SELECT * FROM modules ORDER BY `order`");
+echo "<ul id=\"modsettings\" class=\"ui-helper-reset\" unselectable=\"on\">";
+
+while ($row=$p->db->fetchLast())
+	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span><strong>{$row['name']}</strong></li>";
+echo "</ul></div>";
+
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
 $p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0 ORDER BY username");
