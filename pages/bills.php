@@ -1,7 +1,10 @@
 <?php 
 include_once "../include/page.php";
-$p = new Page('bills',1);
 
+$p = new Page('bills',1); //This page handles it's own access levels. So allow all registered users.
+if((!$p->u->canAccess(2)) && (!$p->u->billable))
+	die(header("Not billable or admin", true, 403)); //halt rendering, and say access denied
+	
 if(isset($_GET['action'])){
 	if($_GET['action']=='pay') $p->db->qry("UPDATE `bills` SET `paid` = 1, `datepaid` = '".date('Y-m-d')."' WHERE `id` = '".$_GET['control']."'");
 	if($_GET['action']=='cancel') $p->db->qry("UPDATE `bills` SET `paid` = 0 WHERE `id` = '".$_GET['control']."'");
