@@ -35,7 +35,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("Default User","INSERT INTO `users`
 	(`username`, `password`, `access`, `firstname`, `lastname`, `dob`, `billable`, `email`)
-	VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', '3', 'System', 'Default', CURDATE(), '0', '')");
+	VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', '3', 'System', 'Default', CURDATE(), '0', 'admin@example.com')");
 
 
 	$errors .= doqry("News Table","CREATE TABLE `news` (
@@ -48,8 +48,9 @@ if(file_exists("stop")){
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
-	$errors .= doqry("Default news item","INSERT INTO `news` (`visible`, `uid`, `title`,`content`)
-	VALUES ('1',  '1',  'Successfully Installed', 'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P<br/><br/>Mmmmm Beta...')
+	$errors .= doqry("Default news item","INSERT INTO `news` (`visible`, `uid`, `title`,`content`) VALUES
+	('1',  '1',  'Successfully Installed', 'Welcome to azaka.<br/><br/>This is the default news item. You seeing this (and no errors) implies that things have gone smoothly.<br/><br/>Shock horror hey :P<br/><br/>Mmmmm Beta...'),
+	('1',  '1',  'Successfully Installed', 'Well now I have azaka. Now what?<br/><br/>Well if you are a mere user you may praise the person in charge of your webserver for using a developed system for managing bills.<br/>If you are an admin, then you should stop by the administration section and change the default values to the ones right for your computer.<br/><br/>Hope you enjoy using this software.')
 	");
 
 	$errors .= doqry("Bills Table","CREATE TABLE `bills` (
@@ -100,7 +101,7 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
-	('userinfo','userinfo.php', 1, 0 ,0),
+	('user','user.php', 1, 0 ,0),
 	('bandwidth','bandwidth.php', 0, 500, 5000),
 	('internet','internet.php', 0, 108000, 216000),
 	('ventrilo','vent.php', 0, 2000, 10000)

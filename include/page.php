@@ -22,6 +22,10 @@ class Page {
 	function addJs($js){
 		$this->javascript .= "\n\n".$js;
 	}
+	function infoBox($info){
+	echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>$info</td></tr></table></p></div></div><br/>";
+
+	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
 		$this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
@@ -31,16 +35,22 @@ class Page {
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
-		$sidebar = "";
-		$this->db->qry("SELECT url FROM modules WHERE enabled = 1 AND onsidebar = 1");
-		$sidebar .= "<ul style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\" id=\"sidelist\">";
+		$this->db->qry("SELECT name, url FROM modules WHERE enabled = 1 AND onsidebar = 1");
+		$sidebar = "<ul style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\" id=\"sidelist\">";
+		$sidebarjs = "";
 		while($row = $this->db->fetchLast()){
-			include "../modules/".$row['url'];
-			$sidebar .= "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\">{$m->name}</div>";
-			$sidebar .= "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div></li>";
+			if(file_exists("../modules/".$row['url'])){
+				include "../modules/".$row['url'];
+				$sidebar .= "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\">{$m->name}</div>";
+				$sidebar .= "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div><br/></li>";
+				$sidebarjs .= $m->getRawJs();
+			} else {
+				$sidebar .= "<li style=\"width:100%\"><div class=\"ui-widget-content ui-corner-all\">Fatal error loading {$row['name']}. Check to see if the module has been copied over, and that the database points to the correct file.</div><br/></li>";
+			}
 		}
 		$sidebar.="</ul>";
 		$this->addJs("document.getElementById('sidebar').innerHTML = '$sidebar';");
+		$this->addJs($sidebarjs);
 		$this->addJs("$(\"#sidelist\").sortable();$(\"#sidelist\").disableSelection();");		
 	}
 	function __destruct(){

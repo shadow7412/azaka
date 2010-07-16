@@ -18,6 +18,8 @@ if(!isset($_GET['action'])){
 	
 //MODULE SETTINGS			
 } elseif ($_GET['action']=='modulesetup'){
+	$p->infoBox('Changing module settings can break the page. If this happens, just refresh your browser.');
+
 	$order = 0;
 	$value = strtok($_GET['order'],' ');
 	do{
@@ -38,6 +40,7 @@ $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 // SHOW FORMS
 //SETTINGS
 echo "<h3><a>Settings</a></h3><div>";
+
 echo "<form type=\"get\" name=\"settings\" action=\"javascript:sendPost('pages/administration.php?action=settings\">
 	<table><tr><td><strong>Option</strong></td><td><strong>Setting</strong></td></tr>";
 $p->db->qry("SELECT * FROM settings");
@@ -71,6 +74,8 @@ echo "Working on it...</div>";
 echo "<h3><a>Module Settings</a></h3><div>";
 $p->addJs("$(\"#modsettingslist\").sortable({placeholder: 'ui-state-highlight'});");
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
+echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>The sidebar is on the left. It will refresh whenever a page is loaded.<br/>The modulebar is on the right. It will refresh automatically as indicated by the local/web refresh fields.</td></tr></table></p></div></div>";
+
 echo "<form name=\"modsettings\" onsubmit=\"var element = document.getElementById('modsettingslist').firstElementChild;
 var order=element.firstElementChild.value+' ';
 while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
@@ -96,11 +101,10 @@ while ($row=$p->db->fetchLast()){
 	echo ">ModuleBar</option></select>";
 	
 	$p->addJs("document.modsettings.action += \"&localrefresh{$row['id']}='+document.modsettings.localrefresh{$row['id']}.value + '\";");
-	echo " local refresh<input type=\"text\" size=\"4\" name=\"localrefresh{$row['id']}\" value=\"{$row['localrefresh']}\"/>";
+	echo " local-refresh<input type=\"text\" size=\"4\" name=\"localrefresh{$row['id']}\" value=\"{$row['localrefresh']}\"/>";
 	$p->addJs("document.modsettings.action += \"&webrefresh{$row['id']}='+document.modsettings.webrefresh{$row['id']}.value + '\";");
-	echo "ms webrefresh<input type=\"text\" size=\"4\" name=\"webrefresh{$row['id']}\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
+	echo "ms web-refresh<input type=\"text\" size=\"4\" name=\"webrefresh{$row['id']}\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
 	}
-//$p->addJs("document.modsettings.action+=\"')\"");
 echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></form></div>";
 
 //USER ADMINISTRATION

@@ -38,6 +38,12 @@ class Module {
 		} else
 			return "<script id=\"modjs-".$this->name."\"></script>";
 	}
+	function getRawJs(){
+		if($this->u->canAccess($this->accessreq)){
+			return $this->js;
+		} else
+			return "";
+	}
 	function addContent($newContent){
 		$this->content .= $newContent;
 	}
