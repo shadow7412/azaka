@@ -32,11 +32,11 @@ while($row = $p->db->fetchLast()){
 	echo "<tr><td title=\"{$row['help']}\">{$row['title']}</td><td>";
 	switch($row['type']){
 		case ("bool"):
-		echo "<select name=\"{$row['option']}\"><option value=\"1\"";
-						echo $row['setting']?" selected=\"selected\"":"";
-						echo " >Yes</option><option value=\"0\"";
-						echo $row['setting']?"":" selected=\"selected\"";
-						echo ">No</option></select>";
+			echo "<select name=\"{$row['option']}\"><option value=\"1\"";
+			echo $row['setting']?" selected=\"selected\"":"";
+			echo " >Yes</option><option value=\"0\"";
+			echo $row['setting']?"":" selected=\"selected\"";
+			echo ">No</option></select>";
 			break;
 		case ("text"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
 			break;
@@ -57,11 +57,18 @@ echo "Working on it...</div>";
 echo "<h3><a>Module Settings</a></h3><div>";
 $p->addJs("$(\"#modsettings\").sortable();");
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
-echo "<ul id=\"modsettings\" class=\"ui-helper-reset\" unselectable=\"on\">";
-
-while ($row=$p->db->fetchLast())
-	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span><strong>{$row['name']}</strong></li>";
-echo "</ul></div>";
+echo "<form><ul id=\"modsettings\" class=\"ui-helper-reset\" unselectable=\"on\">";
+while ($row=$p->db->fetchLast()){
+	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">";
+	echo "<table><tr><td><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span></td><td width=\"90\"><strong>{$row['name']}: </strong></td><td>";
+	echo "<select name=\"{$row['name']}onsidebar\"><option value=\"1\"";
+	echo $row['onsidebar']?" selected=\"selected\"":"";
+	echo " >SideBar</option><option value=\"0\"";
+	echo $row['onsidebar']?"":" selected=\"selected\"";
+	echo ">ModuleBar</option></select>";
+	echo " local refresh<input type=\"text\" size=\"5\" name=\"localrefresh{$row['name']}\" value=\"{$row['localrefresh']}\"/>ms webrefresh<input type=\"text\" size=\"5\" name=\"localrefresh{$row['name']}\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
+	}
+echo "</ul><input type=\"submit\" value=\"Update\"class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></form></div>";
 
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
