@@ -7,7 +7,7 @@ if(isset($_GET['action'])){
 	if($_GET['action']=='cancel') $p->db->qry("UPDATE `bills` SET `paid` = 0 WHERE `id` = '".$_GET['control']."'");
 }
 $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
-$p->l->addItem('manage bills','admin_bills.php',2);
+$p->l->addItem('manage bills','admin_bills',2);
 $p->l->addLink('bendigo bank','https://www.bendigobank.com.au/banking/BBLIBanking/',0);
 $p->l->addLink('commonwealth bank','https://www3.netbank.commbank.com.au/netbank/bankmain',0);
 $p->l->addLink('nab','https://ib.nab.com.au/nabib/index.jsp',0);
