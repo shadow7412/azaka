@@ -49,10 +49,12 @@ document.register.email.value == '' ){
 } else if(document.register.username.value == 'guest'){
 	errorMsg('\'guest\' is not a valid username.');
 	document.register.username.value = '';
+	document.register.username.focus();
 } else if(document.register.password.value != document.register.confirm.value){
 	errorMsg('Please learn how to type. Start simply - by typing the same password twice.');
 	document.register.password.value = '';
 	document.register.confirm.value = '';
+	document.register.password.focus();
 } else if(false){
 	errorMsg('In case I think of something else.');
 } else {

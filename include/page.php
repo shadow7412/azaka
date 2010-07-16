@@ -41,9 +41,11 @@ class Page {
 		while($row = $this->db->fetchLast()){
 			if(file_exists("../modules/".$row['url'])){
 				include "../modules/".$row['url'];
-				$sidebar .= "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\">{$m->name}</div>";
-				$sidebar .= "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div><br/></li>";
-				$sidebarjs .= $m->getRawJs();
+				if($this->u->canAccess($m->accessreq)){
+					$sidebar .= "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\">{$m->name}</div>";
+					$sidebar .= "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div><br/></li>";
+					$sidebarjs .= $m->getRawJs();
+				}
 			} else {
 				$sidebar .= "<li style=\"width:100%\"><div class=\"ui-widget-content ui-corner-all\">Fatal error loading {$row['name']}. Check to see if the module has been copied over, and that the database points to the correct file.</div><br/></li>";
 			}
