@@ -9,11 +9,24 @@ if(!isset($_GET['action'])){
 	foreach ($_GET as $option => $setting)
 		if ($option != "action")
 			$p->db->qry("UPDATE settings SET setting = '$setting' WHERE `option`='$option'");
+
 //PAGE SETTINGS			
-} elseif ($_GET['action']=='pagesetup')
-	echo "";
+} elseif ($_GET['action']=='pagesetup'){
+	echo "<pre>";
+	print_r($_GET);
+	echo "</pre>";
+	
+//MODULE SETTINGS			
+} elseif ($_GET['action']=='modulesetup'){
+	echo "<pre>";
+	print_r($_GET);
+	echo "</pre>";
+	foreach ($_GET as $option => $setting)
+		if ($option != "action")
+			echo "";
+
 //USER ADMIN
-  elseif ($_GET['action']=='delete')
+} elseif ($_GET['action']=='delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
   elseif ($_GET['action']=='reset'){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
@@ -22,6 +35,7 @@ if(!isset($_GET['action'])){
 echo "<div id=\"accordion\">";
 $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 
+// SHOW FORMS
 //SETTINGS
 echo "<h3><a>Settings</a></h3><div>";
 echo "<form type=\"get\" name=\"settings\" action=\"javascript:sendPost('pages/administration.php?action=settings\">
@@ -55,20 +69,39 @@ echo "Working on it...</div>";
 
 //MODULE SETTINGS
 echo "<h3><a>Module Settings</a></h3><div>";
-$p->addJs("$(\"#modsettings\").sortable();");
+$p->addJs("$(\"#modsettingslist\").sortable({placeholder: 'ui-state-highlight'});");
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
-echo "<form><ul id=\"modsettings\" class=\"ui-helper-reset\" unselectable=\"on\">";
+echo "<form name=\"modsettings\" onsubmit=\"var element = document.getElementById('modsettingslist').firstElementChild;
+var order=element.firstElementChild.value+' ';
+while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
+this.action+='&order='+order+'\')'\" action=\"javascript:sendPost('pages/administration.php?action=modulesetup\"><ul id=\"modsettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 while ($row=$p->db->fetchLast()){
 	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">";
+	echo "<input type=\"hidden\" value=\"{$row['name']}\"/>";
+	
 	echo "<table><tr><td><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span></td><td width=\"90\"><strong>{$row['name']}: </strong></td><td>";
+	
+	$p->addJs("document.modsettings.action += \"&{$row['name']}enabled='+document.modsettings.{$row['name']}enabled.value + '\";");
+	echo "<select name=\"{$row['name']}enabled\"><option value=\"1\"";
+	echo $row['enabled']?" selected=\"selected\"":"";
+	echo " >On</option><option value=\"0\"";
+	echo $row['enabled']?"":" selected=\"selected\"";
+	echo ">Off</option></select>";
+
+	$p->addJs("document.modsettings.action += \"&{$row['name']}onsidebar='+document.modsettings.{$row['name']}onsidebar.value + '\";");
 	echo "<select name=\"{$row['name']}onsidebar\"><option value=\"1\"";
 	echo $row['onsidebar']?" selected=\"selected\"":"";
 	echo " >SideBar</option><option value=\"0\"";
 	echo $row['onsidebar']?"":" selected=\"selected\"";
 	echo ">ModuleBar</option></select>";
-	echo " local refresh<input type=\"text\" size=\"5\" name=\"localrefresh{$row['name']}\" value=\"{$row['localrefresh']}\"/>ms webrefresh<input type=\"text\" size=\"5\" name=\"localrefresh{$row['name']}\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
+	
+	$p->addJs("document.modsettings.action += \"&{$row['name']}localrefresh='+document.modsettings.{$row['name']}localrefresh.value + '\";");
+	echo " local refresh<input type=\"text\" size=\"4\" name=\"{$row['name']}localrefresh\" value=\"{$row['localrefresh']}\"/>";
+	$p->addJs("document.modsettings.action += \"&{$row['name']}webrefresh='+document.modsettings.{$row['name']}webrefresh.value + '\";");
+	echo "ms webrefresh<input type=\"text\" size=\"4\" name=\"{$row['name']}webrefresh\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
 	}
-echo "</ul><input type=\"submit\" value=\"Update\"class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></form></div>";
+//$p->addJs("document.modsettings.action+=\"')\"");
+echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></form></div>";
 
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
