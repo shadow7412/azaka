@@ -32,7 +32,7 @@ class Page {
 	}
 	function setupSidebar(){
 		$sidebar = "";
-		$this->db->qry("SELECT url FROM modules WHERE enabled = 1 & onsidebar = 1");
+		$this->db->qry("SELECT url FROM modules WHERE enabled = 1 AND onsidebar = 1");
 		$sidebar .= "<ul style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\" id=\"sidelist\">";
 		while($row = $this->db->fetchLast()){
 			include "../modules/".$row['url'];

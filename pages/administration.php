@@ -18,13 +18,13 @@ if(!isset($_GET['action'])){
 	
 //MODULE SETTINGS			
 } elseif ($_GET['action']=='modulesetup'){
-	echo "<pre>";
-	print_r($_GET);
-	echo "</pre>";
-	foreach ($_GET as $option => $setting)
-		if ($option != "action")
-			echo "";
-
+	$order = 0;
+	$value = strtok($_GET['order'],' ');
+	do{
+		$order++;
+		$p->db->qry("UPDATE modules SET `enabled`='{$_GET["enabled".$value]}', `order`='$order', `onsidebar`='{$_GET["onsidebar".$value]}',`localrefresh`='{$_GET["localrefresh".$value]}',`webrefresh`='{$_GET["webrefresh".$value]}' WHERE `id` = '$value'");
+	}while ($value = strtok(' '));
+	$p->addJs("forceUpdateMods();");
 //USER ADMIN
 } elseif ($_GET['action']=='delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
@@ -77,28 +77,28 @@ while (element = element.nextElementSibling) order += element.firstElementChild.
 this.action+='&order='+order+'\')'\" action=\"javascript:sendPost('pages/administration.php?action=modulesetup\"><ul id=\"modsettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 while ($row=$p->db->fetchLast()){
 	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">";
-	echo "<input type=\"hidden\" value=\"{$row['name']}\"/>";
+	echo "<input type=\"hidden\" value=\"{$row['id']}\"/>";
 	
 	echo "<table><tr><td><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span></td><td width=\"90\"><strong>{$row['name']}: </strong></td><td>";
 	
-	$p->addJs("document.modsettings.action += \"&{$row['name']}enabled='+document.modsettings.{$row['name']}enabled.value + '\";");
-	echo "<select name=\"{$row['name']}enabled\"><option value=\"1\"";
+	$p->addJs("document.modsettings.action += \"&enabled{$row['id']}='+document.modsettings.enabled{$row['id']}.value + '\";");
+	echo "<select name=\"enabled{$row['id']}\"><option value=\"1\"";
 	echo $row['enabled']?" selected=\"selected\"":"";
 	echo " >On</option><option value=\"0\"";
 	echo $row['enabled']?"":" selected=\"selected\"";
 	echo ">Off</option></select>";
 
-	$p->addJs("document.modsettings.action += \"&{$row['name']}onsidebar='+document.modsettings.{$row['name']}onsidebar.value + '\";");
-	echo "<select name=\"{$row['name']}onsidebar\"><option value=\"1\"";
+	$p->addJs("document.modsettings.action += \"&onsidebar{$row['id']}='+document.modsettings.onsidebar{$row['id']}.value + '\";");
+	echo "<select name=\"onsidebar{$row['id']}\"><option value=\"1\"";
 	echo $row['onsidebar']?" selected=\"selected\"":"";
 	echo " >SideBar</option><option value=\"0\"";
 	echo $row['onsidebar']?"":" selected=\"selected\"";
 	echo ">ModuleBar</option></select>";
 	
-	$p->addJs("document.modsettings.action += \"&{$row['name']}localrefresh='+document.modsettings.{$row['name']}localrefresh.value + '\";");
-	echo " local refresh<input type=\"text\" size=\"4\" name=\"{$row['name']}localrefresh\" value=\"{$row['localrefresh']}\"/>";
-	$p->addJs("document.modsettings.action += \"&{$row['name']}webrefresh='+document.modsettings.{$row['name']}webrefresh.value + '\";");
-	echo "ms webrefresh<input type=\"text\" size=\"4\" name=\"{$row['name']}webrefresh\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
+	$p->addJs("document.modsettings.action += \"&localrefresh{$row['id']}='+document.modsettings.localrefresh{$row['id']}.value + '\";");
+	echo " local refresh<input type=\"text\" size=\"4\" name=\"localrefresh{$row['id']}\" value=\"{$row['localrefresh']}\"/>";
+	$p->addJs("document.modsettings.action += \"&webrefresh{$row['id']}='+document.modsettings.webrefresh{$row['id']}.value + '\";");
+	echo "ms webrefresh<input type=\"text\" size=\"4\" name=\"webrefresh{$row['id']}\" value=\"{$row['webrefresh']}\"/>ms</li></td></tr></table>";
 	}
 //$p->addJs("document.modsettings.action+=\"')\"");
 echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></form></div>";
