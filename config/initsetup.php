@@ -120,6 +120,9 @@ if(file_exists("stop")){
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
 	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
+	
+	('bills_all', '1', 'Show all Bills', 'Shows all people in module instead of just the logged in user.', 'bool'),
+	('bills_email', '0', 'Send Email', 'Sends a notification email about bills when they are added or deleted.', 'bool'),	
 	('bills_info', 'Ask your admin where bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
 	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
 	('paypal_currency', 'AUD', 'Paypal Currency', 'Check the paypal site for the correct code.', 'text'),
