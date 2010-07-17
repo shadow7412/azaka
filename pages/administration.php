@@ -15,6 +15,11 @@ if(!isset($_GET['action'])){
 	echo "<pre>";
 	print_r($_GET);
 	echo "</pre>";
+	$p->db->qry("DELETE FROM links");
+	$value = strtok($_GET['order'],' ');
+	do{
+		$p->db->qry("INSERT INTO links (label, url, access, billoverride) VALUES ('{$_GET['label'.$value]}','{$_GET['url'.$value]}','{$_GET['url'.$access]}','{$_GET['url'.$billoverride]}')");
+	}while ($value = strtok(' '));
 
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
@@ -33,6 +38,7 @@ if(!isset($_GET['action'])){
 		$p->db->qry("UPDATE modules SET `enabled`='{$_GET["enabled".$value]}', `order`='$order', `onsidebar`='{$_GET["onsidebar".$value]}',`localrefresh`='{$_GET["localrefresh".$value]}',`webrefresh`='{$_GET["webrefresh".$value]}' WHERE `id` = '$value'");
 	}while ($value = strtok(' '));
 	$p->addJs("forceUpdateMods();");
+
 //USER ADMIN
 } elseif ($_GET['action']=='delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
@@ -46,7 +52,7 @@ $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 // SHOW FORMS
 //SETTINGS
 echo "<h3><a>Settings</a></h3><div>";
-
+$p->infoBox("If you are unclear on any setting, put your mouse over the title of its label. A tooltip will appear.");
 echo "<form type=\"get\" name=\"settings\" action=\"javascript:sendPost('pages/administration.php?action=settings\">
 	<table><tr><td><strong>Option</strong></td><td><strong>Setting</strong></td></tr>";
 $p->db->qry("SELECT * FROM settings");
@@ -79,9 +85,52 @@ echo "<tr><td><input type=\"submit\" value=\"Update settings\" class=\"ui-button
 //LINK SETTINGS
 $row = $p->db->fetch($p->db->qry("SELECT enabled FROM modules WHERE name='links'"));
 if($row['enabled']){
-	echo "<h3><a>Link Module Settings</a></h3><div>";
-	echo "Working on it...</div>";
+	echo "<h3><a>Link Module Settings</a></h3><div><form name=\"linksettings\" id=\"linksettings\" onsubmit=\"
+
+var order = '';
+var element = document.getElementById('linksettingslist').firstElementChild;
+if(element!=undefined){
+	order += element.firstElementChild.value+' ';
+	while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
 }
+this.action+='&order='+order+'\')'
+
+\" action=\"javascript:sendPost('pages/administration.php?action=links\">
+<ul id=\"linksettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
+
+	$p->addJs("$(\"#linksettingslist\").sortable({placeholder: 'ui-state-highlight'});");
+	$id = 0;
+	$p->db->qry("SELECT * FROM links");
+	while($row=$p->db->fetchLast()){
+		echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">
+		<input type=\"hidden\" value=\"$id\"/>
+		<table><tr><td><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span></td><td>
+		<input name=\"label$id\" size = \"7\" value=\"{$row['label']}\"/>
+		<input name=\"url$id\" value=\"{$row['url']}\"/> 
+		<select name=\"access$id\">
+			<option value=\"0\">Unauthorised</option>
+			<option value=\"1\">Authorised</option>
+			<option value=\"2\">Admin</option>
+			<option value=\"3\">God</option>
+		</select>
+		</td><td>
+		<select name=\"billoverride$id\">
+			<option value=\"0\">Ignore Billability</option>
+			<option value=\"1\">or Billable</option>
+		</select></td></tr></table></li>";
+		
+		$p->addJs("document.linksettings.action += \"&label$id='+document.linksettings.label$id.value + '\";");
+		$p->addJs("document.linksettings.action += \"&url$id='+document.linksettings.url$id.value + '\";");
+		$p->addJs("document.linksettings.action += \"&access$id='+document.linksettings.access$id.value + '\";");
+		$p->addJs("document.linksettings.action += \"&billoverride$id='+document.linksettings.billoverride$id.value + '\";");
+		
+		$p->addJs("document.getElementById('linksettings').billoverride$id.value = '{$row['billoverride']}'");
+		$p->addJs("document.getElementById('linksettings').access$id.value = '{$row['reqaccess']}'");
+		$id++; 
+		}
+	echo "</ul><input type=\"submit\" onclick=\"document.linksettings.action+= '&labelnew' + prompt('New Label:') +'&urlnew';\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/><input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
+}
+
 //PAGE SETTINGS
 echo "<h3><a>Page Settings</a></h3><div>";
 echo "Working on it...</div>";
@@ -90,7 +139,7 @@ echo "Working on it...</div>";
 echo "<h3><a>Module Settings</a></h3><div>";
 $p->addJs("$(\"#modsettingslist\").sortable({placeholder: 'ui-state-highlight'});");
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
-echo "<div class=\"ui-widget\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>The sidebar is on the left. It will refresh whenever a page is loaded.<br/>The modulebar is on the right. It will refresh automatically as indicated by the local/web refresh fields.</td></tr></table></p></div></div>";
+echo "<div class=\"ui-widget\">".$p->infoBox("The sidebar is on the left. It will refresh whenever a page is loaded.<br/>The modulebar is on the right. It will refresh automatically as indicated by the local/web refresh fields")."</div>";
 
 echo "<form name=\"modsettings\" onsubmit=\"var element = document.getElementById('modsettingslist').firstElementChild;
 var order=element.firstElementChild.value+' ';
@@ -130,14 +179,14 @@ echo "<form name='useradmin' id='useradmin'><table>";
 while($row = $p->db->fetchLast()){
 	extract($row);
 	echo "<tr><td>$username</td><td>
-  <select name=\"access$id\" id=\"access\">
+  <select name=\"access$id\">
     <option value=\"0\">Unauthorised</option>
     <option value=\"1\">Authorised</option>
     <option value=\"2\">Admin</option>
     <option value=\"3\">God</option>
   </select>
   </td><td>
-  <select name=\"billable$id\" id=\"billable\">
+  <select name=\"billable$id\">
     <option value=\"0\">Standard</option>
     <option value=\"1\">Billable</option>
   </select></td>
