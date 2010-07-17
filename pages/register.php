@@ -10,7 +10,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 		} else {
 			//incorrect password
 			echo "You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately.<br/>Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...<br/><br/>If you have not used this system before, please register.";
-		}	
+		}
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
 	$p->addJs("forceUpdateMods();forceHash();");
@@ -22,7 +22,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 	if($row = $p->db->fetchLast()){
 		echo "That username (".$row['username'].") is taken";
 		if($row['disabled']) echo ", but is disabled.<br/>If you are this user, you may want to talk to your benevolent admin.";
-		echo "<br/><br/>Your punishment is filling out the whole form again.";
+		echo "<br/><br/>Your punishment is filling out the whole form again because I haven't made it autopopulate yet.";
 	} else {
 		//add user to database
 		extract($_GET);
@@ -37,7 +37,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 }
 ?>
 
-<form id="register" name="register" method="get" action="
+<form id="register" name="register" action="
 javascript:if(document.register.username.value == '' || 
 document.register.password.value == '' || 
 document.register.confirm.value == '' || 
@@ -55,8 +55,10 @@ document.register.email.value == '' ){
 	document.register.password.value = '';
 	document.register.confirm.value = '';
 	document.register.password.focus();
-} else if(false){
-	errorMsg('In case I think of something else.');
+} else if(!isEmail(document.register.email.value)){
+	errorMsg('the email does not seem valid');
+	document.register.email.value = '';
+	document.register.email.focus();
 } else {
 	sendPost('pages/register.php?action=registering&
 	username='+document.register.username.value+'&

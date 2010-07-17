@@ -37,7 +37,6 @@ if(file_exists("stop")){
 	(`username`, `password`, `access`, `firstname`, `lastname`, `dob`, `billable`, `email`)
 	VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', '3', 'System', 'Default', CURDATE(), '0', 'admin@example.com')");
 
-
 	$errors .= doqry("News Table","CREATE TABLE `news` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `visible` tinyint(1) NOT NULL DEFAULT '1',
@@ -118,6 +117,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("Add Default Links", "INSERT INTO `links` (label, url, reqaccess, billoverride) VALUES
 	('google',  'http://google.com',  '0',  '0'),
+	('bills',  'http://yahoo.com;',  '0',  '0'),
 	('resetdb',  'config/initsetup.php',  '3',  '1')
 	");
 	
@@ -141,7 +141,7 @@ if(file_exists("stop")){
 	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
 	('paypal_currency', 'AUD', 'Paypal Currency', 'Check the paypal site for the correct code.', 'text'),
 	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','mail'),
-	('vent_server', '127.0.0.1','Vent Server','The address of the vent server','ip'),
+	('vent_server', '127.0.0.1','Vent Server','The address of the vent server','text'),
 	('vent_path', '/var/www/ventrilo_status','VentStat','The executable used to get the status of the vent sever','text'),
 	('vent_port', '3784','Vent Port','The port the vent server is running on','int'),
 	('vent_pass', '','Vent Password','The password the vent server requires. Leave blank for none.','text')

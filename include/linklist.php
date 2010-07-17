@@ -22,7 +22,7 @@ class LinkList {
 		}
 	}
 	function addBreak(){
-		$this->links[$this->counter++]["label"] = "";
+		if($counter!=0) $this->links[$this->counter++]["label"] = "";
 	}
 	function dispList(){
 		if($this->counter!=0){

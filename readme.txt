@@ -21,3 +21,4 @@ While I am here, I should dump these somewhere:
 *jah (the main ajax function) is from http://homepage.mac.com/kevinmarks/staticjah.html
 *paypal uses... Pay...Pal... http://paypal.com
 *The javascript md5 function came from http://pajhome.org.uk/crypt/md5
+*The email validation formulae were http://www.smartwebby.com/DHTML/email_validation.asp#explanation
