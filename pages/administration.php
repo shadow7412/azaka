@@ -10,6 +10,12 @@ if(!isset($_GET['action'])){
 		if ($option != "action")
 			$p->db->qry("UPDATE settings SET setting = '$setting' WHERE `option`='$option'");
 
+//LINK SETTINGS
+} elseif ($_GET['action']=="links"){
+	echo "<pre>";
+	print_r($_GET);
+	echo "</pre>";
+
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
 	echo "<pre>";
@@ -57,6 +63,12 @@ while($row = $p->db->fetchLast()){
 			break;
 		case ("text"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
 			break;
+		case ("mail"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
+			break;
+		case ("ip"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
+			break;
+		case ("int"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\"></input>";
+			break;
 		case ("tbox"): echo "<textarea cols=\"40\" rows=\"3\" name=\"{$row['option']}\">{$row['setting']}</textarea>";
 			break;
 		default: echo "Input type unknown.";
@@ -66,6 +78,12 @@ while($row = $p->db->fetchLast()){
 $p->addJs("document.settings.action+=\"')\"");
 echo "<tr><td><input type=\"submit\" value=\"Update settings\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"/></td></tr></table></form></div>";
 
+//LINK SETTINGS
+$row = $p->db->fetch($p->db->qry("SELECT enabled FROM modules WHERE name='links'"));
+if($row['enabled']){
+	echo "<h3><a>Link Module Settings</a></h3><div>";
+	echo "Working on it...</div>";
+}
 //PAGE SETTINGS
 echo "<h3><a>Page Settings</a></h3><div>";
 echo "Working on it...</div>";

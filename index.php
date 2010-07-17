@@ -11,8 +11,10 @@ switch ($_GET['view']){
 		break;
 	default:
 		if (strpos($_SERVER['HTTP_USER_AGENT'],"iPhone") || 
-		strpos($_SERVER['HTTP_USER_AGENT'],"Android"))
+		    strpos($_SERVER['HTTP_USER_AGENT'],"Android"))
 			require("aesthetics/mobile.html");
+		elseif (strpos($_SERVER['HTTP_USER_AGENT'],"MSIE"))
+			require("aesthetics/ie.html");
 		else require("aesthetics/pc.html");
 }
 ?>

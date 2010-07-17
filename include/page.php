@@ -35,7 +35,7 @@ class Page {
 		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
 	}
 	function setupSidebar(){
-		$this->db->qry("SELECT name, url FROM modules WHERE enabled = 1 AND onsidebar = 1");
+		$this->db->qry("SELECT name, url FROM modules WHERE enabled = 1 AND onsidebar = 1 ORDER BY `order`");
 		$sidebar = "<ul style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\" id=\"sidelist\">";
 		$sidebarjs = "";
 		while($row = $this->db->fetchLast()){

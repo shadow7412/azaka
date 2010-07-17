@@ -102,11 +102,25 @@ if(file_exists("stop")){
 	
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
 	('user','user.php', 1, 0 ,0),
+	('links','links.php', 1, 0, 0),
 	('bandwidth','bandwidth.php', 0, 500, 5000),
 	('internet','internet.php', 0, 108000, 216000),
 	('ventrilo','vent.php', 0, 2000, 10000)
 	");
+	
+	$errors .= doqry("Links Table", "CREATE TABLE `links` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`label` VARCHAR( 15 ) NOT NULL ,
+	`url` TEXT NOT NULL ,
+	`reqaccess` INT NOT NULL ,
+	`billoverride` BOOL NOT NULL
+	) ENGINE = MYISAM ;");
 
+	$errors .= doqry("Add Default Links", "INSERT INTO `links` (label, url, reqaccess, billoverride) VALUES
+	('google',  'http://google.com',  '0',  '0'),
+	('resetdb',  'config/initsetup.php',  '3',  '1')
+	");
+	
 	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (
 	  `option` varchar(20) NOT NULL,
 	  `setting` text,
@@ -126,8 +140,11 @@ if(file_exists("stop")){
 	('bills_info', 'Ask your admin where bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
 	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
 	('paypal_currency', 'AUD', 'Paypal Currency', 'Check the paypal site for the correct code.', 'text'),
-	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','text'),
-	('vent_path', '/var/www/ventrilo_status','VentStat','The executable used to get the status of the vent sever','text')
+	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','mail'),
+	('vent_server', '127.0.0.1','Vent Server','The address of the vent server','ip'),
+	('vent_path', '/var/www/ventrilo_status','VentStat','The executable used to get the status of the vent sever','text'),
+	('vent_port', '3784','Vent Port','The port the vent server is running on','int'),
+	('vent_pass', '','Vent Password','The password the vent server requires. Leave blank for none.','text')
 	");
 	
 	if($errors == ''){

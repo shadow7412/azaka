@@ -110,9 +110,9 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 $stat = new CVentriloStatus;
 $stat->m_cmdprog	= $m->db->getSetting("vent_path");	// Adjust accordingly.
 $stat->m_cmdcode	= "2";					// Detail mode.
-$stat->m_cmdhost	= "127.0.0.1";			// Assume ventrilo server on same machine.
-$stat->m_cmdport	= "3784";				// Port to be statused.
-$stat->m_cmdpass	= "";					// Status password if necessary.
+$stat->m_cmdhost	= $m->db->getSetting("vent_server");			// Assume ventrilo server on same machine.
+$stat->m_cmdport	= $m->db->getSetting("vent_port");				// Port to be statused.
+$stat->m_cmdpass	= $m->db->getSetting("vent_pass");					// Status password if necessary.
 
 if (  $stat->Request() ){
 	$m->addContent("<span onclick=\"javascript:errorMsg('CVentriloStatus->Request() failed. <strong>$stat->m_error</strong>')\">Error occurred. Click for details.</span>");
