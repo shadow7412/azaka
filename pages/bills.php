@@ -32,10 +32,10 @@ if ($p->db->noLast() != 0){
 		<td>";
 		if (!$paid){
 			echo "<input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:sendPost('pages/bills.php?action=pay&control=$id')\" value=\"mark as paid\"></td><td>";
-			if ($p->db->getSetting('paypal_enabled')) {
+			if ($paypalemail = $p->db->getSetting('paypal_email')) {
 				echo "<form action=\"https://www.paypal.com/cgi-bin/webscr\" target=\"_blank\" method=\"post\">
 				<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
-				<input type=\"hidden\" name=\"business\" value=\"{$p->db->getSetting('paypal_email')}\">
+				<input type=\"hidden\" name=\"business\" value=\"$paypalemail\">
 				<input type=\"hidden\" name=\"lc\" value=\"AU\">
 				<input type=\"hidden\" name=\"item_name\" value=\"{$p->u->username}$service\">
 				<input type=\"hidden\" name=\"amount\" value=\"$amount\">

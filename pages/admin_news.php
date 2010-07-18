@@ -2,7 +2,7 @@
 include_once "../include/page.php";
 include_once "../include/linklist.php";
 $p = new Page("news",2);
-$l = new Linklist();
+$l = new LinkList($p->u);
 
 $l->additem("news items","news", 0);
 echo $l->dispList();

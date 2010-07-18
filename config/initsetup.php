@@ -1,4 +1,4 @@
-<?php
+	<?php
 include "dbconfig.php";
 $errors = "";
 
@@ -101,6 +101,7 @@ if(file_exists("stop")){
 	
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
 	('user','user.php', 1, 0 ,0),
+	('bills','bills.php', 1, 0, 0),
 	('links','links.php', 1, 0, 0),
 	('bandwidth','bandwidth.php', 0, 500, 5000),
 	('internet','internet.php', 0, 108000, 216000),
@@ -138,9 +139,8 @@ if(file_exists("stop")){
 	('bills_all', '1', 'Show all Bills', 'Shows all people in module instead of just the logged in user.', 'bool'),
 	('bills_email', '0', 'Send Email', 'Sends a notification email about bills when they are added or deleted.', 'bool'),	
 	('bills_info', 'Ask your admin where bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
-	('paypal_enabled', '0', 'Paypal Enabled', 'Should the paypal link be shown in the bills area?', 'bool'),
+	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. If this is left blank - paypal options will not be available','mail'),
 	('paypal_currency', 'AUD', 'Paypal Currency', 'Check the paypal site for the correct code.', 'text'),
-	('paypal_email', 'huffy7412@gmail.com','Paypal Email','The email address of the person who should recieve the bill payments. They require a paypal account listed on that address for it to work. MAKE SURE THIS IS SET UP PROPERLY BEFORE USING IT.','mail'),
 	('vent_server', '127.0.0.1','Vent Server','The address of the vent server','text'),
 	('vent_path', '/var/www/ventrilo_status','VentStat','The executable used to get the status of the vent sever','text'),
 	('vent_port', '3784','Vent Port','The port the vent server is running on','int'),
