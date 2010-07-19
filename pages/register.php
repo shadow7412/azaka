@@ -2,7 +2,7 @@
 include_once "../include/page.php";
 $p = new Page("registration",0);
 
-if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET['username']) && isset($_GET['password'])
+if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['username']) && isset($_GET['password'])
 	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
 			$p->u->updateCookies($_GET['username'], $_GET['password']);
@@ -14,9 +14,9 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
 	$p->addJs("forceUpdateMods();forceHash();");
-} else if (isset($_GET['action']) && $_GET['action']=="register"){
+} else if (isset($_GET['action']) && $_GET['action']=="wanttoregister"){
 	echo "Here is the paperwork..<br/><br/>";
-} else if (isset($_GET['action']) && $_GET['action']=="registering"){
+} else if (isset($_GET['action']) && $_GET['action']=="register"){
 	//make sure there are no duplicate names
 	$p->db->qry("SELECT username, disabled FROM users WHERE username = '".$_GET['username']."'");
 	if($row = $p->db->fetchLast()){
@@ -37,8 +37,8 @@ if ((!(isset($_GET['action']) && $_GET['action']=="registering")) && isset($_GET
 }
 ?>
 
-<form id="register" name="register" action="
-javascript:if(document.register.username.value == '' || 
+<form id="register" name="register" onsubmit="
+if(document.register.username.value == '' || 
 document.register.password.value == '' || 
 document.register.confirm.value == '' || 
 document.register.firstname.value == '' || 
@@ -60,16 +60,10 @@ document.register.email.value == '' ){
 	document.register.email.value = '';
 	document.register.email.focus();
 } else {
-	sendPost('pages/register.php?action=registering&
-	username='+document.register.username.value+'&
-	firstname='+document.register.firstname.value+'&
-	lastname='+document.register.lastname.value+'&
-	dobd='+document.register.dobd.value+'&
-	dobm='+document.register.dobm.value+'&
-	doby='+document.register.doby.value+'&
-	email='+document.register.email.value+'&
-	password='+hex_md5(document.register.password.value));
-};">
+	document.register.password.value = hex_md5(document.register.password.value);
+	document.register.confirm.value='';
+	doPost('pages/register.php',this);
+};" action="javascript:false">
   <table width="500" border="0">
     <tr>
       <td width="167">username</td>

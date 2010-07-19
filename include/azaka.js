@@ -14,10 +14,23 @@ function grabContent(id){
 	$("#bottom").fadeTo("fast",0);
 	jah("pages?page="+id,'content');
 }
-function sendPost(url){
+function sendPost(url){ //BEING PHASED OUT
+	errorMsg('Uses sendPost()');
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
+	jah(url,'content');
+	return false; //to stop any form stuff from happening all by itself.
+}
+function doPost(url,form){
+	for(var counter = 0;form.length != counter;counter++){
+		if(counter==0) url += "?"; else url += "&";
+		try {
+			url += form[counter].name + "=" + form[counter].value;
+		} catch (e){
+			alert(form+"\n"+counter);
+		}
+	}
 	jah(url,'content');
 	return false; //to stop any form stuff from happening all by itself.
 }
