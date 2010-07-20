@@ -22,7 +22,10 @@ function sendPost(url){ //BEING PHASED OUT
 	jah(url,'content');
 	return false; //to stop any form stuff from happening all by itself.
 }
-function doPost(url,form){
+function doPost(url, form, list){
+//where you want things to be posted
+//the form with the stuff you want posted (generally 'this')
+//optionally, a list. The first object in each li should be the id.
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
@@ -35,6 +38,16 @@ function doPost(url,form){
 		}
 	}
 	url += "&action="+form.name;
+	
+	if(list != undefined){
+		var order = '';
+		var element = list.firstElementChild;
+		if(element != undefined){
+			order += element.firstElementChild.value+' ';
+			while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
+		}
+		url += '&order='+order
+	}
 	form.action = "javascript:false";
 	jah(url,'content');
 	return false; //to stop any form stuff from happening all by itself.

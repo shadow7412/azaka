@@ -11,15 +11,18 @@ if(!isset($_GET['action'])){
 			$p->db->qry("UPDATE settings SET setting = '$setting' WHERE `option`='$option'");
 
 //LINK SETTINGS
-} elseif ($_GET['action']=="links"){
+} elseif ($_GET['action']=="linksettings"){
 	echo "<pre>";
 	print_r($_GET);
 	echo "</pre>";
 	$p->db->qry("DELETE FROM links");
 	$value = strtok($_GET['order'],' ');
-	do{
-		$p->db->qry("INSERT INTO links (label, url, access, billoverride) VALUES ('{$_GET['label'.$value]}','{$_GET['url'.$value]}','{$_GET['access'.$value]}','{$_GET['billoverride'.$value]}')");
-	}while ($value = strtok(' '));
+	if ($value != '')
+		do{
+			$p->db->qry("INSERT INTO links (label, url, reqaccess, billoverride) VALUES ('{$_GET['label'.$value]}','{$_GET['url'.$value]}','{$_GET['access'.$value]}','{$_GET['billoverride'.$value]}')");
+		}while ($value = strtok(' '));
+	if($_GET['newurl']!='')
+		$p->db->qry("INSERT INTO links (label, url) VALUES ('{$_GET['newlabel']}','{$_GET['newurl']}')");
 
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
@@ -84,17 +87,7 @@ echo "<tr><td><input type=\"submit\" name=\"submitbutton\" value=\"Update settin
 //LINK SETTINGS
 $row = $p->db->fetch($p->db->qry("SELECT enabled FROM modules WHERE name='links'"));
 if($row['enabled']){
-	echo "<h3><a>Link Module Settings</a></h3><div><form name=\"linksettings\" id=\"linksettings\" onsubmit=\"
-
-var order = '';
-var element = document.getElementById('linksettingslist').firstElementChild;
-if(element!=undefined){
-	order += element.firstElementChild.value+' ';
-	while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
-}
-this.action+='&order='+order+'\')'
-
-\" action=\"javascript:sendPost('pages/administration.php?action=links\">
+	echo "<h3><a>Link Module Settings</a></h3><div><form name=\"linksettings\" id=\"linksettings\" onsubmit=\"doPost('pages/administration.php',this,getElementById('linksettingslist'))\">
 <ul id=\"linksettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 
 	$p->addJs("$(\"#linksettingslist\").sortable({placeholder: 'ui-state-highlight'});");
@@ -117,17 +110,13 @@ this.action+='&order='+order+'\')'
 			<option value=\"0\">Ignore Billability</option>
 			<option value=\"1\">or Billable</option>
 		</select></td></tr></table></li>";
-		
-		$p->addJs("document.linksettings.action += \"&label$id='+document.linksettings.label$id.value + '\";");
-		$p->addJs("document.linksettings.action += \"&url$id='+document.linksettings.url$id.value + '\";");
-		$p->addJs("document.linksettings.action += \"&access$id='+document.linksettings.access$id.value + '\";");
-		$p->addJs("document.linksettings.action += \"&billoverride$id='+document.linksettings.billoverride$id.value + '\";");
-		
-		$p->addJs("document.getElementById('linksettings').billoverride$id.value = '{$row['billoverride']}'");
-		$p->addJs("document.getElementById('linksettings').access$id.value = '{$row['reqaccess']}'");
 		$id++; 
 		}
-	echo "</ul><input type=\"submit\" onclick=\"document.linksettings.action+= '&labelnew' + prompt('New Label:') +'&urlnew';\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/><input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
+	echo "</ul>
+	<input type=\"hidden\" name=\"newlabel\"/><input type=\"hidden\" name=\"newurl\"/>
+	<input type=\"submit\" onclick=\"if(undefined == (document.linksettings.newlabel.value=prompt('Label?')) || document.linksettings.newlabel.value=='') return false;
+	if(undefined == (document.linksettings.newurl.value=prompt('URL?'))||document.linksettings.newurl.value=='') return false;\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
+	<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
 }
 
 //PAGE SETTINGS
