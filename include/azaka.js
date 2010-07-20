@@ -15,7 +15,7 @@ function grabContent(id){
 	jah("pages?page="+id,'content');
 }
 function sendPost(url){ //BEING PHASED OUT
-	errorMsg('Uses sendPost()');
+	errorMsg('Used deprecated sendPost()');
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
@@ -23,14 +23,19 @@ function sendPost(url){ //BEING PHASED OUT
 	return false; //to stop any form stuff from happening all by itself.
 }
 function doPost(url,form){
+	_animating = true;
+	$("#content").fadeTo("fast",0, function() {_animating = false;});
+	$("#bottom").fadeTo("fast",0);
 	for(var counter = 0;form.length != counter;counter++){
-		if(counter==0) url += "?"; else url += "&";
 		try {
+			if(counter == 0) url += "?"; else url += "&";
 			url += form[counter].name + "=" + form[counter].value;
 		} catch (e){
 			alert(form+"\n"+counter);
 		}
 	}
+	url += "&action="+form.name;
+	form.action = "javascript:false";
 	jah(url,'content');
 	return false; //to stop any form stuff from happening all by itself.
 }
