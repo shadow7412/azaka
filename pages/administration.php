@@ -129,11 +129,7 @@ $p->addJs("$(\"#modsettingslist\").sortable({placeholder: 'ui-state-highlight'})
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
 echo "<div class=\"ui-widget\">".$p->infoBox("The sidebar is on the left. It will refresh whenever a page is loaded.<br/>The modulebar is on the right. It will refresh automatically as indicated by the local/web refresh fields")."</div>";
 
-echo "<form name=\"modulesetup\" onsubmit=\"var element = document.getElementById('modsettingslist').firstElementChild;
-var order = element.firstElementChild.value+' ';
-while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
-document.modulesetup.order.value = order;doPost('pages/administration.php',this);\">
-<input type=\"hidden\" name=\"order\"/>
+echo "<form name=\"modulesetup\" onsubmit=\"doPost('pages/administration.php',this,document.getElementById('modsettingslist'));\">
 <ul id=\"modsettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 while ($row=$p->db->fetchLast()){
 	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">";
