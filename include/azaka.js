@@ -32,7 +32,7 @@ function doPost(url, form, list){
 	for(var counter = 0;form.length != counter;counter++){
 		try {
 			if(counter == 0) url += "?"; else url += "&";
-			url += form[counter].name + "=" + form[counter].value;
+			url += escape(form[counter].name) + "=" + escape(form[counter].value);
 		} catch (e){
 			alert(form+"\n"+counter);
 		}

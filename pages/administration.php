@@ -43,9 +43,9 @@ if(!isset($_GET['action'])){
 	$p->addJs("forceUpdateMods();");
 
 //USER ADMIN
-} elseif ($_GET['action']=='delete')
+} elseif ($_GET['action']=='user_delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
-  elseif ($_GET['action']=='reset'){
+  elseif ($_GET['action']=='user_reset'){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
 	echo "Password has been reset";
 }
@@ -157,7 +157,7 @@ echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget u
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
 $p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0 ORDER BY username");
-echo "<form name='useradmin' id='useradmin'><table>";
+echo "<form name='useradmin' onsubmit=\"doPost('pages/administration.php',this)\"><table>";
 while($row = $p->db->fetchLast()){
 	extract($row);
 	echo "<tr><td>$username</td><td>
@@ -172,10 +172,8 @@ while($row = $p->db->fetchLast()){
     <option value=\"0\">Standard</option>
     <option value=\"1\">Billable</option>
   </select></td>
-  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(newpass=prompt('What to?')) sendPost('pages/administration.php?action=reset&user=$id&newpass='+hex_md5(newpass))\" value=\"reset code\"/></td>
-  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) sendPost('pages/administration.php?action=delete&user=$id')\" value = \"delete\"/></td></tr>";
-  $p->addJs("document.useradmin.access$id.value = $access");
-  $p->addJs("document.useradmin.billable$id.value = $billable");
+  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(newpass=prompt('What to?')) sendPost('pages/administration.php?action=user_reset&user=$id&newpass='+hex_md5(newpass))\" value=\"reset code\"/></td>
+  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) sendPost('pages/administration.php?action=user_delete&user=$id')\" value = \"disable\"/></td></tr>";
 	}
 echo "<td></td></table></form></div>";
 
