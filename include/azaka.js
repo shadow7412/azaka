@@ -16,11 +16,7 @@ function grabContent(id){
 }
 function sendPost(url){ //BEING PHASED OUT
 	errorMsg('Used deprecated sendPost()');
-	_animating = true;
-	$("#content").fadeTo("fast",0, function() {_animating = false;});
-	$("#bottom").fadeTo("fast",0);
-	jah(url,'content');
-	return false; //to stop any form stuff from happening all by itself.
+	return doPost(url);
 }
 function doPost(url, form, list){
 //where you want things to be posted
@@ -29,16 +25,18 @@ function doPost(url, form, list){
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
-	for(var counter = 0;form.length != counter;counter++){
-		try {
-			if(counter == 0) url += "?"; else url += "&";
-			url += escape(form[counter].name) + "=" + escape(form[counter].value);
-		} catch (e){
-			alert(form+"\n"+counter);
+	if(form!=undefined){
+		for(var counter = 0;form.length != counter;counter++){
+			try {
+				if(counter == 0) url += "?"; else url += "&";
+				url += escape(form[counter].name) + "=" + escape(form[counter].value);
+			} catch (e){
+				alert(form+"\n"+counter);
+			}
 		}
+		url += "&action="+form.name;
+		form.action = "javascript:false"; //to stop any form stuff from happening all by itself.
 	}
-	url += "&action="+form.name;
-	
 	if(list != undefined){
 		var order = '';
 		var element = list.firstElementChild;
@@ -48,9 +46,8 @@ function doPost(url, form, list){
 		}
 		url += '&order='+order
 	}
-	form.action = "javascript:false";
 	jah(url,'content');
-	return false; //to stop any form stuff from happening all by itself.
+	return false; 
 }
 function runJs(target){
 	if(document.getElementById(target) != null)
