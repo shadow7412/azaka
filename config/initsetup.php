@@ -83,7 +83,8 @@ if(file_exists("stop")){
 	('error','error.php',0 , 0),
 	('news','news.php',0, 1),
 	('register','register.php',0, 0),
-	('profile','profile.php',1, 1)
+	('profile','profile.php',1, 1),
+	('ping','ping.php',1, 1)
 	");
 	
 	$errors .= doqry("Module Table","CREATE TABLE IF NOT EXISTS `modules` (
