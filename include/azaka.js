@@ -47,7 +47,6 @@ function doPost(url, form, list){
 		url += '&order='+order
 	}
 	jah(url,'content');
-	return false; 
 }
 function runJs(target){
 	if(document.getElementById(target) != null)

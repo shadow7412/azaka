@@ -1,3 +1,4 @@
+@import url("/azaka/aesthetics/fonts/stylesheet.css");
 body {
 	background-color: #000000;
 	font-size: 12px;
@@ -12,10 +13,14 @@ a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 h5 {margin:0px;}
 #top {
-	height: 90px;
+
 	text-align: center;
 }
 #loader {
+	position: absolute;
+	top: 35px;
+	right:0;
+	left:0;
 	height: 15px;
 	text-align: center;
 }
