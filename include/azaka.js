@@ -149,6 +149,6 @@ function isEmail(str){
 	 return true;
 }
 function errorMsg(message){
-	document.getElementById('loader').innerHTML='<span class=\"ui-icon-alert ui-state-error ui-corner-all\">  '+message+'  </span>';
-	setTimeout("document.getElementById('loader').innerHTML=''",3000);
+	document.getElementById('error').innerHTML='<table><tr><td><span class=\"ui-icon ui-icon-alert\"></span></td><td>'+message+'</td></tr></table>  ';
+	setTimeout("document.getElementById('error').innerHTML=''",3000);
 }

@@ -12,22 +12,28 @@ a:active {color: #7777FF; text-decoration: none; }
 a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 h5 {margin:0px;}
-#top {
-
-	text-align: center;
+#heading {
+	float:right;
+	font-size:24px;
+	font-weight: normal;
+	font-style: normal;
+	line-height:normal;
+	font-family: 'KatyBerryRegular', sans-serif;
+}
+#error{
+	float:right;
 }
 #loader {
 	position: absolute;
-	top: 35px;
+	top: 60px;
 	right:0;
 	left:0;
-	height: 15px;
 	text-align: center;
 }
 #linklist ul {
 	padding-left:10px;
 }
-#toolbar {
+#bar {
 	height: 25px;
 	line-height: 25px;
 	vertical-align: bottom;
@@ -60,7 +66,7 @@ h5 {margin:0px;}
 }
 #sidebar{
 	position: absolute;
-	top: 120px;
+	top: 40px;
 	left: 0px;
 	width: 220px;
 	bottom: 0px;
@@ -71,7 +77,7 @@ h5 {margin:0px;}
 }
 #modules {
 	position: absolute;
-	top: 120px;
+	top: 40px;
 	right: 0px;
 	width: 220px;
 	bottom: 0px;
@@ -88,4 +94,8 @@ h5 {margin:0px;}
 	text-align: center;
 	min-width:500px;
 	opacity:0;
+}
+.nomargins{
+	margin:0px;
+	border:none;
 }
