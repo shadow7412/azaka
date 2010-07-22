@@ -25,7 +25,7 @@ function doPost(url, form, list){
 	_animating = true;
 	$("#content").fadeTo("fast",0, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",0);
-	if(form!=undefined){
+	if(form != undefined){
 		for(var counter = 0;form.length != counter;counter++){
 			try {
 				if(counter == 0) url += "?"; else url += "&";
@@ -35,7 +35,7 @@ function doPost(url, form, list){
 			}
 		}
 		url += "&action="+form.name;
-		form.action = "javascript:false"; //to stop any form stuff from happening all by itself.
+		//form.action = "javascript:false;"; //to stop any form stuff from happening all by itself.
 	}
 	if(list != undefined){
 		var order = '';
@@ -47,6 +47,7 @@ function doPost(url, form, list){
 		url += '&order='+order
 	}
 	jah(url,'content');
+	return false;
 }
 function runJs(target){
 	if(document.getElementById(target) != null)

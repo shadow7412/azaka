@@ -114,8 +114,11 @@ if($row['enabled']){
 		}
 	echo "</ul>
 	<input type=\"hidden\" name=\"newlabel\"/><input type=\"hidden\" name=\"newurl\"/>
-	<input type=\"submit\" onclick=\"if(undefined == (document.linksettings.newlabel.value=prompt('Label?')) || document.linksettings.newlabel.value=='') return false;
-	if(undefined == (document.linksettings.newurl.value=prompt('URL?'))||document.linksettings.newurl.value=='') return false;\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
+	<input type=\"submit\" onclick=\"
+if(undefined == (document.linksettings.newlabel.value=prompt('Label?')) ||
+document.linksettings.newlabel.value != '' || undefined !=  (document.linksettings.newurl.value=prompt('URL?'))||
+document.linksettings.newurl.value != '') submit() else errorMsg('Adding
+new link cancelled.');\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
 	<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
 }
 
