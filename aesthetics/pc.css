@@ -13,17 +13,21 @@ a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 h5 {margin:0px;}
 #heading {
+	z-index:10;
 	float:right;
-	font-size:24px;
+	font-size:27px;
 	font-weight: normal;
 	font-style: normal;
 	line-height:normal;
 	font-family: 'KatyBerryRegular', sans-serif;
 }
 #error{
+	z-index:9;
+	border:none;
 	float:right;
 }
 #loader {
+	z-index:-1;
 	position: absolute;
 	top: 60px;
 	right:0;
@@ -34,6 +38,7 @@ h5 {margin:0px;}
 	padding-left:10px;
 }
 #bar {
+	z-index:8;
 	height: 25px;
 	line-height: 25px;
 	vertical-align: bottom;

@@ -35,7 +35,7 @@ function doPost(url, form, list){
 			}
 		}
 		url += "&action="+form.name;
-		//form.action = "javascript:false;"; //to stop any form stuff from happening all by itself.
+		form.action = "javascript:false;"; //to stop any form stuff from happening all by itself.
 	}
 	if(list != undefined){
 		var order = '';

@@ -26,9 +26,7 @@ if(!isset($_GET['action'])){
 
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
-	echo "<pre>";
-	print_r($_GET);
-	echo "</pre>";
+	echo "<pre>".print_r($_GET,true)."</pre>";
 	
 //MODULE SETTINGS			
 } elseif ($_GET['action']=='modulesetup'){
@@ -115,10 +113,11 @@ if($row['enabled']){
 	echo "</ul>
 	<input type=\"hidden\" name=\"newlabel\"/><input type=\"hidden\" name=\"newurl\"/>
 	<input type=\"submit\" onclick=\"
-if(undefined == (document.linksettings.newlabel.value=prompt('Label?')) ||
-document.linksettings.newlabel.value != '' || undefined !=  (document.linksettings.newurl.value=prompt('URL?'))||
-document.linksettings.newurl.value != '') submit() else errorMsg('Adding
-new link cancelled.');\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
+	if(
+	((document.linksettings.newlabel.value = prompt('Label?')) != undefined) &&
+document.linksettings.newlabel.value != '' &&
+ ((document.linksettings.newurl.value=prompt('URL?')) != undefined) &&
+document.linksettings.newurl.value != '') true; else {errorMsg('Adding new link cancelled.');false;}\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
 	<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
 }
 
