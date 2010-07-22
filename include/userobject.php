@@ -1,4 +1,6 @@
 <?php
+include_once "../include/db.php";
+
 class UserObject {
 	public $id;
 	public $username;
@@ -10,8 +12,10 @@ class UserObject {
 	public $billable;
 	public $email;
 	public $isLocal;
-
+	public $db;
+	
 	function __construct(){
+		$this->db = new Database();
 		$this->updateUser();
 		switch ($_SERVER['REMOTE_ADDR'][0].$_SERVER['REMOTE_ADDR'][1].$_SERVER['REMOTE_ADDR'][2]){ //until i work out substring..
 			case ("127"):
@@ -33,10 +37,8 @@ class UserObject {
 			$this->password = $_COOKIE['azaka_password'];
 		}
 	//if cookie info is existent and correct, log user in. if not, destroy stuff.
-		include_once "../include/db.php";
-		$db = new Database();
 		if(isset($this->username)){
-			if($result = $db->fetch($db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."' AND disabled=0"))){
+			if($result = $this->db->fetch($this->db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."' AND disabled=0"))){
 
 				$this->id = $result['id'];
 				$this->access = $result['access'];
@@ -60,8 +62,8 @@ class UserObject {
 		$this->updateCookies('','');
 	}
 	function updateCookies($user, $pass){
-		setcookie("azaka_username",$user,time()+60*60*24*14,"/");
-		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");
+		setcookie("azaka_username",$user,time()+60*60+60*60*24*$this->db->getSetting('account_timeout'),"/");
+		setcookie("azaka_password",$pass,time()+60*60+60*60*24*$this->db->getSetting('account_timeout'),"/");
 	}
 	function updatePassword($pass){
 		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");

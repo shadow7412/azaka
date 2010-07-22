@@ -137,6 +137,7 @@ if(file_exists("stop")){
 	
 	$errors .= doqry("Add Default settings", "INSERT INTO settings VALUES
 	
+	('account_timeout', '5', 'Account timeout', 'How many days will the login cookie last? (It will last an hour longer that what you write)', 'int'),
 	('bills_all', '1', 'Show all Bills', 'Shows all people in module instead of just the logged in user.', 'bool'),
 	('bills_email', '0', 'Send Email', 'Sends a notification email about bills when they are added or deleted.', 'bool'),	
 	('bills_info', 'Ask your admin where bills should be sent.','Bills Info','The message shown in the bills area.','tbox'),
