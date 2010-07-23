@@ -4,12 +4,11 @@ $p = new Page('profile',1);
 echo "<pre>".print_r($_GET,true)."</pre>";
 
 if(isset($_GET['action']) && $_GET['action']=='profile'){
+	$p->infoBox("Skin changes will take affect next time you load a page");
 	if($_GET['password']=='')
-		$p->db->qry("UPDATE users SET firstname='{$_GET['fname']}',	lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
+		$p->db->qry("UPDATE users SET skin='{$_GET['skin']}',firstname='{$_GET['fname']}',	lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
 	else{
-		$p->db->qry("UPDATE users SET password='{$_GET['password']}',
-firstname='{$_GET['fname']}',	lastname='{$_GET['lname']}',
-email='{$_GET['email']}' WHERE id='{$p->u->id}'");
+		$p->db->qry("UPDATE users SET password='{$_GET['password']}', skin='{$_GET['skin']}' firstname='{$_GET['fname']}', lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
 		$p->u->updatePassword($_GET['password']);
 	}
 }
@@ -32,8 +31,14 @@ if(document.profile.password.value == document.profile.cpassword.value){
 	errorMsg('Your passwords did not match. Have another go.')
 } return false;\">
 <table><tr><td>change password</td><td><input type=\"password\" name=\"password\" id=\"password\"/></td></tr>
-<tr><td>confirm password</td><td><input type=\"password\" name=\"cpassword\" id=\"cpassword\"/></td></tr>
-<tr><td>first name</td><td><input type=\"text\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>
+<tr><td>confirm password</td><td><input type=\"password\" name=\"cpassword\" id=\"cpassword\"/></td></tr>";
+$p->db->qry("SELECT * FROM skins");
+echo "<tr><td>skin</td><td><select name=\"skin\">";
+while($row = $p->db->fetchLast())
+	echo "<option value='{$row['id']}}'>{$row['name']}</option>";
+echo "</select></td></tr>";
+$p->addJs("document.profile.skin.value = '{$p->u->skin}';");
+echo "<tr><td>first name</td><td><input type=\"text\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>
 <tr><td>last name</td><td><input type=\"text\" name=\"lname\" id=\"lname\" value=\"$lastname\"/></td></tr>
 <tr><td>email</td><td><input type=\"text\" name=\"email\" id=\"email\" value=\"$email\"/></td></tr>
 <tr><td><input type=\"submit\" value=\"update\"')\"/></td></tr>";

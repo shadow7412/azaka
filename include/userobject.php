@@ -12,6 +12,7 @@ class UserObject {
 	public $billable;
 	public $email;
 	public $isLocal;
+	public $skin;
 	public $db;
 	
 	function __construct(){
@@ -46,6 +47,7 @@ class UserObject {
 				$this->lastname = $result['lastname'];
 				$this->dob = $result['dob'];
 				$this->billable = $result['billable'];
+				$this->skin = $result['skin'];
 				$this->email = $result['email'];
 			} else {
 				unset($this->username);
@@ -54,7 +56,7 @@ class UserObject {
 	//if user did not successfully log in, log in a pseudo guest account
 		if(!isset($this->username)){
 			$this->username = "guest";
-			$this->password = "";
+			$this->skin = 1;
 			$this->access = 0;
 		}
 	}
@@ -70,6 +72,20 @@ class UserObject {
 	}
 	function canAccess($reqaccess){
 		return ($this->access >= $reqaccess);
+	}
+	function getSkin(){
+		$default = "dark-hive/jquery-ui-1.8.2.custom.css";
+	
+		if(isset($this->id)){
+			$this->db->qry("SELECT skins.css AS css FROM skins, users WHERE users.id = {$this->id} AND skins.id=users.skin");
+			if($row = $this->db->fetchLast())
+				return $row['css'];
+			else
+				return $default;
+		} else 
+			return $default;
+			
+		
 	}
 }
 ?>

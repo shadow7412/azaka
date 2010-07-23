@@ -28,6 +28,7 @@ if(file_exists("stop")){
 	`dob` DATE NOT NULL ,
 	`billable` BOOL NOT NULL ,
 	`email` VARCHAR( 20 ) NOT NULL ,
+	`skin` INT( 11 ) NOT NULL DEFAULT '1',
 	UNIQUE (
 	`username`
 	)
@@ -121,6 +122,17 @@ if(file_exists("stop")){
 	('google',  'http://google.com',  '0',  '0'),
 	('bills',  'http://yahoo.com;',  '0',  '0'),
 	('resetdb',  'config/initsetup.php',  '3',  '1')
+	");
+
+	$errors .= doqry("Skins Table","CREATE TABLE IF NOT EXISTS `skins` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `name` text,
+	  `css` text
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+	
+	$errors .= doqry("Add Skins", "INSERT INTO `skins` (name, css) VALUES
+	('dark-hive','dark-hive/jquery-ui-1.8.2.custom.css'),
+	('le-frog','le-frog/jquery-ui-1.8.2.custom.css')
 	");
 	
 	$errors .= doqry("Setup Table","CREATE TABLE IF NOT EXISTS `settings` (
