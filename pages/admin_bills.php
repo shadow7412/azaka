@@ -1,7 +1,7 @@
 <?php 
 include_once "../include/page.php";
 $p = new Page('bills',1);
-
+print_r($_GET);
 if(isset($_GET['action'])){
 	if($_GET['action']=='pay') $p->db->qry("UPDATE `bills` SET `paid` = 1, `datepaid` = '".date('Y-m-d')."' WHERE `id` = '".$_GET['control']."'");
 	if($_GET['action']=='confirm') $p->db->qry("UPDATE `bills` SET `confirmed` = 1, `dateconfirmed` = '".date('Y-m-d')."' WHERE `id` = '".$_GET['control']."'");
@@ -42,7 +42,57 @@ if ($p->db->noLast() != 0){
 	if ($unconfirmed!=0) echo "<strong>$$unconfirmed unconfirmed<br/></strong>"; else echo "$0 unconfirmed<br/>";
 } else echo "There are no outstanding bills!";
 echo "</div><h3><a>add bill</a></h3><div>";
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	echo "<form action=\"javascript:sendPost('pages/admin_bills.php?action=add&datedue='+document.addform.datedue.value+'&service='+document.addform.service.value\" name=\"addform\" id=\"addform\"><table>";
+	$p->db->qry("SELECT `id`,`username`, `email` FROM `users` WHERE `billable` = '1' ORDER BY `username` ASC");
+	$users=0;
+	$emailnotice = "";
+	
+		while($row = $p->db->fetchLast()) {
+			extract($row);
+			$p->addJs("document.addform.action += '\'&amount$id=\'+document.addform.amount$users.value;';");
+			echo "<tr><td>$username</td>
+				<td><input type=\"checkbox\" name\"checkuser$users\" id=\"checkuser$users\" checked/>
+				<input type=\"text\" name=\"amount$users\" id=\"amount$users\" value = 0>
+				</td></tr>\n";
+			$users++;
+			if(false && isset($_GET['action']) && $_GET['action'] == 'add' && isset($_GET['amount'+$id]) && $_GET['amount'+$id] !=0 ){
+				$p->db->qry("INSERT INTO `bills` (uid,amount,dateentered,datedue,service) VALUES ('$id', '".$_GET['amount'+$id]."', '".date('Y-m-d')."', '".$_GET['datedue']."', '".$_GET['service']."')");
+				
+				//email new bill notice
+				if($p->db->getSetting("bills_email") && $email != "") {
+					if(!(mail($email, "azaka - new bill." , ucfirst($username).",\n\nA new bill has been added.\n\nFor: ".$_GET['service']."\nAmount: $".$_GET['amount'.$id]."\n\nPlease pay, then head to http://lemon.thruhere.net/alp/bills.php and mark it.\nYou cannot reply to this email. Or rather you can, but it will die in cyberspace.\nAlso if you want to change which email this is sent to, do so in the users section in lemon.\n\nThankyou." )))
+						$emailnotice .= "Email not sent to $username. SMTP error occurred. Attempted to send to ".$row["email"]."\\n\\n";
+					else
+						$emailnotice .= "Email sent to $username. successfully.\\n\\n";
+				} else {
+					$emailnotice .= "Email not sent to $username. Users email not found in DB.\\n\\n";
+				}
+			}
+		}
+		if($emailnotice!="")
+			echo "<script language=\"JavaScript\">alert('$emailnotice');</script>";
+	$p->addJs("document.addform.action += ')';");
+	
+	//draw the common elements, and the split form
+	echo "tick the people to spilt between or enter figures manually<br/>total <input type=\"text\" id=\"splitfield\">
+	<input id=\"split\" value=\"split\" type=\"button\" onClick=\"var average = 0.0;";
+	for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) average++;";
+	for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) getElementById('user$ii').value = getElementById('splitfield').value/average; else getElementById('user$ii').value = 0;";
+	echo "\"><br/><br/>";	
+	
+	echo "<tr><td>datedue</td><td>	<input type=\"text\" name=\"datedue\" value = ".date('Y-m-d')."></td></tr>
+	<tr><td>service</td><td> <input type=\"text\" name=\"service\" value = \"misc\"></td></table>
+	<input value = \"add\" type=\"submit\"></form><br/>";
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 echo "</div><h3><a>bill history</a></h3><div>";
 
 $p->db->qry("SELECT * FROM `bills` WHERE uid = '".$p->u->id."' AND confirmed=1 ORDER BY `datedue` DESC");
