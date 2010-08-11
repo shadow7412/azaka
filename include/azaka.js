@@ -9,6 +9,11 @@ function startPage(){
 	errorMsg('Core is undergoing reconstruction.','Expect things to go BOOM CRASH SPLASH KADO-O-O-O-KU!');
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
 	checkHash();
+	
+	//Get sidebar/modlist moving.
+	$("#sortable1, #sortable2").sortable({
+			connectWith: '.connectedSortable'
+	}).disableSelection();
 }
 function errorMsg(message,extrainfo){
 	clearTimeout(_errorMessageHandle);
