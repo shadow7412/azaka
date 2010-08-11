@@ -11,7 +11,7 @@ function startPage(){
 	checkHash();
 	
 	//Get sidebar/modlist moving.
-	$("#sortable1, #sortable2").sortable({
+	$("#modulelist, #sidebarlist").sortable({
 			connectWith: '.connectedSortable'
 	}).disableSelection();
 }
