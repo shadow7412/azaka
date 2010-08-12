@@ -4,13 +4,13 @@ $db = new Database();
 
 if (isset($_GET['type']) && $_GET['type']=='m'){
 	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 0 ORDER BY `order`");
-	$js = "<script id=\"modjs\">";
+	$js = "<script id=\"modulejs\">";
 } elseif(isset($_GET['type']) && $_GET['type']=='s'){
 	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 0 ORDER BY `order`");
 	$js = "<script id=\"sidebarjs\">";
-} else {
+} else
 	header("Strange request.", true ,412);
-}
+
 
 while($row = $db->fetchLast()){
 	if(file_exists($row['url'])){

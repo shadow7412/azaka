@@ -71,7 +71,7 @@ while($row = $p->db->fetchLast()){
 			break;
 		case ("mail"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\" onblur=\"if((!isEmail(this.value))&&this.value!=''){this.value='';this.focus();errorMsg('the email in that field is not valid');}\"></input>";
 			break;
-		case ("int"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\" onKeyPress=\"evt = (evt) ? evt : window.event; var charCode = (evt.which) ? evt.which : evt.keyCode; if (charCode > 31 && (charCode < 48 || charCode > 57)){errorMsg('This field only likes numbers.');return false;} else return true;\"></input>";
+		case ("int"): echo "<input size=\"40\" name=\"{$row['option']}\" value=\"{$row['setting']}\" onKeyPress=\"enterNumbers()\"></input>";
 			break;
 		case ("tbox"): echo "<textarea cols=\"40\" rows=\"3\" name=\"{$row['option']}\">{$row['setting']}</textarea>";
 			break;
