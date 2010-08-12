@@ -24,12 +24,12 @@ class Module {
 		else
 			return "<div id=\"mod-".$this->name."\"></div>";
 	}
-	function getRawContent(){
+	/*function getRawContent(){
 		if($this->u->canAccess($this->accessreq))
 			return $this->content;
 		else
 			return "Access Issue. Please log in.";
-	}
+	}*/
 	function getJs(){
 		if($this->u->canAccess($this->accessreq)){
 			$returnstring = "<script id=\"modjs-".$this->name."\">".$this->js.";";
@@ -37,12 +37,6 @@ class Module {
 			return $returnstring."</script>";
 		} else
 			return "<script id=\"modjs-".$this->name."\"></script>";
-	}
-	function getRawJs(){
-		if($this->u->canAccess($this->accessreq)){
-			return $this->js;
-		} else
-			return "";
 	}
 	function addContent($newContent){
 		$this->content .= $newContent;
