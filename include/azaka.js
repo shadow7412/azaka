@@ -16,6 +16,9 @@ errorMsg(message, [extra info])
 runJs(elementID)
 	evals value of element provided. Note to provide id and not the actual element.
 	no return
+	
+forceModulesUpdate()
+	reloads all modules
 
 grabContent(pagename, [attributes])
 	loads page into main content area.
@@ -36,6 +39,7 @@ function startPage(){
 	_currentHash = ''; //for tracking the page hash
 	_req = Array(); // the request array for ajax
 	_errorMessageHandle = ''; // the timer event for error messages. So it can be cancelled should a new one come in.
+	_moduleHandles = Array(); // the timer event for module updates. So they can be cancelled when mods are refreshed/removed
 	
 	//beta warning
 	errorMsg('Core is undergoing reconstruction.','Expect things to go BOOM CRASH SPLASH KADO-O-O-O-KU!');
@@ -48,6 +52,9 @@ function startPage(){
 	$("#modulelist, #sidebarlist").sortable({
 			connectWith: '.connectedSortable'
 	}).disableSelection();
+	
+	//start module bar
+	grabModules();
 }
 function errorMsg(message,extrainfo){
 	clearTimeout(_errorMessageHandle);
@@ -65,13 +72,10 @@ function runJs(target){
 		errorMsg(target+" does not exist. Javascript not run.");
 }
 function grabModules(){
-	
+	loadPage("modules?type=m", "modulelist");
 }
 function grabSidebar(){
-	
-}
-function forceUpdateMods(){
-	loadPage("modules","modules");
+	loadPage('modules?type=s', 'sidebarlist');
 }
 function forceHash(){
 	grabContent(window.location.hash.substring(1));
@@ -89,7 +93,7 @@ function grabContent(id, attr){
 	_animating = true;
 	$("#content").fadeTo("fast",1, function() {_animating = false;});
 	$("#bottom").fadeTo("fast",1);
-	runJs('sidebarjs');
+	if(document.getElementById('sidebarjs')==undefined) grabSidebar(); else runJs('sidebarjs');
 	if(attr==undefined)	loadPage("pages?page="+id,'content');
 	else loadPage("pages?page="+id+"&"+attr,'content');
 }

@@ -6,7 +6,7 @@ if (isset($_GET['type']) && $_GET['type']=='m'){
 	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 0 ORDER BY `order`");
 	$js = "<script id=\"modulejs\">";
 } elseif(isset($_GET['type']) && $_GET['type']=='s'){
-	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 0 ORDER BY `order`");
+	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 1 ORDER BY `order`");
 	$js = "<script id=\"sidebarjs\">";
 } else
 	header("Strange request.", true ,412);
