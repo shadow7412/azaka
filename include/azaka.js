@@ -1,6 +1,6 @@
 /************************************************************************************
 azaka javascript for page.
-Commands to be used:
+Commands: (There are other internal commands that you do not need to use)
 
 startPage()
 	Makes sidebar and module bar active,
@@ -23,7 +23,7 @@ forceModulesUpdate()
 grabContent(pagename, [attributes])
 	loads page into main content area.
 	if attributes are present, they will be added to the url as a GET
-	no return
+	returns false (to prevent standard form action)
 	
 validateEmail(string)
 	checks to see if supplied string is a valid email
@@ -85,6 +85,10 @@ function checkHash(){
 		grabContent(window.location.hash.substring(1));
 	setTimeout("checkHash()",150);
 }
+function clearModuleHandles(){
+	for (var h in _moduleHandles)
+		clearTimeout(h);
+}
 
 //AJAX
 function grabContent(id, attr){
@@ -96,6 +100,7 @@ function grabContent(id, attr){
 	if(document.getElementById('sidebarjs')==undefined) grabSidebar(); else runJs('sidebarjs');
 	if(attr==undefined)	loadPage("pages?page="+id,'content');
 	else loadPage("pages?page="+id+"&"+attr,'content');
+	return false;
 }
 function grabXML(){
 
