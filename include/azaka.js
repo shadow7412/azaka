@@ -27,10 +27,14 @@ grabContent(pagename, [attributes])
 	
 validateEmail(string)
 	checks to see if supplied string is a valid email
-	returns booleen
+	returns boolean
 	
 validateNumber(string)
 	checks to see if string is made of numbers only
+	returns boolean
+	
+validateNotEmpty(string)
+	checks to see if string is empty or undefined
 ***************************************************************************************/
 
 //PAGE SETUP FUNCTIONS
@@ -184,4 +188,7 @@ function validateEmail(str){
 }
 function validateNumber(str){
 	return !isNaN(str);
+}
+function validateNotEmpty(str){
+	return !(str==null || str=='');
 }
