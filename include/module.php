@@ -13,7 +13,7 @@ class Module {
 		$this->u = new UserObject();
 		$this->db = new Database();
 		$this->accessreq = $accessreq;
-		$this->refresh = 200;
+		$this->refresh = 2000;
 		$js = ";";
 		$content = "";
 		$this->name = $name;
@@ -22,7 +22,7 @@ class Module {
 		if($this->u->canAccess($this->accessreq))
 			return "<div id=\"mod-".$this->name."\">".$this->content."</div>";
 		else
-			return "<div id=\"mod-".$this->name."\"></div>";
+			return "<div id=\"mod-".$this->name."\">Access Issue</div>";
 	}
 	/*function getRawContent(){
 		if($this->u->canAccess($this->accessreq))
@@ -33,7 +33,7 @@ class Module {
 	function getJs(){
 		if($this->u->canAccess($this->accessreq)){
 			$returnstring = "<script id=\"modjs-".$this->name."\">".$this->js.";";
-			if($this->refresh != 0) $returnstring .= "_moduleHandles[".$this->name."] = setTimeout(\"runJs('modjs-".$this->name."')\",".$this->refresh.");";
+			if($this->refresh != 0) $returnstring .= "_moduleHandles['".$this->name."'] = setTimeout(\"loadXML('{$this->name}')\",".$this->refresh.");";
 			return $returnstring."</script>";
 		} else
 			return "<script id=\"modjs-".$this->name."\"></script>";

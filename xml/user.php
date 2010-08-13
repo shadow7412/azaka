@@ -5,7 +5,16 @@ include_once "../include/linklist.php";
 $l = new LinkList($u = new UserObject);
 
 header("content-type: text/xml");
-echo "<?xml version=\"1.0\" ?><content>";
+
+echo <<<DTD
+<?xml version="1.0" ?> 
+<!DOCTYPE note [
+  <!ELEMENT content (#PCDATA)>
+]>
+DTD;
+
+
+echo "<content>";
 
 
 if($u->username == "guest"){

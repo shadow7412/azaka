@@ -18,7 +18,7 @@ runJs(elementID)
 	no return
 	
 forceModulesUpdate()
-	reloads all modules
+	reloads all modules and clears timers
 
 grabContent(pagename, [attributes])
 	loads page into main content area.
@@ -106,16 +106,41 @@ function grabContent(id, attr){
 	else loadPage("pages?page="+id+"&"+attr,'content');
 	return false;
 }
-function grabXML(){
-
+function grabXML(victim){
+	
 }
 function loadContent(){
 
 }
-function loadXML(){
-
+function loadXML(victim){
+    if (window.XMLHttpRequest) // native XMLHttpRequest object
+        _req["xml"+victim] = new XMLHttpRequest();
+     else if (window.ActiveXObject) // IE/Windows ActiveX version
+        _req["xml"+victim] = new ActiveXObject("Microsoft.XMLHTTP");
+		
+	_req["xml"+victim].onreadystatechange = function() {
+		if (_req["xml"+victim].readyState == 4) {
+			if (_req["xml"+victim].status == 200) {
+				//var xml = _req["xml"+victim].responseText;
+				var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
+				try{eval(document.getElementById('modjs-'+victim).innerHTML);}
+				catch(error){
+					if(document.getElementById('modjs-'+victim)==undefined)
+						errorMsg("Could not find javascript for "+victim);
+					else 
+						document.getElementById('content').innerHTML=(document.getElementById('modjs-'+victim).innerHTML);
+						//errorMsg("Error running javascript for "+victim, error+"\n\n"+escape(document.getElementById('modjs-'+victim).innerHTML));
+				}
+			} else {
+				errorMsg("XML error",victim+" has failed. Error: "+_req["xml"+victim].status+" "+_req[target].statusText);
+			}
+		}	
+	};
+	
+	_req["xml"+victim].open("GET", "xml/"+victim+".php", true);
+	_req["xml"+victim].send();
 }
-function loadPage(url, target, callback) {
+function loadPage(url, target) {
     document.getElementById('loader').innerHTML = '<img src="aesthetics/images/loading.gif" alt="loading..."/>';
     if (window.XMLHttpRequest) // native XMLHttpRequest object
         _req[target] = new XMLHttpRequest();
@@ -138,8 +163,10 @@ function jahDone(target) {
             document.getElementById(target).innerHTML = _req[target].responseText;
 			if(target=='content')
 				runJs('pagejs');
-			else if(target=='modules')
-				runJs('modjs');
+			else if(target=='modulelist')
+				runJs('modulejs');
+			else if(target=='sidebarlist')
+				runJs('sidebarjs');
         } else {
 			if(target=='content')
 				loadPage("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
