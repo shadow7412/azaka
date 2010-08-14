@@ -4,7 +4,59 @@ include_once "../include/linklist.php";
 $m = new Module("user", 0);
 $l = new LinkList($m->u);
 
-$m->addContent("<div id=\"mod-user-content\"></div>");
-$m->addJs("alert(xml.getElementsByTagName('content')[0].childNodes[0].innerHTML)");
+//Login box
+$m->addContent("<div id=\"mod-user-loginbox\" style=\"display:none;\">
+<form name=\"login\" method=\"get\" onsubmit=\"
+	javascript:if(
+		   validateNotEmpty(document.login.username.value) 
+		|| validateNotEmpty(document.login.password.value)){
+				errorMsg('Please take this seriously.', 'To log in you need to type in your username and password.');
+				return false;
+			} sendForm(this); 
+				return false; \">
+		<table>
+		<tr>
+		<td>
+		<label for=\"username\">user</label>
+		</td>
+		<td>
+		<input type=\"text\" name=\"username\" id=\"username\" />
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<label for=\"password\">code</label>
+		</td>
+		<td>
+		<input type=\"password\" name=\"password\" id=\"password\" />
+		</td>
+		</tr>
+		<tr>
+		<td>
+		</td>
+		<td>
+		<input type=\"submit\" value=\"login\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" />
+		<input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:grabContent('register','action=wanttoregister')\" value=\"register\" />
+		</td></tr></table></form></div>");
+		
+//User Info section
+$m->addContent("<div id=\"mod-user-info\" style=\"display:inline;\">
+	Logged in as: <div id=\"mod-user-info-username\" style=\"display:inline;\">...</div><br/>
+	<div id=\"mod-user-info-connection\">still loading...</div>
+	<input type=\"button\" value=\"logout\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:grabContent('register','action=logout')\"/>
+	</div>");
+
+//Show/hide relevant area.
+$m->addJs("if(xml.getElementsByTagName('username')[0].childNodes[0].nodeValue == 'guest') {");
+$m->addJs("document.getElementById('mod-user-info').style.display = 'none';");
+$m->addJs("document.getElementById('mod-user-loginbox').style.display = 'inline';");
+$m->addJs("} else {");
+$m->addJs("document.getElementById('mod-user-info').style.display = 'inline';");
+$m->addJs("document.getElementById('mod-user-loginbox').style.display = 'none';}");
+
+//Fill in userdata
+$m->addJs("document.getElementById('mod-user-info-username').innerHTML = xml.getElementsByTagName('username')[0].childNodes[0].nodeValue;");
+$m->addJs("document.getElementById('mod-user-info-connection').innerHTML = xml.getElementsByTagName('connection')[0].childNodes[0].nodeValue;");
+
 //$m->addJs("document.getElementById('mod-user-content').innerHTML = xml.getElementsByTagName('content')[0].nodeValue;");
 ?>

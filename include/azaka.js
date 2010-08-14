@@ -45,9 +45,6 @@ function startPage(){
 	_errorMessageHandle = ''; // the timer event for error messages. So it can be cancelled should a new one come in.
 	_moduleHandles = Array(); // the timer event for module updates. So they can be cancelled when mods are refreshed/removed
 	
-	//beta warning
-	errorMsg('Core is undergoing reconstruction.','Expect things to go BOOM CRASH SPLASH KADO-O-O-O-KU!');
-	
 	//start hashing
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
 	checkHash();
@@ -106,12 +103,6 @@ function grabContent(id, attr){
 	else loadPage("pages?page="+id+"&"+attr,'content');
 	return false;
 }
-function grabXML(victim){
-	
-}
-function loadContent(){
-
-}
 function loadXML(victim){
     if (window.XMLHttpRequest) // native XMLHttpRequest object
         _req["xml"+victim] = new XMLHttpRequest();
@@ -128,8 +119,7 @@ function loadXML(victim){
 					if(document.getElementById('modjs-'+victim)==undefined)
 						errorMsg("Could not find javascript for "+victim);
 					else 
-						document.getElementById('content').innerHTML=(document.getElementById('modjs-'+victim).innerHTML);
-						//errorMsg("Error running javascript for "+victim, error+"\n\n"+escape(document.getElementById('modjs-'+victim).innerHTML));
+						errorMsg("Error running javascript for "+victim);
 				}
 			} else {
 				errorMsg("XML error",victim+" has failed. Error: "+_req["xml"+victim].status+" "+_req[target].statusText);
