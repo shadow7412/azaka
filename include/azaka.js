@@ -96,12 +96,31 @@ function grabContent(id, attr){
 	window.location.hash = id;
 	_currentHash = window.location.hash;
 	_animating = true;
-	$("#content").fadeTo("fast",1, function() {_animating = false;});
-	$("#bottom").fadeTo("fast",1);
+	$("#content").fadeTo("fast",0, function() {_animating = false;});
+	$("#bottom").fadeTo("fast",0);
 	if(document.getElementById('sidebarjs')==undefined) grabSidebar(); else runJs('sidebarjs');
 	if(attr==undefined)	loadPage("pages?page="+id,'content');
 	else loadPage("pages?page="+id+"&"+attr,'content');
 	return false;
+}
+function sendForm(form, target){
+	var options = '';
+	for(var counter = 0;form.length != counter;counter++){
+		try {
+			if(form[counter].name == 'password')
+				options += "&" + escape(form[counter].name) + "=" + hex_md5(form[counter].value);
+			else if(form[counter].name == 'cpassword');
+				//Skip this, no need to send a password twice.				
+			else if(form[counter].name != '')
+				options += "&" + escape(form[counter].name) + "=" + escape(form[counter].value);
+		} catch (e){
+			errorMsg(form+"["+counter+"] has thrown error "+e);
+		}
+	}
+	options += "&action="+form.name;
+	grabContent(target, options);
+	form.action="javascript: return false;";
+	return false; //stop default form action from occuring
 }
 function loadXML(victim){
     if (window.XMLHttpRequest) // native XMLHttpRequest object
@@ -206,6 +225,6 @@ function validateEmail(str){
 function validateNumber(str){
 	return !isNaN(str);
 }
-function validateNotEmpty(str){
+function validatePopulated(str){
 	return !(str==null || str=='');
 }

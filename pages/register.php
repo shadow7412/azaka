@@ -1,7 +1,7 @@
 <?php
 include_once "../include/page.php";
 $p = new Page("registration",0);
-
+echo "<pre>".print_r($_GET,true)."</pre>";
 if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['username']) && isset($_GET['password'])
 	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){

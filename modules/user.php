@@ -6,21 +6,22 @@ $l = new LinkList($m->u);
 
 //Login box
 $m->addContent("<div id=\"mod-user-loginbox\" style=\"display:none;\">
-<form name=\"login\" method=\"get\" onsubmit=\"
-	javascript:if(
-		   validateNotEmpty(document.login.username.value) 
-		|| validateNotEmpty(document.login.password.value)){
+<form id=\"mod-user-login\" name=\"login\" method=\"get\" onsubmit=\"
+		if(
+		   validatePopulated(document.getElementById('mod-user-login-username').value) 
+		&& validatePopulated(document.getElementById('mod-user-login-password').value)){
+				sendForm(this,'register'); 
+			} else {
 				errorMsg('Please take this seriously.', 'To log in you need to type in your username and password.');
-				return false;
-			} sendForm(this); 
-				return false; \">
+			}
+		return false; \">
 		<table>
 		<tr>
 		<td>
 		<label for=\"username\">user</label>
 		</td>
 		<td>
-		<input type=\"text\" name=\"username\" id=\"username\" />
+		<input type=\"text\" name=\"username\" id=\"mod-user-login-username\" />
 		</td>
 		</tr>
 		<tr>
@@ -28,7 +29,7 @@ $m->addContent("<div id=\"mod-user-loginbox\" style=\"display:none;\">
 		<label for=\"password\">code</label>
 		</td>
 		<td>
-		<input type=\"password\" name=\"password\" id=\"password\" />
+		<input type=\"password\" name=\"password\" id=\"mod-user-login-password\" />
 		</td>
 		</tr>
 		<tr>
