@@ -82,11 +82,10 @@ echo "<ventrilo>";
 if (  $stat->Request() ){
 	echo "<name>{$stat->m_error}</name>";
 } else {
-	if ($stat->m_clientcount != 0){
+	if ($stat->m_clientcount == 0){
 		VentriloDisplayEX1( $stat, $stat->m_name, 0, 0);
-	} else 
-		$m->addContent("The Ventrilo server is lonely.");
-
+		echo "<user>The Ventrilo server is lonely</user>";
+	}
 }
 
 echo "</ventrilo>";
