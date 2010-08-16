@@ -3,13 +3,13 @@ include_once "../include/page.php";
 include_once "../include/linklist.php";
 $p = new Page("news",2);
 $l = new LinkList($p->u);
-
+echo "<pre>".print_r($_GET,true)."</pre>";
 $l->additem("news items","news", 0);
 echo $l->dispList();
 
 if(!isset($_GET['action'])){
 	//if no action, do nothing. This is just so we do not need to check every time.
-} elseif ($_GET['action']=='add')
+} elseif ($_GET['action']=='addnews')
 	if((!isset($_GET['item'])) || $_GET['item']=="")
 		$p->db->qry("INSERT INTO news (title, uid, content) VALUES ('{$_GET['title']}','{$p->u->id}', '".addSlashes($_GET['newscontent'])."')");
 	else
@@ -29,7 +29,7 @@ if(!isset($_GET['action'])){
 
 
 //new
-echo "<form name=\"addnews\" id=\"addnews\" onsubmit=\"doPost('pages/admin_news.php',this);false;\">
+echo "<form name=\"addnews\" id=\"addnews\" onsubmit=\"sendForm(this,'admin_news');false;\">
 <input type=\"text\" name=\"title\" />: {$p->u->username} at [now] wrote:<blockquote><textarea id=\"newscontent\" name=\"newscontent\" cols=\"45\" rows=\"5\"></textarea></blockquote><input type=submit /><input type=\"hidden\" name=\"item\" id=\"item\" value=\"\" /></form><br/>";
 
 //show all articles
