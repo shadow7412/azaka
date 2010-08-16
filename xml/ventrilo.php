@@ -1,47 +1,16 @@
 <?php 
 include_once "../include/userobject.php";
-include_once "../include/linklist.php";
-
+include_once "../include/ventrilostatus.php";
 header("content-type: text/xml");
 
+$u = new UserObject();
 
-function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
+function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx)
 {
   global $colors; 
   $chan = $stat->ChannelFind( $cid );
-/*
-  if ( $bgidx % 2 )
-  	$bg = $colors['cell_background'];
-  else
-  	$bg = $colors['background'];
-*/
-//$bg = "#111111";
+  echo "<name>".$name."</name>";
 
-/*
-  if ( $chan->m_prot )
-    $fg = "#FF0000";
-  else
-    $fg = "#FFFFFF";
-*/
-  $fg = "#FFFFFF";
-  /*
-  if ( $chan->m_prot )
-  {
-  		if ( $bgidx %2 )
-			$bg = "#000000";
-		else
-			$bg = "#330000";
-  }
-  */
-  $m->addContent("  <tr>\n");
-  $m->addContent("    <td><font color=\"$fg\"><strong>");
-  $m->addContent($name);
-  $m->addContent("</strong></font>\n");
-  
-  $m->addContent("      <table width=\"95%\" border=\"0\" align=\"right\">\n");
-  
-  // Display Client for this channel.
-  
   for ( $i = 0; $i < count( $stat->m_clientlist ); $i++ )
   {
   		$client = $stat->m_clientlist[ $i ];
@@ -49,10 +18,8 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
   		if ( $client->m_cid != $cid )
 			continue;
 		
-			
-		$m->addContent("      <tr>\n");
-		$m->addContent("        <td bgcolor=\"".$colors['cell_background']."\">");
-
+		echo "<user>";
+		
 		$flags = "";
 		
 		if ( $client->m_admin )
@@ -62,14 +29,13 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 			$flags .= "P";
 			
 		if ( strlen( $flags ) )
-			$m->addContent("\"$flags\" ");
+			echo "\"$flags\" ";
 			
-		$m->addContent($client->m_name);
+		echo $client->m_name;
 		if ( $client->m_comm )
-			$m->addContent(" ($client->m_comm)");
+			echo " ($client->m_comm)";
 			
-		$m->addContent("  </td>\n");
-		$m->addContent("      </tr>\n");
+		echo "</user>";
   }
   
   // Display sub-channels for this channel.
@@ -89,10 +55,6 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 			VentriloDisplayEX1( $stat, $cn, $stat->m_channellist[ $i ]->m_cid, $bgidx + 1 );
 		}
   }
-  
-  $m->addContent("      </table>\n");
-  $m->addContent("    </td>\n");
-  $m->addContent("  </tr>\n");
 }
 
 /*
@@ -109,27 +71,23 @@ function VentriloDisplayEX1( &$stat, $name, $cid, $bgidx , &$m)
 */
 
 $stat = new CVentriloStatus;
-$stat->m_cmdprog	= $m->db->getSetting("vent_path");	// Adjust accordingly.
-$stat->m_cmdcode	= "2";					// Detail mode.
-$stat->m_cmdhost	= $m->db->getSetting("vent_server");			// Assume ventrilo server on same machine.
-$stat->m_cmdport	= $m->db->getSetting("vent_port");				// Port to be statused.
-$stat->m_cmdpass	= $m->db->getSetting("vent_pass");					// Status password if necessary.
+$stat->m_cmdprog	= $u->db->getSetting("vent_path");	// Adjust accordingly.
+$stat->m_cmdcode	= "2";				            	// Detail mode.
+$stat->m_cmdhost	= $u->db->getSetting("vent_server");// Assume ventrilo server on same machine.
+$stat->m_cmdport	= $u->db->getSetting("vent_port");	// Port to be statused.
+$stat->m_cmdpass	= $u->db->getSetting("vent_pass");	// Status password if necessary.
+
+echo "<ventrilo>";
 
 if (  $stat->Request() ){
-	$m->addContent("<span onclick=\"javascript:errorMsg('CVentriloStatus->Request() failed. <strong>$stat->m_error</strong>')\">Error occurred. Click for details.</span>");
+	echo "<name>{$stat->m_error}</name>";
 } else {
-
 	if ($stat->m_clientcount != 0){
-		$m->addContent("<center><table width=\"100%\" border=\"0\">\n");
-		VentriloDisplayEX1( $stat, $stat->m_name, 0, 0 ,$m);
-		$m->addContent("</table></center>\n");
+		VentriloDisplayEX1( $stat, $stat->m_name, 0, 0);
 	} else 
 		$m->addContent("The Ventrilo server is lonely.");
 
 }
-
-echo "<ventrilo>";
-
 
 echo "</ventrilo>";
 ?>
