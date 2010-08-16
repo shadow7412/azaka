@@ -19,6 +19,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("User Table","CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    `lastactive` timestamp NULL DEFAULT NULL,
 	`disabled` BOOL NOT NULL DEFAULT  '0',
 	`username` VARCHAR( 12 ) NOT NULL ,
 	`password` VARCHAR( 40 ) NOT NULL ,
@@ -107,7 +108,7 @@ if(file_exists("stop")){
 	('links','links.php', 1, 0, 0),
 	('bandwidth','bandwidth.php', 0, 500, 5000),
 	('internet','internet.php', 0, 108000, 216000),
-	('ventrilo','vent.php', 0, 2000, 10000)
+	('ventrilo','ventrilo.php', 0, 2000, 10000)
 	");
 	
 	$errors .= doqry("Links Table", "CREATE TABLE `links` (

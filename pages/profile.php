@@ -11,12 +11,12 @@ if(isset($_GET['action']) && $_GET['action']=='profile'){
 		$p->db->qry("UPDATE users SET password='{$_GET['password']}', skin='{$_GET['skin']}' firstname='{$_GET['fname']}', lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
 		$p->u->updatePassword($_GET['password']);
 	}
-}
+} else
+	$p->infoBox("To change your password fill out the password fields - or just leave them be to leave your password be.");
 
 $p->db->qry("SELECT * FROM users WHERE id='".$p->u->id."'");
 extract($p->db->fetchLast());
-
-$p->infoBox("To change your password fill out the password fields - or just leave them be to leave your password be.");
+$p->db->qry("SELECT * FROM skins");
 
 echo "<form name=\"profile\" id=\"profile\" type=\"get\" onsubmit=\"javascript:
 if(document.profile.password.value == document.profile.cpassword.value){
@@ -32,10 +32,10 @@ if(document.profile.password.value == document.profile.cpassword.value){
 } return false;\">
 <table><tr><td>change password</td><td><input type=\"password\" name=\"password\" id=\"password\"/></td></tr>
 <tr><td>confirm password</td><td><input type=\"password\" name=\"cpassword\" id=\"cpassword\"/></td></tr>";
-$p->db->qry("SELECT * FROM skins");
+
 echo "<tr><td>skin</td><td><select name=\"skin\">";
 while($row = $p->db->fetchLast())
-	echo "<option value='{$row['id']}}'>{$row['name']}</option>";
+	echo "<option value='{$row['id']}'>{$row['name']}</option>";
 echo "</select></td></tr>";
 $p->addJs("document.profile.skin.value = '{$p->u->skin}';");
 echo "<tr><td>first name</td><td><input type=\"text\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>

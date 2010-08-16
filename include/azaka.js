@@ -1,6 +1,6 @@
 /************************************************************************************
 azaka javascript for page.
-Commands: (There are other internal commands that you do not need to use)
+Commands: (There are other internal commands that you do not need to use or know about)
 
 startPage()
 	Makes sidebar and module bar active,
@@ -25,6 +25,12 @@ grabContent(pagename, [attributes])
 	if attributes are present, they will be added to the url as a GET
 	returns false (to prevent standard form action)
 	
+function sendForm(form, target){
+	sends form as a get to target
+	will automatically encrypt 'password' and ignore 'cpassword'
+	action will be the forms name
+	page will be the reciepent page
+
 validateEmail(string)
 	checks to see if supplied string is a valid email
 	returns boolean
@@ -51,7 +57,8 @@ function startPage(){
 	
 	//Set sidebar/modlist to be draggable
 	$("#modulelist, #sidebarlist").sortable({
-			connectWith: '.connectedSortable'
+			connectWith: '.connectedSortable',
+			placeholder: 'ui-state-highlight'
 	}).disableSelection();
 	
 	//start module bar
@@ -129,6 +136,7 @@ function loadXML(victim){
         _req["xml"+victim] = new ActiveXObject("Microsoft.XMLHTTP");
 		
 	_req["xml"+victim].onreadystatechange = function() {
+	
 		if (_req["xml"+victim].readyState == 4) {
 			if (_req["xml"+victim].status == 200) {
 				//var xml = _req["xml"+victim].responseText;

@@ -49,6 +49,7 @@ class UserObject {
 				$this->billable = $result['billable'];
 				$this->skin = $result['skin'];
 				$this->email = $result['email'];
+				$this->db->qry("UPDATE  `users` SET  `lastactive` = NOW( ) WHERE  `users`.`id` ={$this->id};");
 			} else {
 				unset($this->username);
 			}
@@ -74,7 +75,7 @@ class UserObject {
 		return ($this->access >= $reqaccess);
 	}
 	function getSkin(){
-		$default = "dark-hive/jquery-ui-1.8.2.custom.css";
+		$default = "dark-hive/jquery-ui-1.8.2.custom.css"; //Should be dynamic
 	
 		if(isset($this->id)){
 			$this->db->qry("SELECT skins.css AS css FROM skins, users WHERE users.id = {$this->id} AND skins.id=users.skin");
@@ -84,8 +85,6 @@ class UserObject {
 				return $default;
 		} else 
 			return $default;
-			
-		
 	}
 }
 ?>

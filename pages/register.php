@@ -55,14 +55,14 @@ document.register.email.value == '' ){
 	document.register.password.value = '';
 	document.register.confirm.value = '';
 	document.register.password.focus();
-} else if(!isEmail(document.register.email.value)){
+} else if(!validateEmail(document.register.email.value)){
 	errorMsg('the email does not seem valid');
 	document.register.email.value = '';
 	document.register.email.focus();
 } else {
 	document.register.password.value = hex_md5(document.register.password.value);
 	document.register.confirm.value='';
-	doPost('pages/register.php',this);
+	sendForm(this,'register');
 };" action="javascript:false">
   <table width="500" border="0">
     <tr>
@@ -134,7 +134,7 @@ document.register.email.value == '' ){
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <input name="doby" type="text" id="doby" size="4" /></td>
+      <input name="doby" type="text" id="doby" size="4" onkeypress=enterNumbers() /></td>
     </tr>
     <tr>
       <td>email</td>
