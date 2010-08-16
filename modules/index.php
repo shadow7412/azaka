@@ -18,7 +18,7 @@ while($row = $db->fetchLast()){
 		if($m->u->canAccess($m->accessreq)){
 			$js .= "loadXML('{$row['name']}');";
 			$m->setRefresh($m->u->isLocal?$row['localrefresh']:$row['webrefresh']);
-			echo "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\"> {$m->name}</div>";
+			echo "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\"><table><tr><td><span class=\"ui-icon ui-icon-arrow-4-diag\" style=\"display: inline-block\"></span></td><td><strong>{$m->name}</strong></td></tr></table></div>";
 			echo "<div class=\"ui-widget-content ui-corner-bottom\">".$m->getContent()."</div><br/></li>";
 			echo $m->getJs();
 		}
