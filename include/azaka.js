@@ -82,6 +82,10 @@ function runJs(target){
 function grabModules(){
 	loadPage("modules?type=m", "modulelist");
 }
+function forceModulesUpdate(){
+	clearModuleHandles();
+	grabModules();
+}
 function grabSidebar(){
 	loadPage('modules?type=s', 'sidebarlist');
 }
