@@ -20,10 +20,11 @@ if(!isset($_GET['action'])){
 	if ($value != '')
 		do{
 			$p->db->qry("INSERT INTO links (label, url, reqaccess, billoverride) VALUES ('{$_GET['label'.$value]}','{$_GET['url'.$value]}','{$_GET['access'.$value]}','{$_GET['billoverride'.$value]}')");
-		}while ($value = strtok(' '));
+		}while (($value = strtok(' '))!=null);
+		
 	if($_GET['newurl']!='')
 		$p->db->qry("INSERT INTO links (label, url) VALUES ('{$_GET['newlabel']}','{$_GET['newurl']}')");
-
+	$p->addJs("loadXML('links');");
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
 	echo "<pre>".print_r($_GET,true)."</pre>";
@@ -54,7 +55,7 @@ $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 //SETTINGS
 echo "<h3><a>Settings</a></h3><div>";
 $p->infoBox("If you are unclear on any setting, put your mouse over the title of its label. A tooltip will appear.");
-echo "<form type=\"get\" name=\"settings\" onsubmit=\"doPost('pages/administration.php',this)\" >
+echo "<form type=\"get\" name=\"settings\" onsubmit=\"sendForm(this,'admin')\" >
 	<table><tr><td><strong>Option</strong></td><td><strong>Setting</strong></td></tr>";
 $p->db->qry("SELECT * FROM settings");
 while($row = $p->db->fetchLast()){
@@ -85,7 +86,7 @@ echo "<tr><td><input type=\"submit\" name=\"submitbutton\" value=\"Update settin
 //LINK SETTINGS
 $row = $p->db->fetch($p->db->qry("SELECT enabled FROM modules WHERE name='links'"));
 if($row['enabled']){
-	echo "<h3><a>Link Module Settings</a></h3><div><form name=\"linksettings\" id=\"linksettings\" onsubmit=\"doPost('pages/administration.php',this,getElementById('linksettingslist'))\">
+	echo "<h3><a>Link Module Settings</a></h3><div><form name=\"linksettings\" id=\"linksettings\" onsubmit=\"sendForm(this,'admin',document.getElementById('linksettingslist'))\">
 <ul id=\"linksettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 
 	$p->addJs("$(\"#linksettingslist\").sortable({placeholder: 'ui-state-highlight'});");
@@ -117,7 +118,7 @@ if($row['enabled']){
 	((document.linksettings.newlabel.value = prompt('Label?')) != undefined) &&
 document.linksettings.newlabel.value != '' &&
  ((document.linksettings.newurl.value=prompt('URL?')) != undefined) &&
-document.linksettings.newurl.value != '') true; else {errorMsg('Adding new link cancelled.');false;}\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
+document.linksettings.newurl.value != '') return true; else {errorMsg('Adding new link cancelled.');false;}\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"add new\"/>
 	<input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\"></form></div>";
 }
 

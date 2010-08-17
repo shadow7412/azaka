@@ -114,7 +114,7 @@ function grabContent(id, attr){
 	else loadPage("pages?page="+id+"&"+attr,'content');
 	return false;
 }
-function sendForm(form, target){
+function sendForm(form, target, list){
 	var options = '';
 	for(var counter = 0;form.length != counter;counter++){
 		try {
@@ -127,6 +127,15 @@ function sendForm(form, target){
 		} catch (e){
 			errorMsg(form+"["+counter+"] has thrown error "+e);
 		}
+	}
+	if(list != undefined){
+		var order = '';
+		var element = list.firstElementChild;
+		if(element != undefined){
+			order += element.firstElementChild.value+' ';
+			while (element = element.nextElementSibling) order += element.firstElementChild.value+' ';
+		}
+		options += '&order='+order
 	}
 	options += "&action="+form.name;
 	grabContent(target, options);
