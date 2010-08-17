@@ -18,10 +18,8 @@ while($item = $u->db->fetchLast()){
 	<item> 
 	<title>{$item['title']} by {$item['uid']}</title> 
 	<link></link> 
-	<pubDate>Wed, 21 Jul 2010 10:34:13 GMT</pubDate> 
-	<description><![CDATA[ 
-	content
-	]]></description> 
+	<pubDate>{$item['time']}</pubDate> 
+	<description><![CDATA[ {$item['content']}]]></description> 
 	</item>\n";
 }
 echo "</channel> 
