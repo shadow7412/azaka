@@ -23,8 +23,7 @@ if($u->canAccess(1)&&$u->billable){
 	}
 	echo "\t</unconfirmed>
 </bills>";
+} else {
+echo "<bills><owing></owing><unconfirmed></unconfirmed></bills>";
 }
-
-
-
 ?>

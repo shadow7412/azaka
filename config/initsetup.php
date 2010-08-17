@@ -121,7 +121,7 @@ if(file_exists("stop")){
 
 	$errors .= doqry("Add Default Links", "INSERT INTO `links` (label, url, reqaccess, billoverride) VALUES
 	('google',  'http://google.com',  '0',  '0'),
-	('bills',  'http://yahoo.com;',  '0',  '0'),
+	('bills',  'http://yahoo.com',  '0',  '0'),
 	('resetdb',  'config/initsetup.php',  '3',  '1')
 	");
 
