@@ -43,6 +43,9 @@ if(!isset($_GET['action'])){
 	$p->addJs("forceModulesUpdate();grabSidebar();");
 
 //USER ADMIN
+} elseif ($_GET['action']=='useradmin'){
+	echo "<pre>".print_r($_GET,true)."</pre>";
+
 } elseif ($_GET['action']=='user_delete')
 	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
   elseif ($_GET['action']=='user_reset'){
@@ -162,7 +165,7 @@ echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget u
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
 $p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0 ORDER BY username");
-echo "<form name='useradmin' onsubmit=\"doPost('pages/administration.php',this)\"><table>";
+echo "<form name='useradmin' onsubmit=\"sendForm(this,'admin')\"><table>";
 while($row = $p->db->fetchLast()){
 	extract($row);
 	echo "<tr><td>$username</td><td>
@@ -177,10 +180,10 @@ while($row = $p->db->fetchLast()){
     <option value=\"0\">Standard</option>
     <option value=\"1\">Billable</option>
   </select></td>
-  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(newpass=prompt('What to?')) sendPost('pages/administration.php?action=user_reset&user=$id&newpass='+hex_md5(newpass))\" value=\"reset code\"/></td>
-  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) sendPost('pages/administration.php?action=user_delete&user=$id')\" value = \"disable\"/></td></tr>";
+  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(newpass=prompt('What to?')) grabContent('admin','action=user_reset&user=$id&newpass='+hex_md5(newpass))\" value=\"reset code\"/></td>
+  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) sendPost('admin','action=user_delete&user=$id')\" value = \"disable\"/></td></tr>";
 	}
-echo "<td></td></table></form></div>";
+echo "<td></td></table><input type=\"submit\" value=\"Update\"/></form></div>";
 
 //ADD MORE ADMIN SECTIONS HERE
 echo "</div>"
