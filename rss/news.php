@@ -6,7 +6,7 @@ header("Content-Type: application/xml; charset=ISO-8859-1");
 echo "<rss version=\"2.0\"> 
 <channel> 
 <title>news - azaka</title> 
-<link>{$_SERVER['SERVER_NAME']}/{$_SERVER['REQUEST_URI']}</link> 
+<link>http://{$_SERVER['SERVER_NAME']}/{$_SERVER['REQUEST_URI']}</link> 
 <description>azaka news</description> 
 <language>en-uk</language>  
 <lastBuildDate>".date('DATE_RFC822',time())."</lastBuildDate> 
@@ -17,7 +17,7 @@ while($item = $u->db->fetchLast()){
 	echo "
 	<item> 
 	<title>{$item['title']} by {$item['uid']}</title> 
-	<link>{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}</link> 
+	<link>http://{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}#news</link> 
 	<pubDate>{$item['time']}</pubDate> 
 	<description><![CDATA[ {$item['content']}]]></description> 
 	</item>\n";
