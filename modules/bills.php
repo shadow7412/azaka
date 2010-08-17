@@ -5,7 +5,8 @@ $m = new Module("bills", 1);
 if($m->u->billable){
 	$m->addJs("var box = document.getElementById('mod-bills');");
 	$m->addJs("box.innerHTML = ''; var counter = 0;");
-	$m->addJs("");
+	$m->addJs("if((xml.getElementsByTagName('owing')[0]).length != 0)box.innerHTML+='s';");
+	
 } else {
 	$m->addContent("Billing not available.");
 }

@@ -46,11 +46,13 @@ if(!isset($_GET['action'])){
 } elseif ($_GET['action']=='useradmin'){
 	echo "<pre>".print_r($_GET,true)."</pre>";
 
-} elseif ($_GET['action']=='user_delete')
-	$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
+} elseif ($_GET['action']=='user_delete'){
+		$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
+		$p->infoBox("User has been disabled.");
+	}
   elseif ($_GET['action']=='user_reset'){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
-	echo "Password has been reset";
+	$p->infoBox("Password has been reset.");
 }
 
 // SHOW FORMS
