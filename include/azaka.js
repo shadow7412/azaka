@@ -25,11 +25,14 @@ grabContent(pagename, [attributes])
 	if attributes are present, they will be added to the url as a GET
 	returns false (to prevent standard form action)
 	
-function sendForm(form, target){
+function sendForm(form, target, [order]){
 	sends form as a get to target
 	will automatically encrypt 'password' and ignore 'cpassword'
 	action will be the forms name
 	page will be the reciepent page
+	if defined, order will be a list (seperated by whitespace) showing the id of the
+		first element in each list item. This can be used to determin the results of
+		click/drag type postitioning.
 
 validateEmail(string)
 	checks to see if supplied string is a valid email

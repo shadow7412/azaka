@@ -25,6 +25,7 @@ if(!isset($_GET['action'])){
 	if($_GET['newurl']!='')
 		$p->db->qry("INSERT INTO links (label, url) VALUES ('{$_GET['newlabel']}','{$_GET['newurl']}')");
 	$p->addJs("loadXML('links');");
+	
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
 	echo "<pre>".print_r($_GET,true)."</pre>";
@@ -39,7 +40,7 @@ if(!isset($_GET['action'])){
 		$order++;
 		$p->db->qry("UPDATE modules SET `enabled`='{$_GET["enabled".$value]}', `order`='$order', `onsidebar`='{$_GET["onsidebar".$value]}',`localrefresh`='{$_GET["localrefresh".$value]}',`webrefresh`='{$_GET["webrefresh".$value]}' WHERE `id` = '$value'");
 	}while ($value = strtok(' '));
-	$p->addJs("forceUpdateMods();");
+	$p->addJs("forceModulesUpdate();grabSidebar();");
 
 //USER ADMIN
 } elseif ($_GET['action']=='user_delete')
@@ -48,10 +49,11 @@ if(!isset($_GET['action'])){
 	$p->db->qry("UPDATE users SET password='".$_GET['newpass']."' WHERE id='".$_GET['user']."'");
 	echo "Password has been reset";
 }
+
+// SHOW FORMS
 echo "<div id=\"accordion\">";
 $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 
-// SHOW FORMS
 //SETTINGS
 echo "<h3><a>Settings</a></h3><div>";
 $p->infoBox("If you are unclear on any setting, put your mouse over the title of its label. A tooltip will appear.");
@@ -132,7 +134,7 @@ $p->addJs("$(\"#modsettingslist\").sortable({placeholder: 'ui-state-highlight'})
 $p->db->qry("SELECT * FROM modules ORDER BY `order`");
 echo "<div class=\"ui-widget\">".$p->infoBox("The sidebar is on the left. It will refresh whenever a page is loaded.<br/>The modulebar is on the right. It will refresh automatically as indicated by the local/web refresh fields")."</div>";
 
-echo "<form name=\"modulesetup\" onsubmit=\"doPost('pages/administration.php',this,document.getElementById('modsettingslist'));\">
+echo "<form name=\"modulesetup\" onsubmit=\"sendForm(this,'admin',document.getElementById('modsettingslist'));\">
 <ul id=\"modsettingslist\" class=\"ui-helper-reset\" unselectable=\"on\">";
 while ($row=$p->db->fetchLast()){
 	echo "<li class=\"ui-state-default\" style=\"list-style-type: none; margin: 0; padding: 0; width: 100%;\">";
