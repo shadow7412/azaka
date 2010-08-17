@@ -142,9 +142,13 @@ function loadXML(victim){
 	_req["xml"+victim].onreadystatechange = function() {
 	
 		if (_req["xml"+victim].readyState == 4) {
+				try{
+					var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
+				} catch (error){
+					errorMsg('XML is not downloadable as DOMParser is not supported on this browser.');
+					return;
+				}
 			if (_req["xml"+victim].status == 200) {
-				//var xml = _req["xml"+victim].responseText;
-				var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
 				try{eval(document.getElementById('modjs-'+victim).innerHTML);}
 				catch(error){
 					if(document.getElementById('modjs-'+victim)==undefined)
