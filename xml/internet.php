@@ -13,7 +13,7 @@ if(file_exists($netspacefile) & $u->canAccess(1)){
 	$offtotal = round($xml->PLAN->LIMIT[1]["MEGABYTES"]/1000,1); //offpeak total
 	$onused = round($xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000,1); //peakused
 	$offused = round($xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000,1); //offpeak used
-	$uploaded = ($xml->TRAFFIC->DATA[0]["UPLOADS"]+$xml->TRAFFIC->DATA[1]["UPLOADS"])/1000; //uploads (both on and off peak)
+	$uploaded = round(($xml->TRAFFIC->DATA[0]["UPLOADS"]+$xml->TRAFFIC->DATA[1]["UPLOADS"])/1000,2); //uploads (both on and off peak)
 	$timeleft = date('U',$enddate) - date('U');
 	$totaltime = date('U',$enddate) - date('U', $startdate);
 	$time = round($timeleft/$totaltime*100,2);

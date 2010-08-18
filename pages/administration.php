@@ -12,9 +12,6 @@ if(!isset($_GET['action'])){
 
 //LINK SETTINGS
 } elseif ($_GET['action']=="linksettings"){
-	echo "<pre>";
-	print_r($_GET);
-	echo "</pre>";
 	$p->db->qry("DELETE FROM links");
 	$value = strtok($_GET['order'],' ');
 	if ($value != '')
