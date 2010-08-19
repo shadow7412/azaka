@@ -9,7 +9,7 @@ echo "<rss version=\"2.0\">
 <link>http://{$_SERVER['SERVER_NAME']}/{$_SERVER['REQUEST_URI']}</link> 
 <description>azaka news</description> 
 <language>en-uk</language>  
-<lastBuildDate>".date('DATE_RFC822',time())."</lastBuildDate> 
+<lastBuildDate>".date('r')."</lastBuildDate> 
 <ttl>60</ttl>";
 
 $u->db->qry("SELECT * FROM news");
