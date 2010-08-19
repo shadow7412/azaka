@@ -41,7 +41,10 @@ if(!isset($_GET['action'])){
 
 //USER ADMIN
 } elseif ($_GET['action']=='useradmin'){
-	echo "<pre>".print_r($_GET,true)."</pre>";
+	$userid = strtok($_GET['victims'],' ');
+	do 
+		$p->db->qry("UPDATE users SET `access`='{$_GET["access$userid"]}', `billable`='{$_GET["billable$userid"]}' WHERE id='{$userid}'" );
+	while (($userid = strtok(' ')) != null);
 
 } elseif ($_GET['action']=='user_delete'){
 		$p->db->qry("UPDATE users SET disabled='1' WHERE id='".$_GET['user']."'");
@@ -164,7 +167,8 @@ echo "</ul><input type=\"submit\" value=\"Update\" class=\"ui-button ui-widget u
 //USER ADMINISTRATION
 echo "<h3><a>User Administration</a></h3><div>";
 $p->db->qry("SELECT id, username, access, billable FROM users WHERE disabled=0 ORDER BY username");
-echo "<form name='useradmin' onsubmit=\"sendForm(this,'admin')\"><table>";
+echo "<form name='useradmin' onsubmit=\"sendForm(this,'admin')\">
+	<input type=\"hidden\" value=\"\" name=\"victims\"/><table>";
 while($row = $p->db->fetchLast()){
 	extract($row);
 	echo "<tr><td>$username</td><td>
@@ -180,7 +184,10 @@ while($row = $p->db->fetchLast()){
     <option value=\"1\">Billable</option>
   </select></td>
   <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(newpass=prompt('What to?')) grabContent('admin','action=user_reset&user=$id&newpass='+hex_md5(newpass))\" value=\"reset code\"/></td>
-  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) sendPost('admin','action=user_delete&user=$id')\" value = \"disable\"/></td></tr>";
+  <td><input type=\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:if(confirm('Are you sure?')) grabContent('admin','action=user_delete&user=$id')\" value = \"disable\"/></td></tr>";
+	$p->addJs("document.useradmin.access$id.value = $access;");
+	$p->addJs("document.useradmin.billable$id.value = $billable;");
+	$p->addJs("document.useradmin.victims.value += $id+' ';");
 	}
 echo "<td></td></table><input type=\"submit\" value=\"Update\"/></form></div>";
 
