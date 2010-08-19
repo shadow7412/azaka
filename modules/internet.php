@@ -13,5 +13,5 @@ $m->addJs("$(\"#mod-internet-onpeakbar\").progressbar({value: parseInt(xml.getEl
 $m->addJs("document.getElementById('mod-internet-onpeak').innerHTML = \"data used:\" + xml.getElementsByTagName('onpeakused')[0].childNodes[0].nodeValue + \"/\"+ xml.getElementsByTagName('onpeaktotal')[0].childNodes[0].nodeValue+\"<br/>gb/d remaining: \"+xml.getElementsByTagName('ongbday')[0].childNodes[0].nodeValue;");
 $m->addJs("$(\"#mod-internet-offpeakbar\").progressbar({value: parseInt(xml.getElementsByTagName('offpercentage')[0].childNodes[0].nodeValue)});");
 $m->addJs("document.getElementById('mod-internet-offpeak').innerHTML = \"data used:\" + xml.getElementsByTagName('offpeakused')[0].childNodes[0].nodeValue + \"/\"+ xml.getElementsByTagName('offpeaktotal')[0].childNodes[0].nodeValue + \"<br/>gb/d remaining: \"+xml.getElementsByTagName('offgbday')[0].childNodes[0].nodeValue;");
-$m->addJs("document.getElementById('mod-internet-upload').innerHTML = \"<br/>data uploaded:\" + xml.getElementsByTagName('uploaded')[0].childNodes[0].nodeValue+'gb';");
+$m->addJs("document.getElementById('mod-internet-upload').innerHTML = \"<br/>data uploaded: \" + xml.getElementsByTagName('uploaded')[0].childNodes[0].nodeValue+'gb';");
 ?>
