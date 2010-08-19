@@ -1,14 +1,13 @@
 <?php
 include_once "../include/page.php";
 $p = new Page('profile',1);
-echo "<pre>".print_r($_GET,true)."</pre>";
 
 if(isset($_GET['action']) && $_GET['action']=='profile'){
-	$p->infoBox("Skin changes will take affect next time you load a page");
-	if($_GET['password']=='')
+	$p->addJs("loadXML('user')");
+	if($_GET['password']=='d41d8cd98f00b204e9800998ecf8427e') //hash of ''
 		$p->db->qry("UPDATE users SET skin='{$_GET['skin']}',firstname='{$_GET['fname']}',	lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
-	else{
-		$p->db->qry("UPDATE users SET password='{$_GET['password']}', skin='{$_GET['skin']}' firstname='{$_GET['fname']}', lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
+	else {
+		$p->db->qry("UPDATE users SET password='{$_GET['password']}', skin='{$_GET['skin']}', firstname='{$_GET['fname']}', lastname='{$_GET['lname']}', email='{$_GET['email']}' WHERE id='{$p->u->id}'");
 		$p->u->updatePassword($_GET['password']);
 	}
 } else
@@ -20,10 +19,8 @@ $p->db->qry("SELECT * FROM skins");
 
 echo "<form name=\"profile\" id=\"profile\" type=\"get\" onsubmit=\"javascript:
 if(document.profile.password.value == document.profile.cpassword.value){
-	if(document.profile.password.value != '')
-		document.profile.password.value=hex_md5(document.profile.password.value);
 	document.profile.cpassword.value='';
-	doPost('pages/profile.php',this);
+	sendForm(this, 'profile');
 } else {
 	document.profile.password.value='';
 	document.profile.cpassword.value='';
@@ -38,7 +35,9 @@ while($row = $p->db->fetchLast())
 	echo "<option value='{$row['id']}'>{$row['name']}</option>";
 echo "</select></td></tr>";
 $p->addJs("document.profile.skin.value = '{$p->u->skin}';");
-echo "<tr><td>first name</td><td><input type=\"text\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>
+echo "<tr><td>first name</td><td><input type=\"tex
+	if(validatePopulated(document.profile.password.value))
+		document.profile.password.value=hex_md5(document.profile.password.value);t\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>
 <tr><td>last name</td><td><input type=\"text\" name=\"lname\" id=\"lname\" value=\"$lastname\"/></td></tr>
 <tr><td>email</td><td><input type=\"text\" name=\"email\" id=\"email\" value=\"$email\"/></td></tr>
 <tr><td><input type=\"submit\" value=\"update\"')\"/></td></tr>";

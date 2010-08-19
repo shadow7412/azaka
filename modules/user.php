@@ -58,6 +58,7 @@ $m->addJs("document.getElementById('mod-user-loginbox').style.display = 'none';}
 //Fill in userdata
 $m->addJs("document.getElementById('mod-user-info-username').innerHTML = xml.getElementsByTagName('username')[0].childNodes[0].nodeValue;");
 $m->addJs("document.getElementById('mod-user-info-connection').innerHTML = xml.getElementsByTagName('connection')[0].childNodes[0].nodeValue;");
+$m->addJs("document.getElementById('skin').href = xml.getElementsByTagName('skin')[0].childNodes[0].nodeValue;");
 
 //$m->addJs("document.getElementById('mod-user-content').innerHTML = xml.getElementsByTagName('content')[0].nodeValue;");
 ?>

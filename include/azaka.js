@@ -34,6 +34,10 @@ function sendForm(form, target, [order]){
 		first element in each list item. This can be used to determin the results of
 		click/drag type postitioning.
 
+loadXML(module, [atrributes])
+	Loads xml for module
+	If attributes are given, passed as $_GET to xml
+
 validateEmail(string)
 	checks to see if supplied string is a valid email
 	returns boolean
@@ -42,7 +46,7 @@ validateNumber(string)
 	checks to see if string is made of numbers only
 	returns boolean
 	
-validateNotEmpty(string)
+validatePopulated(string)
 	checks to see if string is empty or undefined
 ***************************************************************************************/
 
@@ -82,15 +86,15 @@ function runJs(target){
 	else
 		errorMsg(target+" does not exist. Javascript not run.");
 }
+function grabSidebar(){
+	loadPage('modules?type=s', 'sidebarlist');
+}
 function grabModules(){
-	loadPage("modules?type=m", "modulelist");
+	loadPage('modules?type=m', "modulelist");
 }
 function forceModulesUpdate(){
 	clearModuleHandles();
 	grabModules();
-}
-function grabSidebar(){
-	loadPage('modules?type=s', 'sidebarlist');
 }
 function forceHash(){
 	grabContent(window.location.hash.substring(1));
@@ -145,7 +149,7 @@ function sendForm(form, target, list){
 	form.action="javascript: return false;";
 	return false; //stop default form action from occuring
 }
-function loadXML(victim){
+function loadXML(victim, attr){
     if (window.XMLHttpRequest) // native XMLHttpRequest object
         _req["xml"+victim] = new XMLHttpRequest();
      else if (window.ActiveXObject) // IE/Windows ActiveX version
@@ -173,8 +177,10 @@ function loadXML(victim){
 			}
 		}	
 	};
-	
-	_req["xml"+victim].open("GET", "xml/"+victim+".php", true);
+	if(attr==undefined)
+		_req["xml"+victim].open("GET", "xml/"+victim+".php", true);
+	else
+		_req["xml"+victim].open("GET", "xml/"+victim+".php"+'&'+attr, true);
 	_req["xml"+victim].send();
 }
 function loadPage(url, target) {
@@ -208,7 +214,7 @@ function jahDone(target) {
 			if(target=='content')
 				loadPage("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
 			else
-				errorMsg(' loading ' + target + ": " + _req[target].statusText)
+				errorMsg('error loading ' + target + ": " + _req[target].statusText)
         }
 		if(target=='content'){
 			$("#content").fadeTo("fast",1);

@@ -18,6 +18,6 @@ echo "<user>
 	<connection>";
 	echo $u->isLocal?"On LAN":"On Internet";
 	echo "</connection>
-	<skin>{$u->skin}</skin>
+	<skin>{$u->getSkin()}</skin>
 </user>";
 ?>

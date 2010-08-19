@@ -1,19 +1,19 @@
 <?php
 include_once "../include/page.php";
 $p = new Page("registration",0);
-echo "<pre>".print_r($_GET,true)."</pre>";
+dev();
 if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['username']) && isset($_GET['password'])
 	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
 			$p->u->updateCookies($_GET['username'], $_GET['password']);
-			die($p->addJs("forceModulesUpdate();forceHash();history.go(-1);"));
+			die($p->addJs("grabModules();history.go(-1);"));
 		} else {
 			//incorrect password
 			echo "You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately.<br/>Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...<br/><br/>If you have not used this system before, please register.";
 		}
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
-	die($p->addJs("forceModulesUpdate();forceHash();history.go(-1);"));
+	die($p->addJs("grabModules();history.go(-1);"));
 } else if (isset($_GET['action']) && $_GET['action']=="wanttoregister"){
 	echo "Here is the paperwork..<br/><br/>";
 } else if (isset($_GET['action']) && $_GET['action']=="register"){
@@ -30,7 +30,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 			VALUES ('$username','$password','$firstname','$lastname','$doby-$dobm-$dobd','$email')");
 		//log user in
 		$p->u->updateCookies($_GET['username'], $_GET['password']);
-		die($p->addJs("forceUpdateMods();forceHash();"));
+		die($p->addJs("forceModulesUpdate();forceHash();"));
 	}
 } else {
 	echo "Dunno who the heck you are... Fill this out if you want to register.<br/><br/>";

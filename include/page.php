@@ -26,12 +26,10 @@ class Page {
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
-		$this->addJs("document.getElementById('skin').href = 'aesthetics/skins/{$this->u->getSkin()}';");
 		$this->db->qry("SELECT name, url, access FROM pages WHERE visible = 1");
 		while($row = $this->db->fetchLast())
 			$this->l->additem($row['name'],$row['name'],$row['access']);
-		$toolbarContent = addSlashes($this->l->dispBar());
-		$this->addJs("document.getElementById('toolbar').innerHTML = '$toolbarContent';");
+		$this->addJs("document.getElementById('toolbar').innerHTML = '".addSlashes($this->l->dispBar())."';");
 	}
 	function __destruct(){
 		$this->javascript .= "</script>";

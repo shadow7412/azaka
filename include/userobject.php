@@ -1,6 +1,11 @@
 <?php
 include_once "../include/db.php";
 
+//dev function shows the contents of $_GET. Done here because it is the most common include.
+function dev(){
+	echo "<pre onclick=\"this.innerHTML='".print_r($_SERVER,true)."'\">".print_r($_GET,true)."</pre>";
+}
+
 class UserObject {
 	public $id;
 	public $username;
@@ -75,12 +80,12 @@ class UserObject {
 		return ($this->access >= $reqaccess);
 	}
 	function getSkin(){
-		$default = "dark-hive/jquery-ui-1.8.2.custom.css"; //Should be dynamic
+		$default = "aesthetics/skins/dark-hive/jquery-ui-1.8.2.custom.css"; //Should be dynamic
 	
 		if(isset($this->id)){
 			$this->db->qry("SELECT skins.css AS css FROM skins, users WHERE users.id = {$this->id} AND skins.id=users.skin");
 			if($row = $this->db->fetchLast())
-				return $row['css'];
+				return "aesthetics/skins/".$row['css'];
 			else
 				return $default;
 		} else 

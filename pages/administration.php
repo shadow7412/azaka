@@ -12,7 +12,7 @@ if(!isset($_GET['action'])){
 
 //LINK SETTINGS
 } elseif ($_GET['action']=="linksettings"){
-	$p->db->qry("DELETE FROM links");
+	$p->db->qry("DELETE FROM links"); //clear current links before adding them back in
 	$value = strtok($_GET['order'],' ');
 	if ($value != '')
 		do{
@@ -21,7 +21,7 @@ if(!isset($_GET['action'])){
 		
 	if($_GET['newurl']!='')
 		$p->db->qry("INSERT INTO links (label, url) VALUES ('{$_GET['newlabel']}','{$_GET['newurl']}')");
-	$p->addJs("loadXML('links');");
+	$p->addJs("loadXML('links');"); //reload link bar straight away
 	
 //PAGE SETTINGS			
 } elseif ($_GET['action']=='pagesetup'){
