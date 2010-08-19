@@ -3,7 +3,7 @@ It does not have a capital letter for aesthetic reasons.
 It can cope with:
 	bill management (supporting paypal),
 	internet usage (netspace only - but xml can be altered for others),
-	ventrilio server status,
+	ventrilo server status,
 	news,
 	and whatever else I think of.
 

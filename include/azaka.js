@@ -119,7 +119,7 @@ function grabContent(id, attr){
 	if(document.getElementById('sidebarjs')==undefined) grabSidebar(); else runJs('sidebarjs');
 	if(attr==undefined)	loadPage("pages?page="+id,'content');
 	else loadPage("pages?page="+id+"&"+attr,'content');
-	return false;
+	false; //returning false makes inferiour browsers say 'false' on the screen
 }
 function sendForm(form, target, list){
 	var options = '';

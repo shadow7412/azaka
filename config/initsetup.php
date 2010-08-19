@@ -105,6 +105,7 @@ if(file_exists("stop")){
 	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
 	('user','user.php', 1, 0 ,0),
 	('bills','bills.php', 1, 0, 0),
+	('shoutbox','shoutbox.php', 1, 0, 0),
 	('links','links.php', 1, 0, 0),
 	('bandwidth','bandwidth.php', 0, 500, 5000),
 	('internet','internet.php', 0, 108000, 216000),
