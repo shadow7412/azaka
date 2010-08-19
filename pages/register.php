@@ -21,8 +21,8 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 	$p->db->qry("SELECT username, disabled FROM users WHERE username = '".$_GET['username']."'");
 	if($row = $p->db->fetchLast()){
 		echo "That username (".$row['username'].") is taken";
-		if($row['disabled']) echo ", but is disabled.<br/>If you are this user, you may want to talk to your benevolent admin.";
-		echo "<br/><br/>Your punishment is filling out the whole form again because I haven't made it autopopulate yet.";
+		if($row['disabled']) echo ", but is disabled.<br/>If you are this user, you may want to talk to your benevolent admin";
+		echo ".<br/><br/>Your punishment is filling out the whole form again because I haven't made it autopopulate yet.";
 	} else {
 		//add user to database
 		extract($_GET);

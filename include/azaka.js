@@ -154,6 +154,10 @@ function loadXML(victim, attr){
         _req["xml"+victim] = new XMLHttpRequest();
      else if (window.ActiveXObject) // IE/Windows ActiveX version
         _req["xml"+victim] = new ActiveXObject("Microsoft.XMLHTTP");
+
+
+
+
 		
 	_req["xml"+victim].onreadystatechange = function() {
 	
@@ -161,8 +165,10 @@ function loadXML(victim, attr){
 				try{
 					var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
 				} catch (error){
-					errorMsg('XML is not downloadable as DOMParser is not supported on this browser.');
-					return;
+					//If DOMParser does not fire, user is likely an IE person. Try the ActiveX version.
+					var xml = new ActiveXObject("Microsoft.XMLDOM")
+					xml.async="false"
+					xml.loadXML(_req["xml"+victim].responseText)
 				}
 			if (_req["xml"+victim].status == 200) {
 				try{eval(document.getElementById('modjs-'+victim).innerHTML);}
