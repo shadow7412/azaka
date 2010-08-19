@@ -18,7 +18,7 @@ while($item = $u->db->fetchLast()){
 	<item> 
 	<title>{$item['title']} by {$item['uid']}</title> 
 	<link>http://{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}#news</link> 
-	<pubDate>{$item['time']}</pubDate> 
+	<pubDate>".date('r', strtotime($item['time']))."</pubDate> 
 	<description><![CDATA[ {$item['content']}]]></description> 
 	</item>\n";
 }
