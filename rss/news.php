@@ -15,7 +15,8 @@ echo "<rss version=\"2.0\">
 $u->db->qry("SELECT * FROM news");
 while($item = $u->db->fetchLast()){
 	echo "
-	<item> 
+	<item>
+	<guid isPermaLink=\"false\">http://{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}#news#{$item['id']}</guid>
 	<title>{$item['title']} by {$item['uid']}</title> 
 	<link>http://{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}#news</link> 
 	<pubDate>".date('r', strtotime($item['time']))."</pubDate> 
