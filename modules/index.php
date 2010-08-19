@@ -9,13 +9,14 @@ if (isset($_GET['type']) && $_GET['type']=='m'){
 	$db->qry("SELECT name, url, localrefresh, webrefresh FROM modules WHERE enabled = 1 AND onsidebar = 1 ORDER BY `order`");
 	$js = "<script id=\"sidebarjs\">";
 } else
-	header("Strange request.", true ,412);
+	die(header("Strange request.", true ,412));
 
 
 while($row = $db->fetchLast()){
 	if(file_exists($row['url'])){
+	unset($m);
 	include $row['url'];
-		if($m->u->canAccess($m->accessreq)){
+		if(isset($m) && $m->u->canAccess($m->accessreq)){
 			$js .= "loadXML('{$row['name']}');";
 			$m->setRefresh($m->u->isLocal?$row['localrefresh']:$row['webrefresh']);
 			echo "<li style=\"width:100%\"><div class=\"ui-state-default ui-corner-top\"><table><tr><td><span class=\"ui-icon ui-icon-arrow-4-diag\" style=\"display: inline-block\"></span></td><td><strong>{$m->name}</strong></td></tr></table></div>";
