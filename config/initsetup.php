@@ -133,6 +133,9 @@ if(file_exists("stop")){
 	
 	$errors .= doqry("Add Skins", "INSERT INTO `skins` (name, css) VALUES
 	('dark-hive','dark-hive/jquery-ui-1.8.2.custom.css'),
+	('start','start/jquery-ui-1.8.4.custom.css'),
+	('sunny','sunny/jquery-ui-1.8.4.custom.css'),
+	('vader','vader/jquery-ui-1.8.4.custom.css'),
 	('le-frog','le-frog/jquery-ui-1.8.2.custom.css')
 	");
 	
