@@ -189,7 +189,15 @@ while($row = $p->db->fetchLast()){
 	$p->addJs("document.useradmin.billable$id.value = $billable;");
 	$p->addJs("document.useradmin.victims.value += $id+' ';");
 	}
-echo "<td></td></table><input type=\"submit\" value=\"Update\"/></form></div>";
+echo "<tr id=\"admin-users-eof\"></tr></table><input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"Update\"/>";
+
+$p->db->qry("SELECT id, username FROM users WHERE disabled=1");
+if($p->db->noLast()){
+	echo "<input type\"button\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"View disabled users\"/>";
+	$disableduserform = "<tr><td>a</td></tr><tr id=\"admin-user-eof\"></tr>";
+	$p->addJs("document.getElementById('admin-users-eof').outerHTML='$disableduserform'");
+}
+echo "</form></div>";
 
 //ADD MORE ADMIN SECTIONS HERE
 echo "</div>"
