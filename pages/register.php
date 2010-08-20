@@ -6,7 +6,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
 			$p->u->updateCookies($_GET['username'], $_GET['password']);
-			$p->addJs("setTimeout('grabModules()',500); history.go(-1);");
+			$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
 			die($p->infoBox("Logging In..."));
 		} else {
 			//incorrect password
@@ -14,7 +14,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 		}
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
-	$p->addJs("setTimeout('grabModules()',500); history.go(-1);");
+	$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
 	die($p->infoBox("Logging Out..."));
 } else if (isset($_GET['action']) && $_GET['action']=="wanttoregister"){
 	echo "Here is the paperwork..<br/><br/>";
@@ -32,11 +32,11 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 			VALUES ('$username','$password','$firstname','$lastname','$doby-$dobm-$dobd','$email')");
 		//log user in
 		$p->u->updateCookies($_GET['username'], $_GET['password']);
-		$p->addJs("setTimeout('grabModules()',500); history.go(-1);");
+		$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
 		die($p->infoBox("Sucessful. Logging In..."));
 	}
 } else {
-	echo "Dunno who the heck you are... Fill this out if you want to register.<br/><br/>";
+	$p->infoBox("Dunno who the heck you are... Fill this out if you want to register.");
 }
 ?>
 

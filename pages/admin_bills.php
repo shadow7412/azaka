@@ -1,7 +1,7 @@
 <?php 
 include_once "../include/page.php";
 $p = new Page('bills',1);
-print_r($_GET);
+dev();
 if(isset($_GET['action'])){
 	if($_GET['action']=='pay') $p->db->qry("UPDATE `bills` SET `paid` = 1, `datepaid` = '".date('Y-m-d')."' WHERE `id` = '".$_GET['control']."'");
 	if($_GET['action']=='confirm') $p->db->qry("UPDATE `bills` SET `confirmed` = 1, `dateconfirmed` = '".date('Y-m-d')."' WHERE `id` = '".$_GET['control']."'");
@@ -44,7 +44,7 @@ if ($p->db->noLast() != 0){
 echo "</div><h3><a>add bill</a></h3><div>";
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	echo "<form action=\"javascript:sendPost('pages/admin_bills.php?action=add&datedue='+document.addform.datedue.value+'&service='+document.addform.service.value\" name=\"addform\" id=\"addform\"><table>";
+	echo "<form action=\"javascript:sendForm(this, 'admin_bills')\" name=\"addform\" id=\"addform\"><table>";
 	$p->db->qry("SELECT `id`,`username`, `email` FROM `users` WHERE `billable` = '1' ORDER BY `username` ASC");
 	$users=0;
 	$emailnotice = "";
@@ -57,7 +57,7 @@ echo "</div><h3><a>add bill</a></h3><div>";
 				<input type=\"text\" name=\"amount$users\" id=\"amount$users\" value = 0>
 				</td></tr>\n";
 			$users++;
-			if(false && isset($_GET['action']) && $_GET['action'] == 'add' && isset($_GET['amount'+$id]) && $_GET['amount'+$id] !=0 ){
+			if(false && isset($_GET['action']) && $_GET['action'] == 'addform' && isset($_GET['amount'+$id]) && $_GET['amount'+$id] !=0 ){
 				$p->db->qry("INSERT INTO `bills` (uid,amount,dateentered,datedue,service) VALUES ('$id', '".$_GET['amount'+$id]."', '".date('Y-m-d')."', '".$_GET['datedue']."', '".$_GET['service']."')");
 				
 				//email new bill notice

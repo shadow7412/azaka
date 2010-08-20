@@ -87,6 +87,9 @@ function runJs(target){
 		errorMsg(target+" does not exist. Javascript not run.");
 }
 function grabSidebar(){
+	var sbjs;
+	//clear current js before reloading it
+	if((sbjs = document.getElementById('sidebarjs')) != undefined) sbjs.innerHTML='';
 	loadPage('modules?type=s', 'sidebarlist');
 }
 function grabModules(){
