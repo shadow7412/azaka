@@ -1,5 +1,7 @@
 <?php
-$netspacefile = '../../xml/netspace.xml';
+$netspacefile = '../../xml/netspace.xml';     // Netspace XML file
+$updatefile = '../../xml/nslastupdate.dat'; // File with time file was last updated
+
 include_once "../include/userobject.php";
 $u = new UserObject;
 
@@ -48,8 +50,14 @@ echo "<internet>
 	<offpeaktotal>$offtotal</offpeaktotal>
 	<offpeakused>$offused</offpeakused>
 	<offgbday>$offgbday</offgbday>
-	<uploaded>$uploaded</uploaded>
-</internet>";
+	<uploaded>$uploaded</uploaded>";
+if(file_exists($updatefile) & $u->canAccess(1)){
+	$handle = fopen($updatefile, "r");
+	$contents = fread($handle, filesize($updatefile));
+	echo "<updated>$contents</updated>";
+} else
+	echo "<updated></updated>";
+echo "</internet>";
 
 
 
