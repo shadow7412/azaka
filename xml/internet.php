@@ -9,10 +9,20 @@ if(file_exists($netspacefile) & $u->canAccess(1)){
 	$xml = simplexml_load_file($netspacefile); //Open (local) NetSpace XML
 	$startdate = strtotime($xml["START_DATE"]); //startdate in seconds
 	$enddate = strtotime($xml["END_DATE"]); //enddate in seconds
-	$ontotal = round($xml->PLAN->LIMIT[0]["MEGABYTES"]/1000,1); //peak total
-	$offtotal = round($xml->PLAN->LIMIT[1]["MEGABYTES"]/1000,1); //offpeak total
-	$onused = round($xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000,1); //peakused
-	$offused = round($xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000,1); //offpeak used
+	if($xml->PLAN->LIMIT[0]["NAME"]=="Peak"){
+		$ontotal = $xml->PLAN->LIMIT[0]["MEGABYTES"]/1000; //peak total
+		$offtotal =$xml->PLAN->LIMIT[1]["MEGABYTES"]/1000; //offpeak total
+	} else if($xml->PLAN->LIMIT[0]["NAME"]=="Off Peak"){
+		$offtotal = $xml->PLAN->LIMIT[0]["MEGABYTES"]/1000; //offpeak total
+		$ontotal =$xml->PLAN->LIMIT[1]["MEGABYTES"]/1000; //peak total
+	}
+	if($xml->TRAFFIC->DATA[0]["TYPE"] == "Peak"){
+		$onused = $xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000; //peakused
+		$offused = $xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000; //offpeak used
+	} else if($xml->TRAFFIC->DATA[0]["TYPE"] == "Off Peak"){
+		$offused = $xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000; //offpeak used
+		$onused = $xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000; //peakused
+	}
 	$uploaded = round(($xml->TRAFFIC->DATA[0]["UPLOADS"]+$xml->TRAFFIC->DATA[1]["UPLOADS"])/1000,2); //uploads (both on and off peak)
 	$timeleft = date('U',$enddate) - date('U');
 	$totaltime = date('U',$enddate) - date('U', $startdate);
