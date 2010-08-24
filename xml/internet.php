@@ -50,14 +50,15 @@ echo "<internet>
 	<offpeaktotal>$offtotal</offpeaktotal>
 	<offpeakused>$offused</offpeakused>
 	<offgbday>$offgbday</offgbday>
-	<uploaded>$uploaded</uploaded>";
+	<uploaded>$uploaded</uploaded>
+	";
 if(file_exists($updatefile) & $u->canAccess(1)){
 	$handle = fopen($updatefile, "r");
 	$contents = fread($handle, filesize($updatefile));
 	echo "<updated>$contents</updated>";
 } else
-	echo "<updated></updated>";
-echo "</internet>";
+	echo "<updated>Update time unavailable</updated>";
+echo "\n</internet>";
 
 
 
