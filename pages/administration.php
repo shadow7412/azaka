@@ -115,7 +115,8 @@ if($row['enabled']){
 		<select name=\"billoverride$id\">
 			<option value=\"0\">Ignore Billability</option>
 			<option value=\"1\">or Billable</option>
-		</select></td></tr></table></li>";
+		</select></td>
+		<td><input type=\"button\" onclick=\"this.parentElement.parentElement.parentElement.parentElement.parentElement.outerHTML = '';\" value=\"Delete\"/></td></tr></table></li>";
 		$id++; 
 		}
 	echo "</ul>
