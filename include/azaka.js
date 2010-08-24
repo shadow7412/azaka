@@ -2,6 +2,8 @@
 azaka javascript for page.
 Commands: (There are other internal commands that you do not need to use or know about)
 
+== PAGE ==
+
 startPage()
 	Makes sidebar and module bar active,
 	Inits global variables
@@ -19,6 +21,8 @@ runJs(elementID)
 	
 forceModulesUpdate()
 	reloads all modules and clears timers
+	
+== AJAX ==
 
 grabContent(pagename, [attributes])
 	loads page into main content area.
@@ -37,7 +41,8 @@ function sendForm(form, target, [order]){
 loadXML(module, [atrributes])
 	Loads xml for module
 	If attributes are given, passed as $_GET to xml
-
+	
+== VALIDATION ==
 validateEmail(string)
 	checks to see if supplied string is a valid email
 	returns boolean
@@ -60,7 +65,7 @@ function startPage(){
 	
 	//start hashing
 	if (window.location.hash == '') grabContent('news'); //if no hash default to news page
-	checkHash();
+	checkHash(); //start hashchecking loop
 	
 	//Set sidebar/modlist to be draggable
 	$("#modulelist, #sidebarlist").sortable({
@@ -93,23 +98,20 @@ function grabSidebar(){
 	loadPage('modules?type=s', 'sidebarlist');
 }
 function grabModules(){
+	//Clear running module handles before reloading module bar
+	//Not doing this would either:
+	//Throw an error should the module not exist when script is run
+	//or make the modules run at double speed - as they create a second handle
+	//when reloaded.
+	
+	for (var h in _moduleHandles)
+		clearTimeout(_moduleHandles[h]);
 	loadPage('modules?type=m', "modulelist");
-}
-function forceModulesUpdate(){
-	clearModuleHandles();
-	grabModules();
-}
-function forceHash(){
-	grabContent(window.location.hash.substring(1));
 }
 function checkHash(){
 	if(_currentHash != window.location.hash)
 		grabContent(window.location.hash.substring(1));
 	setTimeout("checkHash()",150);
-}
-function clearModuleHandles(){
-	for (var h in _moduleHandles)
-		clearTimeout(h);
 }
 
 //AJAX
@@ -158,20 +160,15 @@ function loadXML(victim, attr){
      else if (window.ActiveXObject) // IE/Windows ActiveX version
         _req["xml"+victim] = new ActiveXObject("Microsoft.XMLHTTP");
 
-
-
-
-		
+	//The code in the next block runs AFTER the xml is loaded.
 	_req["xml"+victim].onreadystatechange = function() {
-	
 		if (_req["xml"+victim].readyState == 4) {
 				try{
 					var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
 				} catch (error){
 					//If DOMParser does not fire, user is likely an IE person. Try the ActiveX version.
-					var xml = new ActiveXObject("Microsoft.XMLDOM")
-					xml.async="false"
-					xml.loadXML(_req["xml"+victim].responseText)
+					errorMsg("IE does not like XML at this stage.");
+					return;
 				}
 			if (_req["xml"+victim].status == 200) {
 				try{eval(document.getElementById('modjs-'+victim).innerHTML);}
@@ -179,18 +176,20 @@ function loadXML(victim, attr){
 					if(document.getElementById('modjs-'+victim)==undefined)
 						errorMsg("Could not find javascript for "+victim);
 					else 
-						errorMsg("Error running javascript for "+victim);
+						errorMsg("Error running javascript for "+victim +" : "+ error);
 				}
 			} else {
-				errorMsg("XML error",victim+" has failed. Error: "+_req["xml"+victim].status+" "+_req[target].statusText);
+				errorMsg("XML error (" + victim +")",victim+" has failed. Error: "+_req["xml"+victim].status+" "+_req["xml"+victim].statusText);
 			}
 		}	
 	};
+	//Back in real code now.
 	if(attr==undefined)
 		_req["xml"+victim].open("GET", "xml/"+victim+".php", true);
 	else
 		_req["xml"+victim].open("GET", "xml/"+victim+".php"+'&'+attr, true);
 	_req["xml"+victim].send();
+	//Will run the 'function' area last
 }
 function loadPage(url, target) {
     document.getElementById('loader').innerHTML = '<img src="aesthetics/images/loading.gif" alt="loading..."/>';
@@ -223,7 +222,7 @@ function jahDone(target) {
 			if(target=='content')
 				loadPage("pages?page=error&code="+_req[target].status+"&msg="+_req[target].statusText,"content");
 			else
-				errorMsg('error loading ' + target + ": " + _req[target].statusText)
+				errorMsg('error loading ' + target + ": "  + _req[target].status + _req[target].statusText)
         }
 		if(target=='content'){
 			$("#content").fadeTo("fast",1);

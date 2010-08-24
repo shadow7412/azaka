@@ -1,30 +1,38 @@
 <?php
 include_once "../include/page.php";
 $p = new Page("registration",0);
-dev();
-if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['username']) && isset($_GET['password'])
-	&& $result = $p->db->fetch($p->db->qry("SELECT username, password FROM users WHERE username = '".$_GET['username']."'"))){
+//dev();
+if (isset($_GET['action']) && $_GET['action']=="login" && isset($_GET['username']) && isset($_GET['password'])
+	&& $result = $p->db->fetch($p->db->qry("SELECT username, password, disabled FROM users WHERE username = '".$_GET['username']."'"))){
 		if($result['password']==$_GET['password']){
-			$p->u->updateCookies($_GET['username'], $_GET['password']);
-			$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
-			die($p->infoBox("Logging In..."));
+			if($result['disabled']){
+				$p->infoBox("You have successfully identified yourself, but your account is disabled.");
+				$p->infoBox("To gain access please talk to your admin.");
+				echo "<input onclick=\"history.go(-1);\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"Return\"/>";
+				die();
+			} else {
+				$p->u->updateCookies($_GET['username'], $_GET['password']);
+				$p->addJs("grabModules(); grabSidebar(); setTimeout('history.go(-1)',500);");
+				die($p->infoBox("Logging In..."));
+			}
 		} else {
 			//incorrect password
-			echo "You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately.<br/>Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...<br/><br/>If you have not used this system before, please register.";
+			$p->infoBox("You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately. Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...");
+			$p->infoBox("If you have not used this system before, please register.");
 		}
 } else if(isset($_GET['action']) && $_GET['action']=="logout"){
 	$p->u->invalidateSession();
-	$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
+	$p->addJs("grabModules(); grabSidebar(); setTimeout('history.go(-1)',500);");
 	die($p->infoBox("Logging Out..."));
 } else if (isset($_GET['action']) && $_GET['action']=="wanttoregister"){
-	echo "Here is the paperwork..<br/><br/>";
+	$p->infoBox("Here is the paperwork..");
 } else if (isset($_GET['action']) && $_GET['action']=="register"){
 	//make sure there are no duplicate names
 	$p->db->qry("SELECT username, disabled FROM users WHERE username = '".$_GET['username']."'");
 	if($row = $p->db->fetchLast()){
-		echo "That username (".$row['username'].") is taken";
-		if($row['disabled']) echo ", but is disabled.<br/>If you are this user, you may want to talk to your benevolent admin";
-		echo ".<br/><br/>Your punishment is filling out the whole form again because I haven't made it autopopulate yet.";
+		if($row['disabled']) $p->infoBox("This username is already taken, but disabled. If you are this user, you may want to talk to your benevolent admin");
+		$p->infoBox("That username (".$row['username'].") is taken");
+		$p->infoBox("Your punishment is filling out the whole form again because I haven't made it autopopulate yet.");
 	} else {
 		//add user to database
 		extract($_GET);
@@ -32,8 +40,7 @@ if ((!(isset($_GET['action']) && $_GET['action']=="register")) && isset($_GET['u
 			VALUES ('$username','$password','$firstname','$lastname','$doby-$dobm-$dobd','$email')");
 		//log user in
 		$p->u->updateCookies($_GET['username'], $_GET['password']);
-		$p->addJs("setTimeout('forceModulesUpdate()',500); grabSidebar(); history.go(-1);");
-		die($p->infoBox("Sucessful. Logging In..."));
+		$p->addJs("grabModules(); grabSidebar(); setTimeout('history.go(-1)',500);");
 	}
 } else {
 	$p->infoBox("Dunno who the heck you are... Fill this out if you want to register.");

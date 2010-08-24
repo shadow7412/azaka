@@ -13,8 +13,8 @@ if($u->canAccess(1)){
 </bandwidth>";
 } else {
 	echo "<bandwidth>
-	<liveupload>?</liveupload>
-	<livedownload>?</livedownload>
+	<liveupload>Unauthorised</liveupload>
+	<livedownload>User</livedownload>
 </bandwidth>";
 }
 

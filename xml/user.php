@@ -18,6 +18,7 @@ echo "<user>
 	<connection>";
 	echo $u->isLocal?"On LAN":"On Internet";
 	echo "</connection>
+	<ip>{$_SERVER['REMOTE_ADDR']}</ip>
 	<skin>{$u->getSkin()}</skin>
 </user>";
 ?>

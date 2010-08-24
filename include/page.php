@@ -22,7 +22,7 @@ class Page {
 		$this->javascript .= "\n\n".$js;
 	}
 	function infoBox($info){
-	echo "<div class=\"ui-widget\" onclick=\"this.outerHTML='';\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>$info</td></tr></table></p></div></div><br/>";
+	echo "<div class=\"ui-widget\" onclick=\"this.outerHTML='';\"><div class=\"ui-state-highlight ui-corner-all\" style=\"margin-top: 20px; padding: 0 .7em;\"><p><table><tr><td><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span></td><td>$info</td></tr></table></p></div><br/></div>";
 	}
 	function setupTop($title){
 		$this->addJs("document.title = '$title - azaka';");
