@@ -3,22 +3,24 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 <link rel="apple-touch-icon" href="aesthetics/images/icon.png" />
 <link rel="shortcut icon" href="aesthetics/images/icon.ico" />
-<link media="only screen and (max-device-width: 480px)" href="aesthetic/azaka.css" type= "text/css" rel="stylesheet" />
-<script language="javascript1.3" src="include/jquery.js" ></script>
+<link media="only screen and (max-device-width: 480px)" href="aesthetics/mobile.css" type= "text/css" rel="stylesheet" />
+<link rel="stylesheet" id="skin" type="text/css" href="aesthetics/skins/dark-hive/jquery-ui-1.8.2.custom.css" media="screen" />
+<script language="javascript1.3" src="include/jquery-1.4.2.min.js" ></script>
+<script language="javascript1.3" src="include/jquery-ui-1.8.4.custom.min.js" ></script>
 <script language="javascript1.3" src="include/azaka.js" ></script>
 <script language="javascript1.3" src="include/md5.js" ></script>
 <body onload="javascript:startPage()">
-<div id="top">
-azaka - iphone
-</div>
+<div id="heading">azaka</div>
+
+<div id="sidebar"><ul id="sidebarlist" style="list-style-type: none; margin: 0; padding: 0; width: 100%;" class="connectedSortable"><center><img src="aesthetics/images/loading.gif"/></center></ul></div>
+
+<div id="modules"><ul id="modulelist" style="list-style-type: none; margin: 0; padding: 0; width: 100%;" class="connectedSortable"><center><img src="aesthetics/images/loading.gif"/></center></ul></div>
 <div id="loader"></div>
-<div id="toolbar"><a href=".?view=pc">PC Version</a></div>
+<div id="bar" class="ui-state-default"><div id="toolbar" class="ui-state-default"></div>
+<div id="error" class="ui-state-error ui-corner-all"><noscript>You cannot use this site without javascript. You should enable it.</noscript></div></div>
+<div id="content" class="ui-corner-all"></div>
 
-<div id="content">
-MOBILE VERSION TO BE MADE.
-</div>
-
-<div id="bottom"></div>
+<div id="bottom"><a href=".?view=pc">PC Version</a></div>
 </body>
 </html>
 
