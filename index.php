@@ -16,6 +16,8 @@ switch ($_GET['view']){
 			require("aesthetics/mobile.html");
 		elseif (strpos($_SERVER['HTTP_USER_AGENT'],"MSIE")) //Internet Explorer
 			require("aesthetics/ie.html");
+		elseif (strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot")) //Google
+			echo "This site does not yet support being searched.\n\nAt a later time, a quick summary MAY be placed here.";
 		else require("aesthetics/pc.html");
 }
 ?>
