@@ -1,6 +1,10 @@
 <?php
+// <SETTINGS>
 $netspacefile = '../../xml/netspace.xml';     // Netspace XML file
 $updatefile = '../../xml/nslastupdate.dat'; // File with time file was last updated
+$countuploads = true; //true or false. Use true if your plan counts uploads, false if not
+// </SETTINGS>
+
 
 include_once "../include/userobject.php";
 $u = new UserObject;
@@ -21,9 +25,17 @@ if(file_exists($netspacefile) & $u->canAccess(1)){
 	if($xml->TRAFFIC->DATA[0]["TYPE"] == "Peak"){
 		$onused = $xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000; //peakused
 		$offused = $xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000; //offpeak used
+		if($countuploads){
+			$onused += $xml->TRAFFIC->DATA[0]["UPLOADS"]/1000; //peakused
+			$offused += $xml->TRAFFIC->DATA[1]["UPLOADS"]/1000; //offpeak used
+			}
 	} else if($xml->TRAFFIC->DATA[0]["TYPE"] == "Off Peak"){
 		$offused = $xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000; //offpeak used
 		$onused = $xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000; //peakused
+		if($countuploads{
+			$offused += $xml->TRAFFIC->DATA[0]["UPLOADS"]/1000; //offpeak used
+			$onused += $xml->TRAFFIC->DATA[1]["UPLOADS"]/1000; //peakused
+		}
 	}
 	$uploaded = round(($xml->TRAFFIC->DATA[0]["UPLOADS"]+$xml->TRAFFIC->DATA[1]["UPLOADS"])/1000,2); //uploads (both on and off peak)
 	$timeleft = date('U',$enddate) - date('U');

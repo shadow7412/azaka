@@ -1,7 +1,6 @@
 <?php
 include_once "../include/page.php";
 $p = new Page("news",0);
-
 $p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 $p->l->additem("add news item","admin_news", 2);
 $p->l->addlink("view rss feed","rss/news.php",0);
