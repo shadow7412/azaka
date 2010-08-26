@@ -126,6 +126,14 @@ if(file_exists("stop")){
 	('resetdb',  'config/initsetup.php',  '3',  '1')
 	");
 
+	$errors .= doqry("Shoutbox Table","CREATE TABLE IF NOT EXISTS `shoutbox` (
+	`id` int(11) NOT NULL,
+	`uid` int(11) NOT NULL,
+	`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`message` text NOT NULL,
+	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+
 	$errors .= doqry("Skins Table","CREATE TABLE IF NOT EXISTS `skins` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	  `name` text,
