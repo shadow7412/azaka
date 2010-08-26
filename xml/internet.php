@@ -28,11 +28,11 @@ if(file_exists($netspacefile) & $u->canAccess(1)){
 		if($countuploads){
 			$onused += $xml->TRAFFIC->DATA[0]["UPLOADS"]/1000; //peakused
 			$offused += $xml->TRAFFIC->DATA[1]["UPLOADS"]/1000; //offpeak used
-			}
+		}
 	} else if($xml->TRAFFIC->DATA[0]["TYPE"] == "Off Peak"){
 		$offused = $xml->TRAFFIC->DATA[0]["DOWNLOADS"]/1000; //offpeak used
 		$onused = $xml->TRAFFIC->DATA[1]["DOWNLOADS"]/1000; //peakused
-		if($countuploads{
+		if($countuploads){
 			$offused += $xml->TRAFFIC->DATA[0]["UPLOADS"]/1000; //offpeak used
 			$onused += $xml->TRAFFIC->DATA[1]["UPLOADS"]/1000; //peakused
 		}
