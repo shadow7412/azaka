@@ -171,15 +171,19 @@ function loadXML(victim, attr){
 					return;
 				}
 			if (_req["xml"+victim].status == 200) {
-				try{eval(document.getElementById('modjs-'+victim).innerHTML);}
-				catch(error){
+				try{
+					eval(document.getElementById('modjs-'+victim).innerHTML);
+					document.getElementById('mod-icon-'+victim).className = "ui-icon ui-icon-arrow-4-diag";
+				} catch(error){
+					document.getElementById('mod-icon-'+victim).className = "ui-icon ui-icon-alert";
 					if(document.getElementById('modjs-'+victim)==undefined)
 						errorMsg("Could not find javascript for "+victim);
 					else 
 						errorMsg("Error running javascript for "+victim +" : "+ error);
 				}
 			} else {
-				errorMsg("XML error (" + victim +")",victim+" has failed. Error: "+_req["xml"+victim].status+" "+_req["xml"+victim].statusText);
+				document.getElementById('mod-icon-'+victim).className = "ui-icon ui-icon-alert";
+				setTimeout(function(){loadXML(victim,attr)},1000);
 			}
 		}	
 	};
