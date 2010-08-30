@@ -159,7 +159,7 @@ function loadXML(victim, attr){
         _req["xml"+victim] = new XMLHttpRequest();
      else if (window.ActiveXObject) // IE/Windows ActiveX version
         _req["xml"+victim] = new ActiveXObject("Microsoft.XMLHTTP");
-
+	document.getElementById('mod-icon-'+victim).className = "ui-icon ui-icon-arrowrefresh-1-e";
 	//The code in the next block runs AFTER the xml is loaded.
 	_req["xml"+victim].onreadystatechange = function() {
 		if (_req["xml"+victim].readyState == 4) {
