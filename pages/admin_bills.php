@@ -44,11 +44,11 @@ if ($p->db->noLast() != 0){
 echo "</div><h3><a>add bill</a></h3><div>";
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	echo "<form action=\"javascript:sendForm(this, 'admin_bills')\" name=\"addform\" id=\"addform\"><table>";
 	$p->db->qry("SELECT `id`,`username`, `email` FROM `users` WHERE `billable` = '1' ORDER BY `username` ASC");
-	$users=0;
+	$users = 0;
 	$emailnotice = "";
-	
+	if($p->db->noLast() != 0){
+		echo "<form action=\"javascript:sendForm(this, 'admin_bills')\" name=\"addform\" id=\"addform\"><table>";
 		while($row = $p->db->fetchLast()) {
 			extract($row);
 			$p->addJs("document.addform.action += '\'&amount$id=\'+document.addform.amount$users.value;';");
@@ -73,24 +73,21 @@ echo "</div><h3><a>add bill</a></h3><div>";
 		}
 		if($emailnotice!="")
 			echo "<script language=\"JavaScript\">alert('$emailnotice');</script>";
-	$p->addJs("document.addform.action += ')';");
-	
-	//draw the common elements, and the split form
-	echo "tick the people to spilt between or enter figures manually<br/>total <input type=\"text\" id=\"splitfield\">
-	<input id=\"split\" value=\"split\" type=\"button\" onClick=\"var average = 0.0;";
-	for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) average++;";
-	for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) getElementById('user$ii').value = getElementById('splitfield').value/average; else getElementById('user$ii').value = 0;";
-	echo "\"><br/><br/>";	
-	
-	echo "<tr><td>datedue</td><td>	<input type=\"text\" name=\"datedue\" value = ".date('Y-m-d')."></td></tr>
-	<tr><td>service</td><td> <input type=\"text\" name=\"service\" value = \"misc\"></td></table>
-	<input value = \"add\" type=\"submit\"></form><br/>";
-
-
-
-
-
-
+		$p->addJs("document.addform.action += ')';");
+		
+		//draw the common elements, and the split form
+		echo "tick the people to spilt between or enter figures manually<br/>total <input type=\"text\" id=\"splitfield\">
+		<input id=\"split\" value=\"split\" type=\"button\" onClick=\"var average = 0.0;";
+		for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) average++;";
+		for($ii=0;$ii!=$users;$ii++) echo "if (getElementById('checkuser$ii').checked) getElementById('user$ii').value = getElementById('splitfield').value/average; else getElementById('user$ii').value = 0;";
+		echo "\"><br/><br/>";	
+		
+		echo "<tr><td>datedue</td><td>	<input type=\"text\" name=\"datedue\" value = ".date('Y-m-d')."></td></tr>
+		<tr><td>service</td><td> <input type=\"text\" name=\"service\" value = \"misc\"></td></table>
+		<input value = \"add\" type=\"submit\"></form><br/>";
+	} else {
+		echo "No users have been marked as billable.";
+	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 echo "</div><h3><a>bill history</a></h3><div>";
