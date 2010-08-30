@@ -19,9 +19,11 @@ class UserObject {
 	public $isLocal;
 	public $skin;
 	public $db;
+	private $changed;
 	
 	function __construct(){
 		$this->db = new Database();
+		$this->changed = false;
 		$this->updateUser();
 		switch ($_SERVER['REMOTE_ADDR'][0].$_SERVER['REMOTE_ADDR'][1].$_SERVER['REMOTE_ADDR'][2]){ //until i work out substring..
 			case ("127"):
@@ -33,7 +35,7 @@ class UserObject {
 			default:
 				$this->isLocal = false;
 		}
-		$this->updateCookies($this->username,$this->password);
+		if($this->changed) $this->updateCookies($this->username,$this->password);
 	}
 
 	function updateUser(){
@@ -44,8 +46,9 @@ class UserObject {
 		}
 	//if cookie info is existent and correct, log user in. if not, destroy stuff.
 		if(isset($this->username)){
-			if($result = $this->db->fetch($this->db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."' AND disabled=0"))){
-
+			if($result = $this->db->fetch(
+				$this->db->qry("SELECT * FROM users WHERE username='".$this->username."' AND password = '".$this->password."' AND disabled=0")
+			)){
 				$this->id = $result['id'];
 				$this->access = $result['access'];
 				$this->firstname = $result['firstname'];
@@ -57,6 +60,7 @@ class UserObject {
 				$this->db->qry("UPDATE  `users` SET  `lastactive` = NOW( ) WHERE  `users`.`id` ={$this->id};");
 			} else {
 				unset($this->username);
+				$this->changed = true;
 			}
 		}
 	//if user did not successfully log in, log in a pseudo guest account
@@ -67,13 +71,16 @@ class UserObject {
 		}
 	}
 	function invalidateSession(){
+		$this->changed = true;
 		$this->updateCookies('','');
 	}
 	function updateCookies($user, $pass){
-		setcookie("azaka_username",$user,time()+60*60+60*60*24*$this->db->getSetting('account_timeout'),"/");
-		setcookie("azaka_password",$pass,time()+60*60+60*60*24*$this->db->getSetting('account_timeout'),"/");
+		$timeout = $this->db->getSetting('account_timeout');
+		setcookie("azaka_username",$user,time()+60*60+60*60*24*$timeout,"/");
+		setcookie("azaka_password",$pass,time()+60*60+60*60*24*$timeout,"/");
 	}
 	function updatePassword($pass){
+		$this->changed=true;
 		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");
 	}
 	function canAccess($reqaccess){
