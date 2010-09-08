@@ -82,7 +82,7 @@ function errorMsg(message,extrainfo){
 	if (extrainfo==undefined) table='<table>';
 	else table='<table onclick="alert(\''+extrainfo+'\')">';
 	document.getElementById('error').innerHTML=table+'<tr><td><span class=\"ui-icon ui-icon-alert\"></span></td><td>'+message+'</td></tr></table>  ';
-	_errorMessageHandle = setTimeout("document.getElementById('error').innerHTML=''",3000);
+	_errorMessageHandle = setTimeout(function(){document.getElementById('error').innerHTML='';},3000);
 }
 function runJs(target){
 	if(document.getElementById(target) != null)
@@ -111,7 +111,7 @@ function grabModules(){
 function checkHash(){
 	if(_currentHash != window.location.hash)
 		grabContent(window.location.hash.substring(1));
-	setTimeout("checkHash()",150);
+	setTimeout(function(){checkHash()},150);
 }
 
 //AJAX
@@ -167,8 +167,9 @@ function loadXML(victim, attr){
 					var xml = (new DOMParser()).parseFromString(_req["xml"+victim].responseText,"text/xml");
 				} catch (error){
 					//If DOMParser does not fire, user is likely an IE person. Try the ActiveX version.
-					errorMsg("IE does not like XML at this stage.");
-					return;
+					xml = new ActiveXObject("Microsoft.XMLDOM");
+					xml.async="false";
+					xml.loadXML(_req["xml"+victim].responseText);
 				}
 			if (_req["xml"+victim].status == 200) {
 				try{

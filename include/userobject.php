@@ -9,7 +9,7 @@ function dev(){
 class UserObject {
 	public $id;
 	public $username;
-	public $password;
+	private $password;
 	public $access;
 	public $firstname;
 	public $lastname;
@@ -19,11 +19,10 @@ class UserObject {
 	public $isLocal;
 	public $skin;
 	public $db;
-	private $changed;
+	private $cookie; // md5(user.md5(password));
 	
 	function __construct(){
 		$this->db = new Database();
-		$this->changed = false;
 		$this->updateUser();
 		switch ($_SERVER['REMOTE_ADDR'][0].$_SERVER['REMOTE_ADDR'][1].$_SERVER['REMOTE_ADDR'][2]){ //until i work out substring..
 			case ("127"):
@@ -35,9 +34,41 @@ class UserObject {
 			default:
 				$this->isLocal = false;
 		}
-		if($this->changed) $this->updateCookies($this->username,$this->password);
+		$this->updateCookies($this->username,$this->password);
 	}
-
+	function updateUser(){
+		//pull in cookies
+		//if cookie info matches user, log them in - if not wipe cookie.
+		if(isset($_COOKIE['azaka_user'])){
+			$this->cookie = $_COOKIE['azaka_user'];
+			$this->db->qry("SELECT * FROM users");
+			while($result = $this->db->fetchLast()){
+				if($this->cookie == md5($result['username'].$result['password'])){
+					$this->id = $result['id'];
+					$this->username = $result['username'];
+					$this->password = $result['password'];
+					$this->access = $result['access'];
+					$this->firstname = $result['firstname'];
+					$this->lastname = $result['lastname'];
+					$this->dob = $result['dob'];
+					$this->billable = $result['billable'];
+					$this->skin = $result['skin'];
+					$this->email = $result['email'];
+					$this->db->qry("UPDATE  `users` SET  `lastactive` = NOW( ) WHERE  `users`.`id` ={$this->id}");
+					break; //stop looking for the user
+				}
+			}
+			if(!isset($this->username))
+				unset($this->cookie); //if no valid user was logged in, clear the cookie
+		}
+		//if there is not cookie set - log user in as guest
+		if(!isset($this->cookie)){
+			$this->username = "guest";
+			$this->skin = 1;
+			$this->access = 0;
+		}		
+	}
+/*
 	function updateUser(){
 	//first pull in any cookie info
 		if(isset($_COOKIE['azaka_username']) && isset($_COOKIE['azaka_password'])){
@@ -70,24 +101,21 @@ class UserObject {
 			$this->access = 0;
 		}
 	}
+	*/
 	function invalidateSession(){
-		$this->changed = true;
-		$this->updateCookies('','');
+		setcookie("azaka_user",'');
 	}
 	function updateCookies($user, $pass){
-		$timeout = $this->db->getSetting('account_timeout');
-		setcookie("azaka_username",$user,time()+60*60+60*60*24*$timeout,"/");
-		setcookie("azaka_password",$pass,time()+60*60+60*60*24*$timeout,"/");
+		setcookie("azaka_user",md5($user.$pass),time()+3600+86400*$this->db->getSetting('account_timeout'),"/");
 	}
 	function updatePassword($pass){
-		$this->changed=true;
-		setcookie("azaka_password",$pass,time()+60*60*24*14,"/");
+		$this->updateCookies($this->username,$pass);
 	}
 	function canAccess($reqaccess){
 		return ($this->access >= $reqaccess);
 	}
 	function getSkin(){
-		$default = "aesthetics/skins/dark-hive/jquery-ui-1.8.2.custom.css"; //Should be dynamic
+		$default = "aesthetics/skins/dark-hive/jquery-ui-1.8.2.custom.css"; //Should be dynamic (but isn't)
 	
 		if(isset($this->id)){
 			$this->db->qry("SELECT skins.css AS css FROM skins, users WHERE users.id = {$this->id} AND skins.id=users.skin");
