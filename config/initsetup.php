@@ -1,4 +1,8 @@
 	<?php
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 include "dbconfig.php";
 $errors = "";
 
@@ -127,7 +131,7 @@ if(file_exists("stop")){
 	");
 
 	$errors .= doqry("Shoutbox Table","CREATE TABLE IF NOT EXISTS `shoutbox` (
-	`id` int(11) NOT NULL,
+	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`uid` int(11) NOT NULL,
 	`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`message` text NOT NULL,
