@@ -1,5 +1,7 @@
 <?php
 
+//header
+header("content-type: text/xml");
 error_reporting(E_ALL);
 ini_set("display_errors",1);
 
@@ -9,19 +11,24 @@ include_once "../include/db.php";
 //create objects
 $newObj = new Database;
 
-$query = $newObj->qry("SELECT * FROM shoutbox");
-$values = $newObj->fetchLast();
+$query = $newObj->qry("SELECT id, username FROM users");
+$Users = array();
+while($user = $newObj->fetchLast()){
+   $Users[$user['id']] = $user['username'];
+}
 
-//header
-header("content-type: text/xml");
 echo "<?xml version=\"1.0\" ?>";
 
 //suggested output:
 echo "<shoutbox>";
+
+$query = $newObj->qry("SELECT * FROM shoutbox");
+while($values = $newObj->fetchLast())
 	echo "<message>
-		<user>{$values['uid']}</user>
-		<time>{$values['time']}</time>
-		<content>{$values['message']}</content> 
-	</message>"; // repeat message for the last (up to) 5 messages
+          <user>{$Users[$values['uid']]}</user>
+          <time>{$values['time']}</time>
+          <content>{$values['message']}</content>
+         </message>";
+
 echo "</shoutbox>";
 ?>
