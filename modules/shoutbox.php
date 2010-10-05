@@ -19,7 +19,7 @@ $m->addJs("while(shoutbox = xml.getElementsByTagName('message')[count++] != unde
 //add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
 /*
 if($u->canAccess(1)){
-   $m->addContent("<form id=\"shoutblog\" name=\"shoutblog\" onsubmit=\"if(document.shoutblog.message.value == ''){
+   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"shoutblog\" onsubmit=\"if(document.mod-shoutbox-form.message.value == ''){
                      errorMsg('Please enter a message in the field before pressing enter..');
                      };\" action = \"javascript:false\">
                   <table>
