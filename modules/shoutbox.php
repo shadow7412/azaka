@@ -14,9 +14,10 @@ $u = new UserObject;
 //add the placeholders for existig messages using addContent()
 $m->addContent("<ul id=\"mod-shoutbox-content\"></ul>");
 $m->addJs("var shoutbox = document.getElementById('mod-shoutbox-content'); shoutbox.innerHTML = ''; var count = 0; var shoutbox = null;");
-$m->addJs("while(shoutbox = xml.getElementsByTagName('message`)[count++] !=undefined)");
+$m->addJs("while(shoutbox = xml.getElementsByTagName('message')[count++] != undefined)");
 
 //add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
+/*
 if($u->canAccess(1)){
    $m->addContent("<form id=\"shoutblog\" name=\"shoutblog\" onsubmit=\"if(document.shoutblog.message.value == ''){
                      errorMsg('Please enter a message in the field before pressing enter..');
@@ -32,7 +33,7 @@ if($u->canAccess(1)){
                   </table>
                   </form>");
 }
-
+*/
 //add the messages into the place holder using javascript > addJs()
 //You will want to see another module file (such as links) to figure
 //this out
