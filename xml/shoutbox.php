@@ -12,9 +12,9 @@ include_once "../include/db.php";
 $newObj = new Database;
 
 $query = $newObj->qry("SELECT id, username FROM users");
-$Users = array();
+$username = array();
 while($user = $newObj->fetchLast()){
-   $Users[$user['id']] = $user['username'];
+   $username[$user['id']] = $user['username'];
 }
 
 echo "<?xml version=\"1.0\" ?>";
@@ -25,7 +25,7 @@ echo "<shoutbox>";
 $query = $newObj->qry("SELECT * FROM shoutbox");
 while($values = $newObj->fetchLast())
 	echo "<message>
-          <user>{$Users[$values['uid']]}</user>
+          <user>{$username[$values['uid']]}</user>
           <time>{$values['time']}</time>
           <content>{$values['message']}</content>
          </message>";
