@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set("display_errors",1);
+
 //includes (grab from some other module)
 include_once "../include/module.php";
 include_once "../include/userobject.php";
@@ -14,7 +18,7 @@ $m->addJs("while(shoutbox = xml.getElementsByTagName('message`)[count++] !=undef
 
 //add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
 if($u->canAccess(1)){
-   $u->addContent("<form id=\"shoutblog\" name=\"shoutblog\" onsubmit=\"if(document.shoutblog.message.value == ''){
+   $m->addContent("<form id=\"shoutblog\" name=\"shoutblog\" onsubmit=\"if(document.shoutblog.message.value == ''){
                      errorMsg('Please enter a message in the field before pressing enter..');
                      };\" action = \"javascript:false\">
                   <table>
