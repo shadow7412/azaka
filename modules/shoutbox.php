@@ -15,6 +15,7 @@ $u = new UserObject;
 $m->addContent("<ul id=\"mod-shoutbox-content\"></ul>");
 $m->addJs("var shoutbox = document.getElementById('mod-shoutbox-content'); shoutbox.innerHTML = ''; var count = 0; var shoutbox = null;");
 $m->addJs("while(shoutbox = xml.getElementsByTagName('mod-shoutbox-message')[count++] != undefined);");
+$m->addJs("shoutbox.innerHTML += '<p>'shoutbox.childNodes[0].nodeValue'</p>';");
 
 //add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
 /*
