@@ -3,9 +3,10 @@ include_once "../include/page.php";
 include_once "../include/linklist.php";
 $p = new Page("news",2);
 $l = new LinkList($p->u);
-echo "<pre>".print_r($_GET,true)."</pre>";
+dev();
 $l->additem("news items","news", 0);
 echo $l->dispList();
+$p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 
 if(!isset($_GET['action'])){
 	//if no action, do nothing. This is just so we do not need to check every time.
@@ -23,22 +24,18 @@ if(!isset($_GET['action'])){
 	$p->addJs("document.addnews.item.value='$item';");
 } elseif ($_GET['action']=='delete')
 	$p->db->qry("DELETE FROM news WHERE id = {$_GET['item']}");
-//modify
-
-//delete
-
-
+	
 //new
+echo "<div id=\"accordion\"><h3><a>Edit Entry</a></h3><div>";
 echo "<form name=\"addnews\" id=\"addnews\" onsubmit=\"sendForm(this,'admin_news');false;\">
-<input type=\"text\" name=\"title\" />: {$p->u->username} at [now] wrote:<blockquote><textarea id=\"newscontent\" name=\"newscontent\" cols=\"45\" rows=\"5\"></textarea></blockquote><input type=submit /><input type=\"hidden\" name=\"item\" id=\"item\" value=\"\" /></form><br/>";
+<input type=\"text\" name=\"title\" /> by {$p->u->username} @ [now] wrote:<br/><textarea id=\"newscontent\" name=\"newscontent\" cols=\"45\" rows=\"5\"></textarea><br/><input type=\"submit\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" /><input type=\"hidden\" name=\"item\" id=\"item\" value=\"\" /></form></div>";
 
 //show all articles
 $p->db->qry("SELECT n.*, u.username AS poster FROM news AS n, users AS u WHERE u.id = n.uid ORDER BY time DESC");
 while($row = $p->db->fetchLast()){
 	extract($row);
-	echo "$title: $poster at $time wrote:
-	(<a href=\"javascript:if(confirm('Are you sure?'))doPost('pages/admin_news.php?action=delete&item=$id');\">delete</a> or
-	<a href=\"javascript:doPost('pages/admin_news.php?action=modify&item=$id');\">edit</a>)
-	<blockquote><pre>$content</pre></blockquote>";
+	echo "<h3><a>$title by $poster @ $time</a></h3><div>(<a href=\"javascript:if(confirm('Are you sure?'))grabContent('admin_news','action=delete&item=$id');\">delete</a> or
+	<a href=\"javascript:grabContent('admin_news','action=modify&item=$id');\">edit</a>)<br/><br/>$content</div>";
 }
+echo "</div>";
 ?>

@@ -17,7 +17,7 @@ $p->db->qry("SELECT * FROM users WHERE id='".$p->u->id."'");
 extract($p->db->fetchLast());
 $p->db->qry("SELECT * FROM skins");
 
-echo "<form name=\"profile\" id=\"profile\" type=\"get\" onsubmit=\"javascript:
+echo "<div id=\"accordion\"><h3><a>Profile</a></h3><div><form name=\"profile\" id=\"profile\" type=\"get\" onsubmit=\"javascript:
 if(document.profile.password.value == document.profile.cpassword.value){
 	document.profile.cpassword.value='';
 	sendForm(this, 'profile');
@@ -35,11 +35,12 @@ while($row = $p->db->fetchLast())
 	echo "<option value='{$row['id']}'>{$row['name']}</option>";
 echo "</select></td></tr>";
 $p->addJs("document.profile.skin.value = '{$p->u->skin}';");
+$p->addJs("$(\"#accordion\").accordion({autoHeight: false, navigation: true})");
 echo "<tr><td>first name</td><td><input type=\"tex
 	if(validatePopulated(document.profile.password.value))
 		document.profile.password.value=hex_md5(document.profile.password.value);t\" name=\"fname\" id=\"fname\" value=\"$firstname\"/></td></tr>
 <tr><td>last name</td><td><input type=\"text\" name=\"lname\" id=\"lname\" value=\"$lastname\"/></td></tr>
 <tr><td>email</td><td><input type=\"text\" name=\"email\" id=\"email\" value=\"$email\"/></td></tr>
 <tr><td><input type=\"submit\" value=\"update\"')\"/></td></tr>";
-echo "</table></form>";
+echo "</table></form></div></div>";
 ?>
