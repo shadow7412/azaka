@@ -22,13 +22,9 @@ echo "<?xml version=\"1.0\" ?>";
 //suggested output:
 echo "<shoutbox>";
 
-$query = $newObj->qry("SELECT * FROM shoutbox");
+$query = $newObj->qry("SELECT * FROM shoutbox ORDER BY time DESC LIMIT 0,5");
 while($values = $newObj->fetchLast())
-	echo "<message>
-          <user>{$username[$values['uid']]}</user>
-          <time>{$values['time']}</time>
-          <content>{$values['message']}</content>
-         </message>";
+	echo "<message><user>{$username[$values['uid']]}</user><time>{$values['time']}</time><content>{$values['message']}</content></message>";
 
 echo "</shoutbox>";
 ?>
