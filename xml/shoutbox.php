@@ -2,8 +2,6 @@
 
 //header
 header("content-type: text/xml");
-error_reporting(E_ALL);
-ini_set("display_errors",1);
 
 //includes
 include_once "../include/db.php";

@@ -12,6 +12,9 @@ a:active {color: #7777FF; text-decoration: none; }
 a:visited {color: #7777FF; text-decoration: none; }
 a:hover {color: #7777FF; text-decoration: underline; }
 h5 {margin:0px;}
+ul {
+	padding-left:20px;
+}
 #heading {
 	z-index:10;
 	float:right;
@@ -34,9 +37,6 @@ h5 {margin:0px;}
 	left:0;
 	text-align: center;
 }
-#linklist ul {
-	padding-left:10px;
-}
 #bar {
 	z-index:8;
 	height: 25px;
@@ -55,7 +55,6 @@ h5 {margin:0px;}
 	width:6em;
 	text-decoration:none;
 	color:white;
-	background-image: url(images/ui-icons_cccccc_256x240.png);
 	padding:0em 0.6em;
 	border-right:1px solid white;
 }

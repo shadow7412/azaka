@@ -106,14 +106,15 @@ if(file_exists("stop")){
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 	
-	$errors .= doqry("Add Modules", "INSERT INTO modules (name, url, onsidebar, localrefresh, webrefresh) VALUES
-	('user','user.php', 1, 0 ,0),
-	('bills','bills.php', 1, 0, 0),
-	('shoutbox','shoutbox.php', 0, 500, 2000),
-	('links','links.php', 1, 0, 0),
-	('bandwidth','bandwidth.php', 0, 500, 5000),
-	('internet','internet.php', 0, 108000, 216000),
-	('ventrilo','ventrilo.php', 0, 2000, 10000)
+	$errors .= doqry("Add Modules", "INSERT INTO modules (enabled, name, url, onsidebar, localrefresh, webrefresh) VALUES
+	(1 ,'user','user.php', 1, 0 ,0),
+	(1 ,'bills','bills.php', 1, 0, 0),
+	(1 ,'shoutbox','shoutbox.php', 0, 500, 2000),
+	(0 ,'minecraft','minecraft.php', 1, 0, 0),
+	(1 ,'links','links.php', 1, 0, 0),
+	(1 ,'bandwidth','bandwidth.php', 0, 500, 5000),
+	(0 ,'internet','internet.php', 0, 108000, 216000),
+	(0 ,'ventrilo','ventrilo.php', 0, 2000, 10000)
 	");
 	
 	$errors .= doqry("Links Table", "CREATE TABLE `links` (

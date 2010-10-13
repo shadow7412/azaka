@@ -26,13 +26,13 @@ class LinkList {
 	}
 	function dispList(){
 		if($this->counter!=0){
-			$output = "<div id=\"linklist\"><ul>".$this->dispBar()."</div>";
+			$output = "<div class=\"linklist\"><ul>".$this->dispBar()."</div>";
 			return $output;
 		}
 	}
 	function dispBox($rows){ //TODO
 		if($this->counter!=0){
-			$output = "<div id=\"linklist\"><ul>".$this->dispBar()."</div>";
+			$output = "<div class=\"linklist\"><ul>".$this->dispBar()."</div>";
 			return $output;
 		}
 	}

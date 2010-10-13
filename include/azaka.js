@@ -100,7 +100,7 @@ function grabSidebar(){
 function grabModules(){
 	//Clear running module handles before reloading module bar
 	//Not doing this would either:
-	//Throw an error should the module not exist when script is run
+	//Throw an error should the module not exist when script is running at the same time
 	//or make the modules run at double speed - as they create a second handle
 	//when reloaded.
 	

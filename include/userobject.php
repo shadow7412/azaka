@@ -3,6 +3,7 @@ include_once "../include/db.php";
 
 //dev function shows the contents of $_GET. Done here because it is the most common include.
 function dev(){
+	error_reporting(E_ALL);
 	echo "<pre onclick=\"this.innerHTML='".print_r($_SERVER,true)."'\">".print_r($_GET,true)."</pre>";
 }
 
@@ -37,7 +38,6 @@ class UserObject {
 		$this->updateCookies($this->username,$this->password);
 	}
 	function updateUser(){
-		//pull in cookies
 		//if cookie info matches user, log them in - if not wipe cookie.
 		if(isset($_COOKIE['azaka_user'])){
 			$this->cookie = $_COOKIE['azaka_user'];
