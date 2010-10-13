@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set("display_errors",1);
-
 //includes (grab from some other module)
 include_once "../include/module.php";
 include_once "../include/userobject.php";
@@ -12,13 +9,24 @@ $m = new Module("shoutbox", 0);
 $u = new UserObject;
 
 //add the placeholders for existig messages using addContent()
-$m->addContent("<ul id=\"mod-shoutbox-content\"></ul>");
-$m->addJs("var shoutbox = document.getElementById('mod-shoutbox-content'); shoutbox.innerHTML = ''; var count = 0; var shoutbox = null;");
-$m->addJs("while(shoutbox = xml.getElementsByTagName('mod-shoutbox-message')[count++] != undefined);");
-$m->addJs("shoutbox.innerHTML += '<p>'shoutbox.childNodes[0].nodeValue'</p>';");
 
-//add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
+$m->addContent("<div id=\"mod-shoutbox-contents\"></div>");
+$m->addJs("var shoutbox = document.getElementById('mod-shoutbox-contents'); shoutbox.innerHTML = ''; var count = 0;");
+$m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != undefined)");
+$m->addJs("shoutbox.innerHTML += '<p><b>' + message.childNodes[0].childNodes[0].nodeValue + '</b> ' + message.childNodes[1].childNodes[0].nodeValue + '<br />' + message.childNodes[2].childNodes[0].nodeValue + '</p>'");
+
 /*
+//$m->addContent("<ul id=\"mod-shoutbox-content\"></ul>");
+$m->addJs("var shoutbox = loadXMLDoc(\"../xml/shoutbox.xml\")");
+$m->addJs("var shoutbox = document.getElementById('mod-shoutbox-content'); shoutbox.innerHTML = ''; var count = 0; var shoutbox = null;");
+$m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != undefined){
+            shoutbox.innerHTML += '<p>' + message.getAttributeNode(\"message\").nodeValue '</p>'
+           } ");
+//$m->addContent("document.write(shoutbox);");
+//$m->addJs("shoutbox.innerHTML += '<p>' + message.childNodes[1].nodeValue '</p>' ");
+
+$m->addJs("shoutbox.innerHTML += '<p>' + shoutbox.childNodes[0].nodeValue + '</p>';");
+//add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
 if($u->canAccess(1)){
    $m->addContent("<form id=\"mod-shoutbox-form\" name=\"shoutblog\" onsubmit=\"if(document.mod-shoutbox-form.message.value == ''){
                      errorMsg('Please enter a message in the field before pressing enter..');
@@ -35,6 +43,7 @@ if($u->canAccess(1)){
                   </form>");
 }
 */
+
 //add the messages into the place holder using javascript > addJs()
 //You will want to see another module file (such as links) to figure
 //this out
