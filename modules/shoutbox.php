@@ -16,12 +16,12 @@ $m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != und
 $m->addJs("shoutbox.innerHTML += '<p><b>' + message.childNodes[0].childNodes[0].nodeValue + '</b> ' + message.childNodes[1].childNodes[0].nodeValue + '<br />' + message.childNodes[2].childNodes[0].nodeValue + '</p>'");
 
 if($u->canAccess(1)){
-   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"Shoutblog\" onsubmit=\"if(document.mod-shoutbox-form.message.value == ''){
+   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"Shoutblog\" onsubmit=\"if(document.getElementById('message') == ''){
                      errorMsg('Please enter a message in the field before pressing enter..'); return false;}
-                     else{return true;};\" action = \"javascript:sendForm(this,'shoutbox');\">
+                     else{sendForm(this, 'shoutbox')};\">
                   <table>
                      <tr>Message:</tr>
-                     <tr><input type=\"text\" name=\"message\"></tr>
+                     <tr><input type=\"text\" name=\"message\" id=\"message\"></tr>
                      <tr>
                         <td><input type=\"submit\" value=\"Shout\" class=\"ui-buttonui-widget ui-state-default ui-corner-all\"/></td>
                      </tr>

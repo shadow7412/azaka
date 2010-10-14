@@ -1,6 +1,6 @@
 <?php
 include_once "../include/page.php";
-include_once "../module/shoutbox.php";
+//include_once "../module/shoutbox.php";
 
 $p = new Page("shoutbox", 0);
 $p->addJs("$(\"#accordion\").accordion({autoHeight:false, navigation:true})");
@@ -20,6 +20,8 @@ while($row = $p->db->fetchLast()){
    
    echo "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3><div>".$row['message']."</div>";
 }
+
+//$p->db->qry("INSERT INTO Shoutbox VALUES(default, )");
 
 echo "</div>";
 ?>
