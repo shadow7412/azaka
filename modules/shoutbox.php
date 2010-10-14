@@ -15,34 +15,19 @@ $m->addJs("var shoutbox = document.getElementById('mod-shoutbox-contents'); shou
 $m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != undefined)");
 $m->addJs("shoutbox.innerHTML += '<p><b>' + message.childNodes[0].childNodes[0].nodeValue + '</b> ' + message.childNodes[1].childNodes[0].nodeValue + '<br />' + message.childNodes[2].childNodes[0].nodeValue + '</p>'");
 
-/*
-//$m->addContent("<ul id=\"mod-shoutbox-content\"></ul>");
-$m->addJs("var shoutbox = loadXMLDoc(\"../xml/shoutbox.xml\")");
-$m->addJs("var shoutbox = document.getElementById('mod-shoutbox-content'); shoutbox.innerHTML = ''; var count = 0; var shoutbox = null;");
-$m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != undefined){
-            shoutbox.innerHTML += '<p>' + message.getAttributeNode(\"message\").nodeValue '</p>'
-           } ");
-//$m->addContent("document.write(shoutbox);");
-//$m->addJs("shoutbox.innerHTML += '<p>' + message.childNodes[1].nodeValue '</p>' ");
-
-$m->addJs("shoutbox.innerHTML += '<p>' + shoutbox.childNodes[0].nodeValue + '</p>';");
-//add the form using addContent() - verify a message is printed. Maybe do not show form unless a user is logged in
 if($u->canAccess(1)){
-   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"shoutblog\" onsubmit=\"if(document.mod-shoutbox-form.message.value == ''){
-                     errorMsg('Please enter a message in the field before pressing enter..');
-                     };\" action = \"javascript:false\">
+   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"Shoutblog\" onsubmit=\"if(document.mod-shoutbox-form.message.value == ''){
+                     errorMsg('Please enter a message in the field before pressing enter..'); return false;}
+                     else{return true;};\" action = \"javascript:sendForm(this,'shoutbox');\">
                   <table>
+                     <tr>Message:</tr>
+                     <tr><input type=\"text\" name=\"message\"></tr>
                      <tr>
-                        <td>Message</td>
-                        <td><textarea rows=\"10\" cols=\"60\" name=\"message\">A big load of text here</textarea></td>
-                     </tr>
-                     <tr>
-                        <td><input type=\"submit\" name=\"action\" value=\"shoutblog\" class=\"ui-buttonui-widget ui-state-default ui-corner-all\"></td>
+                        <td><input type=\"submit\" value=\"Shout\" class=\"ui-buttonui-widget ui-state-default ui-corner-all\"/></td>
                      </tr>
                   </table>
                   </form>");
 }
-*/
 
 //add the messages into the place holder using javascript > addJs()
 //You will want to see another module file (such as links) to figure
