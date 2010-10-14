@@ -1,11 +1,14 @@
 <?php
 include_once "../include/page.php";
-//include_once "../module/shoutbox.php";
+include_once "../include/userobject.php";
 
 $p = new Page("shoutbox", 0);
+$u = new UserObject;
 $p->addJs("$(\"#accordion\").accordion({autoHeight:false, navigation:true})");
 
-dev();
+if(isset($_GET['message'])){
+   $p->db->qry("INSERT INTO shoutbox VALUES(default,".$u->id.",default,\"".$_GET['message']."\")");
+}
 
 $user = $p->db->qry("SELECT id, username FROM users");
 $username = array();
@@ -20,8 +23,6 @@ while($row = $p->db->fetchLast()){
    
    echo "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3><div>".$row['message']."</div>";
 }
-
-//$p->db->qry("INSERT INTO Shoutbox VALUES(default, )");
 
 echo "</div>";
 ?>

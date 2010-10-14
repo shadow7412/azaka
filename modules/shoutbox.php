@@ -16,7 +16,7 @@ $m->addJs("while((message = xml.getElementsByTagName('message')[count++]) != und
 $m->addJs("shoutbox.innerHTML += '<p><b>' + message.childNodes[0].childNodes[0].nodeValue + '</b> ' + message.childNodes[1].childNodes[0].nodeValue + '<br />' + message.childNodes[2].childNodes[0].nodeValue + '</p>'");
 
 if($u->canAccess(1)){
-   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"Shoutblog\" onsubmit=\"if(document.getElementById('message') == ''){
+   $m->addContent("<form id=\"mod-shoutbox-form\" name=\"Shoutblog\" onsubmit=\"if(document.getElementById('mod-shoutbox-form').message.value == ''){
                      errorMsg('Please enter a message in the field before pressing enter..'); return false;}
                      else{sendForm(this, 'shoutbox')};\">
                   <table>
