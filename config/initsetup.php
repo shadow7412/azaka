@@ -90,6 +90,7 @@ if(file_exists("stop")){
 	('news','news.php',0, 1),
 	('register','register.php',0, 0),
 	('profile','profile.php',1, 1),
+	('shoutbox','shoutbox.php',1, 1),
 	('ping','ping.php',1, 1)
 	");
 	
