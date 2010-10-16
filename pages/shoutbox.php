@@ -10,6 +10,10 @@ if(isset($_GET['message'])){
    $p->db->qry("INSERT INTO shoutbox VALUES(default,".$u->id.",default,\"".$_GET['message']."\")");
 }
 
+if(isset($_GET['delete'])){
+   $p->db->qry("DELETE FROM shoutbox WHERE id =".$_GET['delete']);
+}
+
 //$p->addJs("function delete(){alert('hello');}");
 
 $user = $p->db->qry("SELECT id, username FROM users");
@@ -22,8 +26,7 @@ $p->db->qry("SELECT * FROM shoutbox ORDER BY time DESC");
 echo "<div id=\"accordion\">";
 
 while($row = $p->db->fetchLast()){
-   
-   echo "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3><div>".$row['message']."<a href=\"javascript:delete()\" style=\"color: yellow; float: right; margin-right:5%;\">Delete</a></div>";
+   echo "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3><div>".$row['message']."<a href='#shoutbox&delete={$row['id']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a></div>";
 }
 
 echo "</div>";
