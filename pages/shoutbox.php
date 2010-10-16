@@ -6,15 +6,16 @@ $p = new Page("shoutbox", 0);
 $u = new UserObject;
 $p->addJs("$(\"#accordion\").accordion({autoHeight:false, navigation:true})");
 
+
 if(isset($_GET['message'])){
    $p->db->qry("INSERT INTO shoutbox VALUES(default,".$u->id.",default,\"".$_GET['message']."\")");
 }
 
-if(isset($_GET['delete'])){
-   $p->db->qry("DELETE FROM shoutbox WHERE id =".$_GET['delete']);
+if(isset($_GET['delete']) && isset($_GET['idNumber'])){
+    if($u->id == $_GET['idNumber'] || $u->canAccess(2) || $u->canAccess(3)) $p->db->qry("DELETE FROM shoutbox WHERE id =".$_GET['delete']);
 }
 
-//$p->addJs("function delete(){alert('hello');}");
+$HTML = null;
 
 $user = $p->db->qry("SELECT id, username FROM users");
 $username = array();
@@ -23,11 +24,15 @@ while($user = $p->db->fetchLast()){
 }
 
 $p->db->qry("SELECT * FROM shoutbox ORDER BY time DESC");
-echo "<div id=\"accordion\">";
+$HTML .= "<div id=\"accordion\">";
 
 while($row = $p->db->fetchLast()){
-   echo "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3><div>".$row['message']."<a href='#shoutbox&delete={$row['id']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a></div>";
+   $HTML .= "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3>
+             <div>".$row['message'];
+   if($u->id == $row['uid'] || $u->canAccess(2) || $u->canAccess(3)) $HTML .= "<a href='#shoutbox&delete={$row['id']}&idNumber={$row['uid']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a>"; 
+   $HTML .= "</div>";
 }
 
-echo "</div>";
+$HTML .= "</div>";
+echo $HTML;
 ?>
