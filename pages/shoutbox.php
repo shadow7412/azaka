@@ -12,7 +12,7 @@ if(isset($_GET['message'])){
 }
 
 if(isset($_GET['delete']) && isset($_GET['idNumber'])){
-    if($u->id == $_GET['idNumber'] || $u->canAccess(2) || $u->canAccess(3)) $p->db->qry("DELETE FROM shoutbox WHERE id =".$_GET['delete']);
+    if($u->id == $_GET['idNumber'] || $u->canAccess(2)) $p->db->qry("DELETE FROM shoutbox WHERE id =".$_GET['delete']);
 }
 
 $HTML = null;
@@ -29,7 +29,7 @@ $HTML .= "<div id=\"accordion\">";
 while($row = $p->db->fetchLast()){
    $HTML .= "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3>
              <div>".$row['message'];
-   if($u->id == $row['uid'] || $u->canAccess(2) || $u->canAccess(3)) $HTML .= "<a href='#shoutbox&delete={$row['id']}&idNumber={$row['uid']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a>"; 
+   if($u->id == $row['uid'] || $u->canAccess(2)) $HTML .= "<a href='#shoutbox&delete={$row['id']}&idNumber={$row['uid']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a>"; 
    $HTML .= "</div>";
 }
 
