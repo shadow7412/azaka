@@ -29,7 +29,7 @@ $HTML .= "<div id=\"accordion\">";
 while($row = $p->db->fetchLast()){
    $HTML .= "<h3><a>".$username[$row['uid']]." ".$row['time']."</a></h3>
              <div>".$row['message'];
-   if($u->id == $row['uid'] || $u->canAccess(2)) $HTML .= "<a href='#shoutbox&delete={$row['id']}&idNumber={$row['uid']}' style=\"color: yellow; float: right; margin-right:4%;\">Delete</a>"; 
+   if($u->id == $row['uid'] || $u->canAccess(2)) $HTML .= "<a href='#shoutbox&delete={$row['id']}&idNumber={$row['uid']}' style=\"float: right; margin-right:4%;\"><input type= 'submit' name='Delete' value='Delete'></a>"; 
    $HTML .= "</div>";
 }
 
