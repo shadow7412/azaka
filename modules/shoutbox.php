@@ -1,14 +1,10 @@
 <?php
 
-//includes (grab from some other module)
 include_once "../include/module.php";
 include_once "../include/userobject.php";
 
-//create module class
 $m = new Module("shoutbox", 0);
 $u = new UserObject;
-
-//add the placeholders for existig messages using addContent()
 
 $m->addContent("<div id=\"mod-shoutbox-contents\"></div>");
 $m->addJs("var shoutbox = document.getElementById('mod-shoutbox-contents'); shoutbox.innerHTML = ''; var count = 0;");
@@ -29,7 +25,4 @@ if($u->canAccess(1)){
                   </form>");
 }
 
-//add the messages into the place holder using javascript > addJs()
-//You will want to see another module file (such as links) to figure
-//this out
 ?>
