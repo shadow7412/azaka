@@ -20,10 +20,6 @@ if (isset($_GET['action']) && $_GET['action']=="login" && isset($_GET['username'
 			$p->infoBox("You seem to have inaccuratly typed your password. For examples sake, I have intentionally misspelled inaccurately. Poor you.<br/>Try again, or you can ask your benevolent admin to reset it...");
 			$p->infoBox("If you have not used this system before, please register.");
 		}
-} else if(isset($_GET['action']) && $_GET['action']=="logout"){
-	$p->u->invalidateSession();
-	$p->addJs("grabModules(); grabSidebar(); setTimeout('history.go(-1)',500);");
-	die($p->infoBox("Logging Out..."));
 } else if (isset($_GET['action']) && $_GET['action']=="wanttoregister"){
 	$p->infoBox("Here is the paperwork..");
 } else if (isset($_GET['action']) && $_GET['action']=="register"){

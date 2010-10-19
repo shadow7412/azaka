@@ -44,7 +44,7 @@ $m->addContent("<div id=\"mod-user-loginbox\" style=\"display:none;\">
 $m->addContent("<div id=\"mod-user-info\" style=\"display:inline;\">
 	Logged in as: <div id=\"mod-user-info-username\" style=\"display:inline;\">...</div><br/>
 	<div id=\"mod-user-info-connection\">still loading...</div>
-	<input type=\"button\" value=\"logout\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:grabContent('register','action=logout')\"/>
+	<input type=\"button\" value=\"logout\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" onclick=\"javascript:document.cookie = 'azaka_user=;path=/';grabModules(); grabSidebar();grabContent(window.location.hash.substring(1,99));false;\"/>
 	</div>");
 
 //Show/hide relevant area.
