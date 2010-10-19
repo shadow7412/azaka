@@ -9,10 +9,12 @@ startPage()
 	Inits global variables
 	Starts checking hashes.
 	If no hash defined, default to news.
+	Only ever required in the html page loaded at by index.php
 	no return
 	
 errorMsg(message, [extra info])
 	Displays message for a few seconds. Used instead of alert()
+	A second message will overwrite the first
 	no return
 
 runJs(elementID)
@@ -36,7 +38,7 @@ function sendForm(form, target, [order]){
 	page will be the reciepent page
 	if defined, order will be a list (seperated by whitespace) showing the id of the
 		first element in each list item. This can be used to determin the results of
-		click/drag type postitioning.
+		click/drag type positioning.
 
 loadXML(module, [atrributes])
 	Loads xml for module
@@ -53,6 +55,7 @@ validateNumber(string)
 	
 validatePopulated(string)
 	checks to see if string is empty or undefined
+	returns boolean
 ***************************************************************************************/
 
 //PAGE SETUP FUNCTIONS
