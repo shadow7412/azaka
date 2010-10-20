@@ -66,8 +66,6 @@ document.register.email.value == '' ){
 	document.register.email.value = '';
 	document.register.email.focus();
 } else {
-	document.register.password.value = hex_md5(document.register.password.value);
-	document.register.confirm.value='';
 	sendForm(this,'register');
 };" action="javascript:false">
   <table width="500" border="0">
