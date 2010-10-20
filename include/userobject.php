@@ -72,9 +72,7 @@ class UserObject {
 		setcookie("azaka_user",'');
 	}
 	function updateCookies($user, $pass){
-		if(headers_sent())
-			echo "<div id=\"error\">User info not updated</div>";
-		else
+		if(!headers_sent())
 			setcookie("azaka_user",md5($user.$pass),time()+3600+86400*$this->db->getSetting('account_timeout'),"/");
 	}
 	function updatePassword($pass){
