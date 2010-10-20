@@ -28,7 +28,7 @@ while($row = $p->db->fetchLast()){
    echo "<h3><a>".$row['username']." ".$row['time']."</a></h3>
              <div>".$row['message'];
 
-   if($u->id == $row['idNumber'] || $u->canAccess(2)) echo "<div style=\"float: right; margin-right:4%;\"><input type=\"button\" OnClick=\"grabContent('shoutbox', 'shout_id=".$row['shout_id']."')\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"Delete\"/></div>"; 
+   if($u->id == $row['idNumber'] || $u->canAccess(2)) echo "<div style=\"float: right; margin-right:4%;\"><input type=\"button\" onClick=\"grabContent('shoutbox', 'shout_id=".$row['shout_id']."')\" class=\"ui-button ui-widget ui-state-default ui-corner-all\" value=\"Delete\"/></div>"; 
    echo "</div>";
 }
 
